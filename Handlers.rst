@@ -1,6 +1,3 @@
-#summary A list of all built in caches and how to use them.
-#labels Featured
-
 FileSystem
 ==========
 
