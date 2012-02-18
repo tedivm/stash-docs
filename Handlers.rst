@@ -1,7 +1,8 @@
 #summary A list of all built in caches and how to use them.
 #labels Featured
 
-=!FileSystem=
+FileSystem
+==========
 
  The StashFileSystem handler stores each item in a php script, as native php. Unsurprisingly this is the fastest backend for small to medium sites, as it is just as good as simply including a configuration file (and can even get stored in opcode caches). The downside is that clear and purge actions- those which have to recursively scan the cache's filesystem- take extraordinarily long compared to the other handlers.
 
@@ -11,17 +12,17 @@
   * *dirPermissions* - The unix permission for new directories. Defaults to 0770.
 
 
-{{{
-// Uses a install specific default path if none is passed.
-$handler = new StashFileSystem();
+.. code:block::
+    // Uses a install specific default path if none is passed.
+    $handler = new StashFileSystem();
 
-// Setting a custom path is done by passing an options array to the constructor.
-$options = array('path' => '/tmp/myCache/');
-$handler = new StashFileSystem($options);
-}}}
+    // Setting a custom path is done by passing an options array to the constructor.
+    $options = array('path' => '/tmp/myCache/');
+    $handler = new StashFileSystem($options);
 
 
-=Sqlite=
+Sqlite
+======
 
 An alternative file based caching backend is the StashSqlite handler. It can use either the PDO or native sqlite extensions, and can use either sqlite2 or sqlite3. 
 
@@ -32,42 +33,47 @@ An alternative file based caching backend is the StashSqlite handler. It can use
   * *filePermissions* - The unix permission for new files. Defaults to 0660.
   * *dirPermissions* - The unix permission for new directories. Defaults to 0770.
 
-{{{
-// StashSqlite
+.. code:block:: php
 
-// Uses a install specific default path if none is passed.
-$handler = new StashSqlite();
+    // StashSqlite
 
-// Setting a custom path is done by passing an options array to the constructor.
-$options = array('path' => '/tmp/myCache/');
-$handler = new StashSqlite($options);
-}}}
+    // Uses a install specific default path if none is passed.
+    $handler = new StashSqlite();
 
-=APC=
+    // Setting a custom path is done by passing an options array to the constructor.
+    $options = array('path' => '/tmp/myCache/');
+    $handler = new StashSqlite($options);
+
+
+APC
+===
 
  The APC extension is one of the most well known php caching extensions, allowing for both php opcode caching and memory storage of php values. The StashApc handler uses its userspace libraries to store data directly in memory for scripts to use.
 
   * *ttl* - This is the maximum time an item can live in memory. This is to keep memory pruned to small amounts, particularly when there is another handler backing this one.
   * *namespace* -This stores the data under a namespace in case other scripts are using APC to store data as well. If this isn't passed the handler creates an install specific namespace, so this is really only needed if two scripts need their own caches but are using the same Stash install. 
 
-{{{
-// Uses a install specific default path if none is passed.
-$handler = new StashApc();
+.. code:block:: php
 
-// Setting a custom path is done by passing an options array to the constructor.
-$options = array('ttl' => 3600, 'namespace' = md5(__file__));
-$handler = new StashApc($options);
-}}}
+    // Uses a install specific default path if none is passed.
+    $handler = new StashApc();
+
+    // Setting a custom path is done by passing an options array to the constructor.
+    $options = array('ttl' => 3600, 'namespace' = md5(__file__));
+    $handler = new StashApc($options);
 
 
-=Xcache (experimental)=
+
+Xcache (experimental)
+=====================
 
  The Xcache handler is currently experimental.
 
   Like the APC handler, the StashXcache class stores data directly in memory for use by other scripts.
 
 
-=Memcached=
+Memcached
+=========
 
 Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The StashMemcached is a feature complete handler for Memcached, complete with  hierarchal caching.
 
@@ -76,65 +82,64 @@ Memcached is a client/server application which allows machines to pool their mem
 
   * *Options* can be passed to the "memcached" handler by adding them to the options array. The memcached extension defined options using contants, ie Memcached::OPT%. By passing in the % portion ('compression' for Memcached::OPT_COMPRESSION) and its respective option. Please see the [http://us2.php.net/manual/en/memcached.constants.php php manual] for the specific options.
 
-{{{
+.. code:block:: php
 
-// One Server
-$handler = new StashMemcached(array('servers' => array('127.0.0.1', '11211')));
-$stash = new $stash($handler);
-
-
-// Multiple Servers
-$servers = array();
-$servers[] = array('127.0.0.1', '11211', 60);
-$servers[] = array('10.10.10.19', '11211', 20);
-$servers[] = array('10.10.10.19', '11211', 20);
-
-$handler = new StashMemcached(array('servers' => $servers));
-$stash = new $stash($handler);
+    // One Server
+    $handler = new StashMemcached(array('servers' => array('127.0.0.1', '11211')));
+    $stash = new $stash($handler);
 
 
-// Using memcached options
-$options = array();
-$options['servers'][] = array('mem1.example.net', '11211');
-$options['servers'][] = array('mem2.example.net', '11211');
+    // Multiple Servers
+    $servers = array();
+    $servers[] = array('127.0.0.1', '11211', 60);
+    $servers[] = array('10.10.10.19', '11211', 20);
+    $servers[] = array('10.10.10.19', '11211', 20);
 
-$options['prefix_key'] = 'application_name';
-$options['libketama_compatible'] = true;
-$options['cache_lookups'] = true;
-$options['serializer'] = 'json';
-
-$handler = new StashMemcached($options);
-$stash = new $stash($handler);
+    $handler = new StashMemcached(array('servers' => $servers));
+    $stash = new $stash($handler);
 
 
-}}}
+    // Using memcached options
+    $options = array();
+    $options['servers'][] = array('mem1.example.net', '11211');
+    $options['servers'][] = array('mem2.example.net', '11211');
+
+    $options['prefix_key'] = 'application_name';
+    $options['libketama_compatible'] = true;
+    $options['cache_lookups'] = true;
+    $options['serializer'] = 'json';
+
+    $handler = new StashMemcached($options);
+    $stash = new $stash($handler);
 
 
-=!MulitiHandler=
+
+MulitiHandler
+=============
 
  The StashMultiHandler acts as a wrapper around one or more handlers, allowing different handlers to work together in a single cache. 
 
  Upon creation the handler takes in an array of handlers as an option, with each handler after the first having a lower and lower priority. When get requests are run the handlers are checked by highest priority (first, second, third, etc) until the item is found. When an item is found in the cache the handlers that previously missed it are repopulated so they will hit on it next time. The store, clear and purge operations are run in reverse order to prevent stale data from being placed back into a cleared subhandler. 
 
-{{{
-$subHandlers = array();
-$subHandlers[] = new StashApc();
-$subHandlers[] = new StashFileSystem();
-$subHandlers[] = new StashMemcached();
+.. code:block:: php
 
-$options = array('handlers' => $subHandlers);
-$handler = new StashMultiHandler($options);
+    $subHandlers = array();
+    $subHandlers[] = new StashApc();
+    $subHandlers[] = new StashFileSystem();
+    $subHandlers[] = new StashMemcached();
 
-$stash = new $stash($handler);
-$stash->makeKey('test');
+    $options = array('handlers' => $subHandlers);
+    $handler = new StashMultiHandler($options);
 
-// First it checks StashApc. If that fails it checks StashFileSystem. If that succeeds it stores the returned value
-// from StashFileSystem into StashApc and then returns the value.
-$data = $stash->get();
+    $stash = new $stash($handler);
+    $stash->makeKey('test');
 
-// First the data is stored in StashFileSystem, and then it is put into StashApc.
-$stash->store($data);
+    // First it checks StashApc. If that fails it checks StashFileSystem. If that succeeds it stores the returned value
+    // from StashFileSystem into StashApc and then returns the value.
+    $data = $stash->get();
 
-// As with the store, function, the data is first removed from StashFileSystem before being clear from StashApc.
-$stash->clear();
-}}} 
+    // First the data is stored in StashFileSystem, and then it is put into StashApc.
+    $stash->store($data);
+
+    // As with the store, function, the data is first removed from StashFileSystem before being clear from StashApc.
+    $stash->clear();
