@@ -1,4 +1,5 @@
-#labels toc
+labels toc
+==========
   * [http://code.google.com/p/stash/#Features Features]
   * [http://code.google.com/p/stash/#Installing Installing]
   * [http://code.google.com/p/stash/#Example Example]  
