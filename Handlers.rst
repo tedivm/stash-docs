@@ -1,12 +1,20 @@
+========
+Handlers
+========
+
 FileSystem
 ==========
 
 The StashFileSystem handler stores each item in a php script, as native php. Unsurprisingly this is the fastest backend for small to medium sites, as it is just as good as simply including a configuration file (and can even get stored in opcode caches). The downside is that clear and purge actions- those which have to recursively scan the cache's filesystem- take extraordinarily long compared to the other handlers.
 
-* *dirSplit* - Defines how many subdirectories to divide each key into. Larger cache pools run the risk of hitting file system limits on how many files can exist in a directory, so they need to divide the data up. Larger numbers can have performance issues, so testing should be done.
-* *path* - This optional parameter points the handler to the directory it should use for storage. If it isn't passed then an install specific directory is created inside the systems temporary directory.
-* *filePermissions* - The unix permission for new files. Defaults to 0660.
-* *dirPermissions* - The unix permission for new directories. Defaults to 0770.
+* *dirSplit*
+    Defines how many subdirectories to divide each key into. Larger cache pools run the risk of hitting file system limits on how many files can exist in a directory, so they need to divide the data up. Larger numbers can have performance issues, so testing should be done.
+* *path*
+    This optional parameter points the handler to the directory it should use for storage. If it isn't passed then an install specific directory is created inside the systems temporary directory.
+* *filePermissions*
+    The unix permission for new files. Defaults to 0660.
+* *dirPermissions*
+    The unix permission for new directories. Defaults to 0770.
 
 .. code-block:: php
     // Uses a install specific default path if none is passed.
@@ -22,12 +30,18 @@ Sqlite
 
 An alternative file based caching backend is the StashSqlite handler. It can use either the PDO or native sqlite extensions, and can use either sqlite2 or sqlite3. 
 
-* *extension* - Either "pdo" or "sqlite". By default PDO is used and it falls back to sqlite, but if specified then only the passed extension will be used and no fallback action will be taken.
-* *version* - This takes either 2 or 3, with the default behavior being to use 3 and fallback to 2 if it isn't available.
-* *nesting* - Defaults to 0, this option defines how many levels of keys get their own sqlite file. A value of 0 uses one file, while a value of 1 will use one file for each unique first key and a value of two will use both the first and second key for creating sqlite files. For larger sites this can improve performance by spreading locks to multiple files, but for most sites this should be left at it's default.
-* *path* - This optional parameter points the handler to the directory it should use for storage. If it isn't passed then an install specific directory is created inside the systems temporary directory.
-* *filePermissions* - The unix permission for new files. Defaults to 0660.
-* *dirPermissions* - The unix permission for new directories. Defaults to 0770.
+* *extension*
+    Either "pdo" or "sqlite". By default PDO is used and it falls back to sqlite, but if specified then only the passed extension will be used and no fallback action will be taken.
+* *version*
+    This takes either 2 or 3, with the default behavior being to use 3 and fallback to 2 if it isn't available.
+* *nesting*
+    Defaults to 0, this option defines how many levels of keys get their own sqlite file. A value of 0 uses one file, while a value of 1 will use one file for each unique first key and a value of two will use both the first and second key for creating sqlite files. For larger sites this can improve performance by spreading locks to multiple files, but for most sites this should be left at it's default.
+* *path*
+    This optional parameter points the handler to the directory it should use for storage. If it isn't passed then an install specific directory is created inside the systems temporary directory.
+* *filePermissions*
+    The unix permission for new files. Defaults to 0660.
+* *dirPermissions*
+    The unix permission for new directories. Defaults to 0770.
 
 .. code-block:: php
 
@@ -46,8 +60,10 @@ APC
 
 The APC extension is one of the most well known php caching extensions, allowing for both php opcode caching and memory storage of php values. The StashApc handler uses its userspace libraries to store data directly in memory for scripts to use.
 
-* *ttl* - This is the maximum time an item can live in memory. This is to keep memory pruned to small amounts, particularly when there is another handler backing this one.
-* *namespace* -This stores the data under a namespace in case other scripts are using APC to store data as well. If this isn't passed the handler creates an install specific namespace, so this is really only needed if two scripts need their own caches but are using the same Stash install.
+* *ttl*
+    This is the maximum time an item can live in memory. This is to keep memory pruned to small amounts, particularly when there is another handler backing this one.
+* *namespace*
+    This stores the data under a namespace in case other scripts are using APC to store data as well. If this isn't passed the handler creates an install specific namespace, so this is really only needed if two scripts need their own caches but are using the same Stash install.
 
 .. code-block:: php
 
@@ -73,10 +89,12 @@ Memcached
 
 Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The StashMemcached is a feature complete handler for Memcached, complete with  hierarchal caching.
 
-* *servers* - An array of memcached servers, hosts and (optionally) weights for memcache. Each server is represented by an array- array(server, port, weight). If no servers are passed then the default of 127.0.0.1:11211 will be used.
-* *extension* - Which php extension to use, 'memcache' or 'memcached'. The default is to use the newer memcached and fallback to memcache if it is not available.
-
-* *Options* can be passed to the "memcached" handler by adding them to the options array. The memcached extension defined options using contants, ie Memcached::OPT%. By passing in the % portion ('compression' for Memcached::OPT_COMPRESSION) and its respective option. Please see the [http://us2.php.net/manual/en/memcached.constants.php php manual] for the specific options.
+* *servers*
+    An array of memcached servers, hosts and (optionally) weights for memcache. Each server is represented by an array- array(server, port, weight). If no servers are passed then the default of 127.0.0.1:11211 will be used.
+* *extension*
+    Which php extension to use, 'memcache' or 'memcached'. The default is to use the newer memcached and fallback to memcache if it is not available.
+* *Options*
+    Extension options can be passed to the "memcached" handler by adding them to the options array. The memcached extension defined options using contants, ie Memcached::OPT%. By passing in the % portion ('compression' for Memcached::OPT_COMPRESSION) and its respective option. Please see the `php manual for memcached <http://us2.php.net/manual/en/memcached.constants.php>`_ for the specific options.
 
 .. code-block:: php
 
