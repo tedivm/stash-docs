@@ -22,7 +22,7 @@ The StashFileSystem handler stores each item in a php script, as native php. Uns
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('path' => '/tmp/myCache/');
-    $handler = new StashFileSystem($options);
+    $handler = new Stash\Handler\FileSystem($options);
 
 
 Sqlite
@@ -48,11 +48,11 @@ An alternative file based caching backend is the StashSqlite handler. It can use
     // StashSqlite
 
     // Uses a install specific default path if none is passed.
-    $handler = new StashSqlite();
+    $handler = new Stash\Handler\Sqlite();
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('path' => '/tmp/myCache/');
-    $handler = new StashSqlite($options);
+    $handler = new Stash\Handler\Sqlite($options);
 
 
 APC
@@ -72,7 +72,7 @@ The APC extension is one of the most well known php caching extensions, allowing
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('ttl' => 3600, 'namespace' = md5(__file__));
-    $handler = new StashApc($options);
+    $handler = new Stash\Handler\Apc($options);
 
 
 
@@ -81,7 +81,7 @@ Xcache (experimental)
 
 The Xcache handler is currently experimental.
 
-Like the APC handler, the StashXcache class stores data directly in memory for use by other scripts.
+Like the APC handler, the Xcache handler stores data directly in memory for use by other scripts.
 
 
 Memcached
@@ -99,8 +99,7 @@ Memcached is a client/server application which allows machines to pool their mem
 .. code-block:: php
 
     // One Server
-    $handler = new StashMemcached(array('servers' => array('127.0.0.1', '11211')));
-    $stash = new $stash($handler);
+    $handler = new Stash\Handler\Memcache(array('servers' => array('127.0.0.1', '11211')));
 
 
     // Multiple Servers
@@ -109,9 +108,7 @@ Memcached is a client/server application which allows machines to pool their mem
     $servers[] = array('10.10.10.19', '11211', 20);
     $servers[] = array('10.10.10.19', '11211', 20);
 
-    $handler = new StashMemcached(array('servers' => $servers));
-    $stash = new $stash($handler);
-
+    $handler = new Stash\Handler\Memcache(array('servers' => $servers));
 
     // Using memcached options
     $options = array();
@@ -123,8 +120,7 @@ Memcached is a client/server application which allows machines to pool their mem
     $options['cache_lookups'] = true;
     $options['serializer'] = 'json';
 
-    $handler = new StashMemcached($options);
-    $stash = new $stash($handler);
+    $handler = new Stash\Handler\Memcache($options);
 
 
 
@@ -138,14 +134,14 @@ Upon creation the handler takes in an array of handlers as an option, with each 
 .. code-block:: php
 
     $subHandlers = array();
-    $subHandlers[] = new StashApc();
-    $subHandlers[] = new StashFileSystem();
-    $subHandlers[] = new StashMemcached();
+    $subHandlers[] = new Stash\Handler\Apc();
+    $subHandlers[] = new Stash\Handler\FileSystem();
+    $subHandlers[] = new Stash\Handler\Memcached();
 
     $options = array('handlers' => $subHandlers);
-    $handler = new StashMultiHandler($options);
+    $handler = new Stash\Handler\MultiHandler($options);
 
-    $stash = new $stash($handler);
+    $stash = new Stash\Cache($handler);
     $stash->makeKey('test');
 
     // First it checks StashApc. If that fails it checks StashFileSystem. If that succeeds it stores the returned value
@@ -155,5 +151,5 @@ Upon creation the handler takes in an array of handlers as an option, with each 
     // First the data is stored in StashFileSystem, and then it is put into StashApc.
     $stash->store($data);
 
-    // As with the store, function, the data is first removed from StashFileSystem before being clear from StashApc.
+    // As with the store, function, the data is first removed from StashFileSystem before being cleared from StashApc.
     $stash->clear();

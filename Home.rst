@@ -43,16 +43,16 @@ Features
 Installing
 ==========
 
-Stash can be downloaded from `Github <https://github.com/tedivm/Stash>`_ or through `tedivm's pear channel <http://pear.tedivm.com/>`_. Please note that only Unix based systems are supported at this time due to a windows bug we are still trying to squish.
+Stash can be downloaded from `Github <https://github.com/tedivm/Stash>`_ or through `tedivm's pear channel <http://pear.tedivm.com/>`_. 
 
 Example
 =======
 
-As its core Stash is basically a key-value store. You place things into the cache using a key and you retrieve them using the same key. 
+Stash functions as a key-value store: you place things into the cache using a key and you retrieve them using the same key. 
 
 .. code-block:: php
 
-    $stash = StashBox::getCache('fruit');
+    $stash = $pool->getCache('fruit');
     $stash->store('apple');
 
     var_dump($stash->get());
@@ -62,11 +62,11 @@ This works between requests as well.
 
 .. code-block:: php
     // First Request
-    $stash = StashBox::getCache('fruit');
+    $stash = $pool->getCache('fruit');
     $stash->store('apple');
 
     // Second Request
-    $stash = StashBox::getCache('fruit');
+    $stash = $pool->getCache('fruit');
     var_dump($stash->get());
     // string(6) "apples"
 
@@ -76,8 +76,10 @@ Putting this together with the rest of Stash allows for a simple yet flexible wa
 
     function getUserInfo($userId)
     {
-        // Get a Stash object from the StashBox class.
-        $stash = StashBox::getCache('user', $userId, 'info');
+        $pool = $this->cachePool;   
+
+        // Get a Stash object from the cache pool.
+        $stash = $pool->getCache('user', $userId, 'info');
 
         // Get the date from it, if any happens to be there.
         $userInfo = $stash->get();
@@ -101,12 +103,12 @@ Putting this together with the rest of Stash allows for a simple yet flexible wa
         saveDataToDatabase($userId, $infoArray);
 
         // Clear out the now invalid data from the cache.
-        StashBox::('user', $userId', 'info');
+        $this->cachePool->clear('user', $userId, 'info');
     }
 
-For an in-depth look at using Stash take a look at our `Usage <Usage.rst>`_ and `Handlers <Handlers.rst>`_.
+For an in-depth look at using Stash take a look at `Usage <Usage.rst>`_ and `Handlers <Handlers.rst>`_.
 
 License
 =======
 
-Stash is licensed under the New BSD License. This means you are free to use it in any of your projects, proprietary or open source. While you aren't obligated to contribute back, any bug fixes or enhancements are appreciated- besides, getting your code into the main branch is so much easier than maintaining your own fork.
+Stash is licensed under the New BSD License. This means you are free to use it in any of your projects, proprietary or open source. While you aren't obligated to contribute back, any bug fixes or enhancements are appreciated -- besides, getting your code into the main branch is so much easier than maintaining your own fork.
