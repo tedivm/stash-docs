@@ -1,6 +1,7 @@
 labels toc
 ==========
   * `Home <Home.rst>`_
+
     * `Features <Home.rst#Features>`_
     * `Installing <Home.rst#Installing>`_
     * `Example <Home.rst#Example>`_
