@@ -1,29 +1,28 @@
 labels toc
 ==========
-  * [http://code.google.com/p/stash/#Features Features]
-  * [http://code.google.com/p/stash/#Installing Installing]
-  * [http://code.google.com/p/stash/#Example Example]  
-  * [http://code.google.com/p/stash/#License License]
-  * [http://code.google.com/p/stash/wiki/Usage#Usage Usage]
-    * [http://code.google.com/p/stash/wiki/Usage#Quick_Example Quick Example]
-    * [http://code.google.com/p/stash/wiki/Usage#Setting_the_Autoloader Setting the Autoload]
-    * [http://code.google.com/p/stash/wiki/Usage#Creating_Stash_Objects Creating Stash Objects]
-    * [http://code.google.com/p/stash/wiki/Usage#Identifying_Stored_Data_Using_Keys Identifying Stored Data Using Keys]
-    * [http://code.google.com/p/stash/wiki/Usage#Storing_and_Retrieving_Data Storing and Retrieving Data]
-    * [http://code.google.com/p/stash/wiki/Usage#Stampede_Protection Stampede Protection]
-      * [http://code.google.com/p/stash/wiki/Usage#Invalidation_Methods Invalidation Methods]
-        * [http://code.google.com/p/stash/wiki/Usage#STASH_SP_NONE STASH_SP_NONE]
-        * [http://code.google.com/p/stash/wiki/Usage#STASH_SP_PRECOMPUTE STASH_SP_PRECOMPUTE]
-        * [http://code.google.com/p/stash/wiki/Usage#STASH_SP_OLD STASH_SP_OLD]
-        * [http://code.google.com/p/stash/wiki/Usage#STASH_SP_VALUE STASH_SP_VALUE]
-        * [http://code.google.com/p/stash/wiki/Usage#STASH_SP_SLEEP STASH_SP_SLEEP]
-    * [http://code.google.com/p/stash/wiki/Usage#Clearing_Data Clearing Data]
-    * [http://code.google.com/p/stash/wiki/Usage#Purging_Data Purging Data]
-  * [http://code.google.com/p/stash/wiki/Handlers#Handlers Handlers]
-    * [http://code.google.com/p/stash/wiki/Handlers#FileSystem FileSystem]
-    * [http://code.google.com/p/stash/wiki/Handlers#Sqlite Sqlite]
-    * [http://code.google.com/p/stash/wiki/Handlers#APC APC]
-    * [http://code.google.com/p/stash/wiki/Handlers#Xcache_(experimental) Xcache]
-    * [http://code.google.com/p/stash/wiki/Handlers#Memcached Memcached]
-    * [http://code.google.com/p/stash/wiki/Handlers#MulitiHandler MuliHandler]
-  * [http://code.google.com/p/stash/wiki/Roadmap Roadmap]
+  * `Home <Home.rst>`_
+
+    * `Features <Home.rst#Features>`_
+    * `Installing <Home.rst#Installing>`_
+    * `Example <Home.rst#Example>`_
+    * `License <Home.rst#License>`_
+
+  * `Usage <Usage.rst>`_
+
+    * `Quick Example <Usage.rst#Quick_Example>`_
+    * `Setting the Autoload <Usage.rst#Setting_the_Autoload>`_
+    * `Creating Stash Objects <Usage.rst#Creating_Stash_Objects>`_
+    * `Identifying Stored Data Using Keys <Usage.rst#Identifying_Stored_Data_Using_Keys>`_
+    * `Storing and Retrieving Data <Usage.rst#Storing_and_Retrieving_Data>`_
+    * `Stampede Protection <Usage.rst#Stampede_Protection>`_
+    * `Clearing Data <Usage.rst#Clearing_Data>`_
+    * `Purging Data <Usage.rst#Purging_Data>`_
+
+  * `Handlers <Handlers.rst>`_
+
+    * `Filesystem <Handlers.rst#Filesystem>`_
+    * `Sqlite <Handlers.rst#Sqlite>`_
+    * `APC <Handlers.rst#APC>`_
+    * `Xcache <Handlers.rst#Xcache>`_
+    * `Memcached <Handlers.rst#Memcached>`_
+    * `MultiHandler <Handlers.rst#MultiHandler>`_

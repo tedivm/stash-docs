@@ -1,113 +1,82 @@
-Quick Example
-=============
+Autoloading
+===========
 
-.. code-block:: php
-    // Get a Stash object from the StashBox class.
-    $stash = StashBox::getCache('user', $userId, 'info');
+The Stash library conforms to the PSR-0 autoloading standard. If your project doesn't already use a PSR-0 compliant autoloader, you can simply include the `autoload.php` file at the root of the project to load Stash classes.
 
-    // Get the date from it, if any happens to be there.
-    $userInfo = $stash->get();
-
-    // Check to see if the cache missed, which could mean that it either didn't exist or was stale.
-    if($stash->isMiss())
-    {
-        // Run the relatively expensive code.
-        $userInfo = loadUserInfoFromDatabase($id);
-
-        // Store the expensive code so the next time it doesn't miss.
-        $stash->store($userInfo);
-    }
-
-Setting the Autoloader
-======================
-
-Before using Stash the project should include the Autoloader. Once included there are two options for using it- you can use the *register()* function to load classes on demand _or_ the *loadAll()* function to load each class into the system immediately.
-
-.. code-block:: php
-
-    include('Stash/Autoloader.class.php');
-
-    // Lazy load classes as they're called
-    StashAutoloader::register();
-
-    // Load all classes at once.
-    StashAutoloader::loadAll();
+All of Stash's classes live in the Stash namespace. 
 
 Creating Stash Objects
 ======================
 
-Creating a simple Stash object is fairly simple, although initializing it can take a couple of steps.
+Creating a basic Stash object is simple:
 
 .. code-block:: php
 
-    $stash = new Stash();
+    $stash = new Stash\Cache();
 
     // Set the "key", which is the path the Stash object points to.
-    $stash->setupKey('path', 'to', 'data')
+    $stash->setupKey('path/to/data');
 
+This will create a cache object with no cross request storage, meaning the data will only be cached for the lifetime of that one script or request. In order to store cache results across requests, we need a handler. Each handler interfaces with a specific form of persistent storage.
 
-This leaves Stash without any cross request storage, meaning the data will only be cached for the lifetime of that one script or request. Each Stash object needs a handler for persistent storage, which can be injected into the class during construction.
 
 .. code-block:: php
 
-    // Create Handler- this step is optional if you only need to store items for the lifetime of the script
-    $stashFileSystem = new StashFileSystem();
+    // Create Handler with default options
+    $stashFileSystem = new Stash\Handler\FileSystem();
 
-    // Create the actual Stash, injecting the backend.
-    $stash = new Stash($stashFileSystem);
+    // Create the actual cache object, injecting the backend
+    $stash = new Stash\Cache($stashFileSystem);
 
     // Set the "key", which is the path the Stash object points to. This will be discussed in depth later,
     // but for now just know it's an identifier.
-    $stash->setupKey('path', 'to', 'data')
+    $stash->setupKey('path/to/data');
 
-
-Handlers are reusable, since the initialization of a handler can have overhead (database connections, file handlers, etc). To make this easier two wrapper are provided- *StashBox* and *StashManager*. These classes also encapsulate the "makeKey" process, allowing the whole process to get called through one function.
-
+Each handler object can be used by many different cache objects, so that any initial setup and overhead (database connections, file handlers, etc.) can be done only once per request. In order to simplify this process, the Pool class automates the process of handler creation to ensure that all cache objects use the same handlers.
 .. code-block:: php
 
-    // Path defaults to an install specific temp folder
-    $stashFileSystem = new StashFileSystem();
+    // Create Handler with default options
+    $stashFileSystem = new Stash\Handler\FileSystem();
 
-    StashBox::setHandler($stashFileSystem);
-    $stash = StashBox::getCache();
+    // Create pool and inject handler
+    $pool = new Stash\Pool();
+    $pool->setHandler($stashFileSystem);
 
+    // Retrieve a single cache item
+    $pool->getCache('path/to/data');
 
-    //For systems with multiple cache pools the StashManager wrapper can be used.
-    StashManager::setHandler('Pool Name', $stashFileSystem);
-    $stash = StashBox::getCache('Pool Name');
-
+    // Retrieve an iterator containing multiple cache items
+    $pool->getCacheIterator('path/to/data', 'path/to/more/data');
 
 Identifying Stored Data Using Keys
 ==================================
 
-Stash identifies items in the cache pool using keys. Keys are simple a a series of strings or numbers defined by each individual project.
+Stash identifies items in the cache pool using keys. Keys are simple: a set of strings, delimited by the '/' character.
 
 The best way to think about keys is to think of them like a filesystem. Filesystems have different folders that contain more folders and files. Folders can be nested to virtually unlimited levels, allowing files to be organized according to various criteria. Stash uses the same principal- different nodes can contain both data and more nodes, allowing developers to group data together just like they would files. This makes clearing groups of items in the cache as simple as clearing their parent node, just like deleting a directory would erase all the files underneath.
 
 A project that had different models, each identified by an id and a type, might have it's keys for those models start with models/type/id, with individual pieces of data stored in keys inside of those. If the user "bob" had the id "32", the path to his data in the cache would be "models/users/32".
 
-Any functions that require a kay can accept in one of two ways. Each piece of the key can be passed as it's own argument, or they can be placed in an array which is then passed as a single argument.
+Stash methods that accept keys can accept them in two forms: as a slash-delimited string, or as a series of arguments.
 
 .. code-block:: php
 
-    // Pass the key as a series of arguments
-    $stash = StashBox::getCache('models', 'users', 32, 'info');
+    // Pass the key as a string
+    $stash = $pool->getCache('models/users/32/info');
 
-    // or pass the key using an array.
-    $key = array('models', 'users', 32, 'info');
-    $stash = StashBox::getCache($key);
+    // Pass the key as a series of arguments
+    $stash = $pool->getCache('models', 'users', $id, 'info');
 
 Storing and Retrieving Data
 ===========================
 
-The basic function of Stash is to store data so it can be retrieved later. This is meant to be as simple as possible, with three functions doing the bulk of the work.
+Storing data in Stash (and retrieving it in future requests) is easy. Three functions do the bulk of the work: 
 
-* *get()* - This function returns data that was previously stored, or null if nothing stored. Since it is possible to store null values it is very important not to rely on a null return to check for a cache miss.
-* *isMiss()* - If the data requested doesn't exist or is stale this function returns true.
-* *lock()* - When called stampede protection is enabled.
-* *store($data, $expiration = null)* - This places the passed data into the persistent storage.
+* *get()* - Returns data that was previously stored, or null if nothing stored. (Since it is possible to store null values it is very important not to rely on a null return to check for a cache miss.)
+* *isMiss()* - Returns true if no data is stored or the data is stale; returns false if fresh data is present.
+* *store($data, $expiration = null)* - Stores the specified data in the handler's persistent storage.
 
-These three functions work to create simple "cache blocks"- pieces of code that attempt to get the data, check for a miss and then store the data after it is calculated.
+Using these three functions, you can create simple cache blocks -- pieces of code where you fetch data, check to see if it's fresh, and then regenerate and store the data if it was stale or absent.
 
 .. code-block:: php
 
@@ -118,17 +87,16 @@ These three functions work to create simple "cache blocks"- pieces of code that 
     if($stash->isMiss())
     {
         // Run intensive code
-        // This code takes a long time.
+        $data = codeThatTakesALongTime();
 
         // Store data.
         $stash->store($data);
     }
 
     // Continue as normal.
+    return $data;
 
-The *store* function can take the expiration as an additional argument. This expiration can be a time, in seconds, that the cache should live or it can be a DateTime object that represents the time the cached item should expire. This argument can be negative, which will result in an immediately stale cache- this is primarily for testing.
-
-In many cases this can be ignored, such as when there are calls to the Stash->clear() function whenever stored data is changed.
+The *store* function can take the expiration as an additional argument. This expiration can be a time, in seconds, that the cache should live or it can be a DateTime object that represents the time the cached item should expire. (This argument can be negative, which will result in an immediately stale cache.) 
 
 .. code-block:: php
 
@@ -153,22 +121,17 @@ In many cases this can be ignored, such as when there are calls to the Stash->cl
         $stash->store($data, $expiration);
     }
 
-It is important to note that the expiration- whether a date, age or the default time- is only the maximum possible age of the item, and that it is not at all guaranteed to stay in the cache for that long. In order to distribute cache misses the Stash system tries to vary the expiration time for items by shortening a random amount. Additionally some handlers have size restrictions or other criteria for removing items besides just time. However, the cache system will never consider an item fresh if it is picked up after the passed expiration.
+The expiration sets the *maximum* time a cached object can remain fresh. In order to distribute cache misses, the Stash system tries to vary the expiration time for items by shortening a random amount; some handlers may also have size restrictions or other criteria for removing items early, and items can be cleared manually before they expire. Items will never be reported as fresh *after* the expiration time passes, however.
 
 Stampede Protection
 ===================
 
-A stampede is when a cache miss causes multiple requests to attempt a rebuild of the cached item, in turn slowing down the system. Stash can prevent this behavior using a variety of invalidation techniques.
-
-Using Stampede protection is relatively straightforward. Expanding our earlier example by adding a new argument to the "get" function and a call to the "lock" function tells Stash everything it needs to know.
+Sometimes, when a cache item expires, multiple requests might come in for that item before it can be regenerated. If the process of generating it is very slow or expensive, these requests might stack up, each slowing down the system enough that previous requests can't complete -- this is a cache stampede. Stash has a stampede prevention function that's fairly easy to use:
 
 .. code-block:: php
 
-    // Get a Stash object from the StashBox class.
-    $stash = StashBox::getCache('user', $userId, 'info');
-
     // Get the data from the cache using the "STASH_SP_OLD" technique for dealing with stampedes
-    $userInfo = $stash->get(STASH_SP_OLD);
+    $userInfo = $stash->get(Stash\Cache::STASH_SP_OLD);
 
     // Check to see if the cache missed, which could mean that it either didn't exist or was stale.
     if($stash->isMiss())
@@ -220,7 +183,7 @@ When this method is used Stash->get takes one additional argument, the amount of
 STASH_SP_OLD
 ------------
 
-When this method is enabled and a different instance has called the lock function Stash will return the existing value in the cache even if it is stale.
+When this method is enabled and a different instance has called the lock function, Stash will return the existing value in the cache even if it is stale.
 
 .. code-block:: php
 
@@ -259,54 +222,46 @@ When this method is used Stash->get takes two additional arguments, the time (in
 Clearing Data
 =============
 
-Clearing data is just as simple as getting it. As with the *get* and *store* functions, the *clear* function takes a set key- if one isn't set then the entire cache is cleared.
+Clearing data is just as simple as getting it. As with the *get* and *store* functions, the *clear* function takes a set key - if one isn't set then the entire cache is cleared. Note that clearing a key will clear that key *and any keys beneath it in the hierarchy.*
 
 .. code-block:: php
 
-    $stashFileSystem = new StashFileSystem();
-
     // Clearing a key.
-    $stash = new Stash($stashFileSystem);
-    $stash->setupKey('path', 'to', 'data')
+    $stash = new Stash\Cache($handler);
+    $stash->setupKey('path/to/data/specific/123')
+    $stash->clear();
+
+    // Clearing a key with subkeys
+    $stash = new Stash\Cache($handler);
+    $stash->setupKey('path/to/data/general') // clears 'path/to/data/*'
     $stash->clear();
 
     // Clearing everything.
-    $stash = new Stash($stashFileSystem);
+    $stash = new Stash($handler);
     $stash->clear();
 
-
-The *StashBox* and *StashManager* classes also have their own clearing mechanisms meant to make things easier.
+The Pool class can also clear the entire cache:
 
 .. code-block:: php
 
-    // Clear a path using StashBox
-    StashBox::clearCache('path', 'to', 'data');
-    // Clear the entire StashBox cache.
-    StashBox::clearCache();
-
-    // Clear a path in the "Main Cache" using the StashManager class.
-    StashManager::clearCache('Main Cache', 'path', 'to', 'data');
-    // Clear the entire "Main Cache".
-    StashManager::clearCache('Main Cache');
+    $pool->flush();
 
 
 Purging Data
 ============
 
-The *purge* function removes stale data from the cache backends while leaving current data intact. Depending on the size of the cache and the specific handlers in use this can take some time, so it is best called as part of a separate maintenance task or as part of a cron job.
+The *purge* function removes stale data from the cache backends while leaving current data intact. Depending on the size of the cache and the specific handlers in use this can take some time, so it is best called as part of a separate maintenance task or as part of a cron job. 
 
 .. code-block:: php
 
-    $stashFileSystem = new StashFileSystem();
+    $stashFileSystem = new Stash\Handler\FileSystem();
 
     // Purge the FileSystem
-    $stash = new Stash($stashFileSystem);
+    $stash = new Stash\Cache($stashFileSystem);
     $stash->purge();
 
-    // The StashBox and StashManager classes also have their own clearing mechanisms meant to make things easier.
+The Pool class can also purge the cache:
 
-    // Purge the StashBox cache.
-    StashBox::purge();
+.. code-block:: php
 
-    // Purge the "Main Cache".
-    StashManager::purge('Main Cache');
+    $pool->purge();
