@@ -110,7 +110,7 @@ Putting this together with the rest of Stash allows for a simple yet flexible wa
         $this->cachePool->clear('user', $userId, 'info');
     }
 
-For an in-depth look at using Stash take a look at `Usage <Usage.rst>`_ and `Handlers <Handlers.rst>`_.
+For an in-depth look at using Stash take a look at :doc:`Usage <Usage>` and :doc:`Handlers <Handlers>`.
 
 License
 =======
