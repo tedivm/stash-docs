@@ -4,7 +4,7 @@ Stash Documentation
 .. toctree::
    :maxdepth: 2
 
-   Index
+   index
    Usage
    Handlers
 
