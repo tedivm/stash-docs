@@ -17,6 +17,8 @@ The StashFileSystem handler stores each item in a php script, as native php. Uns
     The unix permission for new directories. Defaults to 0770.
 
 .. code-block:: php
+
+    <?php
     // Uses a install specific default path if none is passed.
     $handler = new StashFileSystem();
 
@@ -45,6 +47,7 @@ An alternative file based caching backend is the StashSqlite handler. It can use
 
 .. code-block:: php
 
+    <?php
     // StashSqlite
 
     // Uses a install specific default path if none is passed.
@@ -67,6 +70,7 @@ The APC extension is one of the most well known php caching extensions, allowing
 
 .. code-block:: php
 
+    <?php
     // Uses a install specific default path if none is passed.
     $handler = new StashApc();
 
@@ -98,6 +102,7 @@ Memcached is a client/server application which allows machines to pool their mem
 
 .. code-block:: php
 
+    <?php
     // One Server
     $handler = new Stash\Handler\Memcache(array('servers' => array('127.0.0.1', '11211')));
 
@@ -133,6 +138,7 @@ Upon creation the handler takes in an array of handlers as an option, with each 
 
 .. code-block:: php
 
+    <?php
     $subHandlers = array();
     $subHandlers[] = new Stash\Handler\Apc();
     $subHandlers[] = new Stash\Handler\FileSystem();

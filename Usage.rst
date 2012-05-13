@@ -12,6 +12,7 @@ Creating a basic Stash object is simple:
 
 .. code-block:: php
 
+    <?php
     $stash = new Stash\Cache();
 
     // Set the "key", which is the path the Stash object points to.
@@ -22,6 +23,7 @@ This will create a cache object with no cross request storage, meaning the data 
 
 .. code-block:: php
 
+    <?php
     // Create Handler with default options
     $stashFileSystem = new Stash\Handler\FileSystem();
 
@@ -33,8 +35,10 @@ This will create a cache object with no cross request storage, meaning the data 
     $stash->setupKey('path/to/data');
 
 Each handler object can be used by many different cache objects, so that any initial setup and overhead (database connections, file handlers, etc.) can be done only once per request. In order to simplify this process, the Pool class automates the process of handler creation to ensure that all cache objects use the same handlers.
+
 .. code-block:: php
 
+    <?php
     // Create Handler with default options
     $stashFileSystem = new Stash\Handler\FileSystem();
 
@@ -61,6 +65,7 @@ Stash methods that accept keys can accept them in two forms: as a slash-delimite
 
 .. code-block:: php
 
+    <?php
     // Pass the key as a string
     $stash = $pool->getCache('models/users/32/info');
 
@@ -80,6 +85,7 @@ Using these three functions, you can create simple cache blocks -- pieces of cod
 
 .. code-block:: php
 
+    <?php
     // Attempt to "get"
     $data = $stash->get();
 
@@ -100,6 +106,7 @@ The *store* function can take the expiration as an additional argument. This exp
 
 .. code-block:: php
 
+    <?php
     // Using an age.
     $data = $stash->get();
     if($stash->isMiss())
@@ -130,6 +137,7 @@ Sometimes, when a cache item expires, multiple requests might come in for that i
 
 .. code-block:: php
 
+    <?php
     // Get the data from the cache using the "STASH_SP_OLD" technique for dealing with stampedes
     $userInfo = $stash->get(Stash\Cache::STASH_SP_OLD);
 
@@ -160,6 +168,7 @@ By default Stash simply returns true for the "isMiss" function whenever the cach
 
 .. code-block:: php
 
+    <?php
     // preserves backward compatibility.
     $stash->get();
 
@@ -175,8 +184,10 @@ STASH_SP_PRECOMPUTE
 The personal favorite method of the Stash developers, this method causes Stash to recalculate the cached item _before_ it misses.
 
 When this method is used Stash->get takes one additional argument, the amount of time (in seconds) before the expiration when it should regenerate the cache.
+
 .. code-block:: php
 
+    <?php
     // five minutes before the cache expires one instance will return a miss, causing the cache to regenerate.
     $stash->get(STASH_SP_PRECOMPUTE, 300);
 
@@ -187,6 +198,7 @@ When this method is enabled and a different instance has called the lock functio
 
 .. code-block:: php
 
+    <?php
     $stash->get(STASH_SP_OLD);
 
     // return false if another Stash instance is rebuilding the cached item even though the returned item is stale
@@ -201,6 +213,7 @@ This method takes one additional argument, the value to be returned while stampe
 
 .. code-block:: php
 
+    <?php
     $stash->get(STASH_SP_VALUE, 'Return this if stampede protection stops a miss');
 
     // returns true only if the value is stale and no other processes have stated rebuilding the value.
@@ -215,6 +228,7 @@ When this method is used Stash->get takes two additional arguments, the time (in
 
 .. code-block:: php
 
+    <?php
     // sleeps for .5 seconds, reattempts to load the cache,
     // then sleeps again for another .5 seconds before making it's last attempt
     $stash->get(STASH_SP_SLEEP, 500, 2);
@@ -226,6 +240,7 @@ Clearing data is just as simple as getting it. As with the *get* and *store* fun
 
 .. code-block:: php
 
+    <?php
     // Clearing a key.
     $stash = new Stash\Cache($handler);
     $stash->setupKey('path/to/data/specific/123')
@@ -244,6 +259,7 @@ The Pool class can also clear the entire cache:
 
 .. code-block:: php
 
+    <?php
     $pool->flush();
 
 
@@ -254,6 +270,7 @@ The *purge* function removes stale data from the cache backends while leaving cu
 
 .. code-block:: php
 
+    <?php
     $stashFileSystem = new Stash\Handler\FileSystem();
 
     // Purge the FileSystem
@@ -264,4 +281,5 @@ The Pool class can also purge the cache:
 
 .. code-block:: php
 
+    <?php
     $pool->purge();

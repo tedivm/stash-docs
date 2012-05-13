@@ -52,6 +52,7 @@ Stash functions as a key-value store: you place things into the cache using a ke
 
 .. code-block:: php
 
+    <?php
     $stash = $pool->getCache('fruit');
     $stash->store('apple');
 
@@ -61,6 +62,8 @@ Stash functions as a key-value store: you place things into the cache using a ke
 This works between requests as well.
 
 .. code-block:: php
+
+    <?php
     // First Request
     $stash = $pool->getCache('fruit');
     $stash->store('apple');
@@ -74,6 +77,7 @@ Putting this together with the rest of Stash allows for a simple yet flexible wa
 
 .. code-block:: php
 
+    <?php
     function getUserInfo($userId)
     {
         $pool = $this->cachePool;   
