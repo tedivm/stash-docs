@@ -2,9 +2,6 @@
 Stash
 ===========================
 
-Every Project Needs A Stash
-===========================
-
 Stash makes it easy to speed up your code by caching the results of expensive functions or code. Certain actions, like database queries or calls to external APIs, take a lot of time to run but tend to have the same results over short periods of time. This makes it much more efficient to store the results and call them back up later.
 
 Features
