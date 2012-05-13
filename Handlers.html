@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Handlers &mdash; Stash 0.9.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Stash 0.9.5 documentation" href="index.html" />
+    <link rel="prev" title="Usage" href="Usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="handlers">
+<h1>Handlers<a class="headerlink" href="#handlers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="filesystem">
+<h2>FileSystem<a class="headerlink" href="#filesystem" title="Permalink to this headline">¶</a></h2>
+<p>The StashFileSystem handler stores each item in a php script, as native php. Unsurprisingly this is the fastest backend for small to medium sites, as it is just as good as simply including a configuration file (and can even get stored in opcode caches). The downside is that clear and purge actions- those which have to recursively scan the cache&#8217;s filesystem- take extraordinarily long compared to the other handlers.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>dirSplit</em></dt>
+<dd><p class="first last">Defines how many subdirectories to divide each key into. Larger cache pools run the risk of hitting file system limits on how many files can exist in a directory, so they need to divide the data up. Larger numbers can have performance issues, so testing should be done.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>path</em></dt>
+<dd><p class="first last">This optional parameter points the handler to the directory it should use for storage. If it isn&#8217;t passed then an install specific directory is created inside the systems temporary directory.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>filePermissions</em></dt>
+<dd><p class="first last">The unix permission for new files. Defaults to 0660.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>dirPermissions</em></dt>
+<dd><p class="first last">The unix permission for new directories. Defaults to 0770.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Uses a install specific default path if none is passed.</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StashFileSystem</span><span class="p">();</span>
+
+<span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/tmp/myCache/&#39;</span><span class="p">);</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\FileSystem</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sqlite">
+<h2>Sqlite<a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h2>
+<p>An alternative file based caching backend is the StashSqlite handler. It can use either the PDO or native sqlite extensions, and can use either sqlite2 or sqlite3.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>extension</em></dt>
+<dd><p class="first last">Either &#8220;pdo&#8221; or &#8220;sqlite&#8221;. By default PDO is used and it falls back to sqlite, but if specified then only the passed extension will be used and no fallback action will be taken.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>version</em></dt>
+<dd><p class="first last">This takes either 2 or 3, with the default behavior being to use 3 and fallback to 2 if it isn&#8217;t available.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>nesting</em></dt>
+<dd><p class="first last">Defaults to 0, this option defines how many levels of keys get their own sqlite file. A value of 0 uses one file, while a value of 1 will use one file for each unique first key and a value of two will use both the first and second key for creating sqlite files. For larger sites this can improve performance by spreading locks to multiple files, but for most sites this should be left at it&#8217;s default.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>path</em></dt>
+<dd><p class="first last">This optional parameter points the handler to the directory it should use for storage. If it isn&#8217;t passed then an install specific directory is created inside the systems temporary directory.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>filePermissions</em></dt>
+<dd><p class="first last">The unix permission for new files. Defaults to 0660.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>dirPermissions</em></dt>
+<dd><p class="first last">The unix permission for new directories. Defaults to 0770.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// StashSqlite</span>
+
+<span class="c1">// Uses a install specific default path if none is passed.</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Sqlite</span><span class="p">();</span>
+
+<span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/tmp/myCache/&#39;</span><span class="p">);</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Sqlite</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="apc">
+<h2>APC<a class="headerlink" href="#apc" title="Permalink to this headline">¶</a></h2>
+<p>The APC extension is one of the most well known php caching extensions, allowing for both php opcode caching and memory storage of php values. The StashApc handler uses its userspace libraries to store data directly in memory for scripts to use.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>ttl</em></dt>
+<dd><p class="first last">This is the maximum time an item can live in memory. This is to keep memory pruned to small amounts, particularly when there is another handler backing this one.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>namespace</em></dt>
+<dd><p class="first last">This stores the data under a namespace in case other scripts are using APC to store data as well. If this isn&#8217;t passed the handler creates an install specific namespace, so this is really only needed if two scripts need their own caches but are using the same Stash install.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Uses a install specific default path if none is passed.</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StashApc</span><span class="p">();</span>
+
+<span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ttl&#39;</span> <span class="o">=&gt;</span> <span class="mi">3600</span><span class="p">,</span> <span class="s1">&#39;namespace&#39;</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="k">__file__</span><span class="p">));</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Apc</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xcache-experimental">
+<h2>Xcache (experimental)<a class="headerlink" href="#xcache-experimental" title="Permalink to this headline">¶</a></h2>
+<p>The Xcache handler is currently experimental.</p>
+<p>Like the APC handler, the Xcache handler stores data directly in memory for use by other scripts.</p>
+</div>
+<div class="section" id="memcached">
+<h2>Memcached<a class="headerlink" href="#memcached" title="Permalink to this headline">¶</a></h2>
+<p>Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The StashMemcached is a feature complete handler for Memcached, complete with  hierarchal caching.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>servers</em></dt>
+<dd><p class="first last">An array of memcached servers, hosts and (optionally) weights for memcache. Each server is represented by an array- array(server, port, weight). If no servers are passed then the default of 127.0.0.1:11211 will be used.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>extension</em></dt>
+<dd><p class="first last">Which php extension to use, &#8216;memcache&#8217; or &#8216;memcached&#8217;. The default is to use the newer memcached and fallback to memcache if it is not available.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>Options</em></dt>
+<dd><p class="first last">Extension options can be passed to the &#8220;memcached&#8221; handler by adding them to the options array. The memcached extension defined options using contants, ie Memcached::OPT%. By passing in the % portion (&#8216;compression&#8217; for Memcached::OPT_COMPRESSION) and its respective option. Please see the <a class="reference external" href="http://us2.php.net/manual/en/memcached.constants.php">php manual for memcached</a> for the specific options.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// One Server</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Memcache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">)));</span>
+
+
+<span class="c1">// Multiple Servers</span>
+<span class="nv">$servers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+<span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+<span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Memcache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$servers</span><span class="p">));</span>
+
+<span class="c1">// Using memcached options</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mem1.example.net&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">);</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mem2.example.net&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">);</span>
+
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;prefix_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;application_name&#39;</span><span class="p">;</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;libketama_compatible&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache_lookups&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;serializer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span><span class="p">;</span>
+
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Memcache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mulitihandler">
+<h2>MulitiHandler<a class="headerlink" href="#mulitihandler" title="Permalink to this headline">¶</a></h2>
+<p>The StashMultiHandler acts as a wrapper around one or more handlers, allowing different handlers to work together in a single cache.</p>
+<p>Upon creation the handler takes in an array of handlers as an option, with each handler after the first having a lower and lower priority. When get requests are run the handlers are checked by highest priority (first, second, third, etc) until the item is found. When an item is found in the cache the handlers that previously missed it are repopulated so they will hit on it next time. The store, clear and purge operations are run in reverse order to prevent stale data from being placed back into a cleared subhandler.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$subHandlers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$subHandlers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Apc</span><span class="p">();</span>
+<span class="nv">$subHandlers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\FileSystem</span><span class="p">();</span>
+<span class="nv">$subHandlers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\Memcached</span><span class="p">();</span>
+
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;handlers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$subHandlers</span><span class="p">);</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Handler\MultiHandler</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+
+<span class="nv">$stash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Cache</span><span class="p">(</span><span class="nv">$handler</span><span class="p">);</span>
+<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">makeKey</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+
+<span class="c1">// First it checks StashApc. If that fails it checks StashFileSystem. If that succeeds it stores the returned value</span>
+<span class="c1">// from StashFileSystem into StashApc and then returns the value.</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// First the data is stored in StashFileSystem, and then it is put into StashApc.</span>
+<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+<span class="c1">// As with the store, function, the data is first removed from StashFileSystem before being cleared from StashApc.</span>
+<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="Contents.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#filesystem">FileSystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sqlite">Sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#apc">APC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xcache-experimental">Xcache (experimental)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memcached">Memcached</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mulitihandler">MulitiHandler</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Handlers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Usage.html" title="Usage"
+             >previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Robert Hafner.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
