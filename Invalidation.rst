@@ -11,22 +11,24 @@ Sometimes, when a cache item expires, multiple requests might come in for that i
 .. code-block:: php
 
     <?php
+	$item = $pool->getItem('Test');
+
     // Get the data from the cache using the "STASH_SP_OLD" technique for dealing with stampedes
-    $userInfo = $stash->get(Stash\Cache::STASH_SP_OLD);
+    $userInfo = $item->get(Stash\Cache::STASH_SP_OLD);
 
     // Check to see if the cache missed, which could mean that it either didn't exist or was stale.
-    if($stash->isMiss())
+    if($item->isMiss())
     {
         // Mark this instance as the one regenerating the cache. Because our protection method is
         // STASH_SP_OLD other Stash instances will use the old value and count it as a hit.
-        $stash->lock();
+        $item->lock();
 
         // Run the relatively expensive code.
         $userInfo = loadUserInfoFromDatabase($id);
 
         // Store the expensive code so the next time it doesn't miss. The store function marks the
         // stampede as over for now, so other Stash items will begin working as normal.
-        $stash->store($userInfo);
+        $item->store($userInfo);
     }
 
 Invalidation Methods
@@ -43,13 +45,13 @@ By default Stash simply returns true for the "isMiss" function whenever the cach
 
     <?php
     // preserves backward compatibility.
-    $stash->get();
+    $item->get();
 
     // recommended if this method is explicitly wanted as the default value may change in the future.
-    $stash->get(STASH_SP_NONE);
+    $item->get(STASH_SP_NONE);
 
     // returns false if the item is missing or expired, no exceptions.
-    $stash->isMiss();
+    $item->isMiss();
 
 STASH_SP_PRECOMPUTE
 -------------------
@@ -62,7 +64,7 @@ When this method is used Stash->get takes one additional argument, the amount of
 
     <?php
     // five minutes before the cache expires one instance will return a miss, causing the cache to regenerate.
-    $stash->get(STASH_SP_PRECOMPUTE, 300);
+    $item->get(STASH_SP_PRECOMPUTE, 300);
 
 STASH_SP_OLD
 ------------
@@ -72,10 +74,10 @@ When this method is enabled and a different instance has called the lock functio
 .. code-block:: php
 
     <?php
-    $stash->get(STASH_SP_OLD);
+    $item->get(STASH_SP_OLD);
 
     // return false if another Stash instance is rebuilding the cached item even though the returned item is stale
-    $stash->isMiss();
+    $item->isMiss();
 
 STASH_SP_VALUE
 --------------
@@ -87,10 +89,10 @@ This method takes one additional argument, the value to be returned while stampe
 .. code-block:: php
 
     <?php
-    $stash->get(STASH_SP_VALUE, 'Return this if stampede protection stops a miss');
+    $item->get(STASH_SP_VALUE, 'Return this if stampede protection stops a miss');
 
     // returns true only if the value is stale and no other processes have stated rebuilding the value.
-    $stash->isMiss();
+    $item->isMiss();
 
 STASH_SP_SLEEP
 --------------
@@ -104,5 +106,5 @@ When this method is used Stash->get takes two additional arguments, the time (in
     <?php
     // sleeps for .5 seconds, reattempts to load the cache,
     // then sleeps again for another .5 seconds before making it's last attempt
-    $stash->get(STASH_SP_SLEEP, 500, 2);
+    $item->get(STASH_SP_SLEEP, 500, 2);
 

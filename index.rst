@@ -12,10 +12,10 @@ Stash functions as a key-value store: you place things into the cache using a ke
 .. code-block:: php
 
     <?php
-    $stash = $pool->getCache('fruit');
-    $stash->store('apple');
+    $item = $pool->getItem('fruit');
+    $item->store('apple');
 
-    var_dump($stash->get());
+    var_dump($item->get());
     // string(6) "apples"
 
 This works between requests as well.
@@ -24,12 +24,12 @@ This works between requests as well.
 
     <?php
     // First Request
-    $stash = $pool->getCache('fruit');
-    $stash->store('apple');
+    $item = $pool->getItem('fruit');
+    $item->store('apple');
 
     // Second Request
-    $stash = $pool->getCache('fruit');
-    var_dump($stash->get());
+    $item = $pool->getItem('fruit');
+    var_dump($item->get());
     // string(6) "apples"
 
 Putting this together with the rest of Stash allows for a simple yet flexible way to speed up scripts by reusing data.
@@ -42,19 +42,19 @@ Putting this together with the rest of Stash allows for a simple yet flexible wa
         $pool = $this->cachePool;   
 
         // Get a Stash object from the cache pool.
-        $stash = $pool->getCache('user', $userId, 'info');
+        $item = $pool->getItem('user', $userId, 'info');
 
         // Get the date from it, if any happens to be there.
-        $userInfo = $stash->get();
+        $userInfo = $item->get();
 
         // Check to see if the cache missed, which could mean that it either didn't exist or was stale.
-        if($stash->isMiss())
+        if($item->isMiss())
         {
             // Run the relatively expensive code.
             $userInfo = loadUserInfoFromDatabase($userId);
 
             // Store the expensive code so the next time it doesn't miss.
-            $stash->store($userInfo);
+            $item->store($userInfo);
         }
 
         return $userInfo;

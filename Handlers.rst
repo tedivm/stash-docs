@@ -129,10 +129,10 @@ Memcached is a client/server application which allows machines to pool their mem
 
 
 
-MulitiHandler
+Composite
 =============
 
-The StashMultiHandler acts as a wrapper around one or more handlers, allowing different handlers to work together in a single cache.
+The Composite handler acts as a wrapper around one or more handlers, allowing different handlers to work together in a single cache.
 
 Upon creation the handler takes in an array of handlers as an option, with each handler after the first having a lower and lower priority. When get requests are run the handlers are checked by highest priority (first, second, third, etc) until the item is found. When an item is found in the cache the handlers that previously missed it are repopulated so they will hit on it next time. The store, clear and purge operations are run in reverse order to prevent stale data from being placed back into a cleared subhandler.
 
@@ -145,17 +145,17 @@ Upon creation the handler takes in an array of handlers as an option, with each 
     $subHandlers[] = new Stash\Handler\Memcached();
 
     $options = array('handlers' => $subHandlers);
-    $handler = new Stash\Handler\MultiHandler($options);
+    $handler = new Stash\Handler\Composite($options);
 
-    $stash = new Stash\Cache($handler);
-    $stash->makeKey('test');
+    $pool = new Stash\Pool($handler);
+    $item = $pool->getItem('test');
 
-    // First it checks StashApc. If that fails it checks StashFileSystem. If that succeeds it stores the returned value
-    // from StashFileSystem into StashApc and then returns the value.
+    // First it checks Apc. If that fails it checks FileSystem. If that succeeds it stores the returned value
+    // from FileSystem into Apc and then returns the value.
     $data = $stash->get();
 
-    // First the data is stored in StashFileSystem, and then it is put into StashApc.
+    // First the data is stored in FileSystem, and then it is put into Apc.
     $stash->store($data);
 
-    // As with the store, function, the data is first removed from StashFileSystem before being cleared from StashApc.
+    // As with the store function, the data is first removed from FileSystem before being cleared from Apc.
     $stash->clear();
