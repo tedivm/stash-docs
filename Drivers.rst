@@ -128,6 +128,34 @@ Memcached is a client/server application which allows machines to pool their mem
     $driver = new Stash\Driver\Memcache($options);
 
 
+Ephemeral
+======
+
+The Ephemeral driver is a special backend that only stores data for the lifetime of the script, whether it be a longer running process or a web request. Items pushed to this driver are stored in the script's running memory. This driver has no options.
+
+When combined with the Composite driver the Ephemeral driver can reduce the load on the underlying caching services by storing returns in memory to reduce duplicate lookups (caching the cache, in a way).
+
+.. code-block:: php
+
+    <?php
+    $pool = new Stash\Pool(new Stash\Driver\Ephemeral())
+    $item = $pool->getItem('test');
+    $item->set('data');
+
+    echo $item->get(); // Outputs "data".
+
+On subsequent requests, however, the data is not there-
+
+.. code-block:: php
+
+    <?php
+    $pool = new Stash\Pool(new Stash\Driver\Ephemeral())
+    $item = $pool->getItem('test');
+
+    var_dump($item->isMiss()); // Outputs "true";
+
+
+
 
 Composite
 =============
