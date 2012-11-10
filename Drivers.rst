@@ -91,7 +91,7 @@ Like the APC driver, the Xcache driver stores data directly in memory for use by
 Memcached
 =========
 
-Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The Memcached driver is a feature complete driver for Memcached, complete with hierarchal caching.
+Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The Memcached driver is a feature complete driver for Memcached, complete with hierarchical caching.
 
 * *servers*
     An array of memcached servers, hosts and (optionally) weights for memcache. Each server is represented by an array- array(server, port, weight). If no servers are passed then the default of 127.0.0.1:11211 will be used.
