@@ -25,14 +25,14 @@ Creating a basic Stash object is simple:
     // Set the "key", which is the path the Stash object points to.
     $item = $stash->getCache('path/to/data');
 
-This will create a cache object with no cross request storage, meaning the data will only be cached for the lifetime of that one script or request. In order to store cache results across requests, we need a handler. Each handler interfaces with a specific form of persistent storage.
+This will create a cache object with no cross request storage, meaning the data will only be cached for the lifetime of that one script or request. In order to store cache results across requests, we need a driver. Each driver interfaces with a specific form of persistent storage.
 
 
 .. code-block:: php
 
     <?php
-    // Create Handler with default options
-    $stashFileSystem = new Stash\Handler\FileSystem();
+    // Create Driver with default options
+    $stashFileSystem = new Stash\Driver\FileSystem();
 
     // Create the actual cache object, injecting the backend
     $stash = new Stash\Pool($stashFileSystem);
@@ -41,15 +41,15 @@ This will create a cache object with no cross request storage, meaning the data 
     // but for now just know it's an identifier.
     $item = $stash->getItem('path/to/data');
 
-Each handler object can be used by many different cache objects, so that any initial setup and overhead (database connections, file handlers, etc.) can be done only once per request. In order to simplify this process, the Pool class automates the process of handler creation to ensure that all cache objects use the same handlers.
+Each driver object can be used by many different cache objects, so that any initial setup and overhead (database connections, file drivers, etc.) can be done only once per request. In order to simplify this process, the Pool class automates the process of driver creation to ensure that all cache objects use the same drivers.
 
 .. code-block:: php
 
     <?php
-    // Create Handler with default options
-    $stashFileSystem = new Stash\Handler\FileSystem();
+    // Create Driver with default options
+    $stashFileSystem = new Stash\Driver\FileSystem();
 
-    // Create pool and inject handler
+    // Create pool and inject driver
     $pool = new Stash\Pool($stashFileSystem);
 
     // Retrieve a single cache item
@@ -84,7 +84,7 @@ Storing data in Stash (and retrieving it in future requests) is easy. Three func
 
 * *get()* - Returns data that was previously stored, or null if nothing stored. (Since it is possible to store null values it is very important not to rely on a null return to check for a cache miss.)
 * *isMiss()* - Returns true if no data is stored or the data is stale; returns false if fresh data is present.
-* *store($data, $expiration = null)* - Stores the specified data in the handler's persistent storage.
+* *store($data, $expiration = null)* - Stores the specified data in the driver's persistent storage.
 
 Using these three functions, you can create simple cache blocks -- pieces of code where you fetch data, check to see if it's fresh, and then regenerate and store the data if it was stale or absent.
 
@@ -141,7 +141,7 @@ The *store* function can take the expiration as an additional argument. This exp
         $stashItem->set($data, $expiration);
     }
 
-The expiration sets the *maximum* time a cached object can remain fresh. In order to distribute cache misses, the Stash system tries to vary the expiration time for items by shortening a random amount; some handlers may also have size restrictions or other criteria for removing items early, and items can be cleared manually before they expire. Items will never be reported as fresh *after* the expiration time passes, however.
+The expiration sets the *maximum* time a cached object can remain fresh. In order to distribute cache misses, the Stash system tries to vary the expiration time for items by shortening a random amount; some drivers may also have size restrictions or other criteria for removing items early, and items can be cleared manually before they expire. Items will never be reported as fresh *after* the expiration time passes, however.
 
 
 Clearing Data
@@ -171,7 +171,7 @@ The Pool class can also empty the entire cache:
 Purging Data
 ============
 
-The *purge* function removes stale data from the cache backends while leaving current data intact. Depending on the size of the cache and the specific handlers in use this can take some time, so it is best called as part of a separate maintenance task or as part of a cron job. 
+The *purge* function removes stale data from the cache backends while leaving current data intact. Depending on the size of the cache and the specific drivers in use this can take some time, so it is best called as part of a separate maintenance task or as part of a cron job. 
 
 .. code-block:: php
 

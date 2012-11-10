@@ -69,7 +69,7 @@ Putting this together with the rest of Stash allows for a simple yet flexible wa
         $this->cachePool->clear('user', $userId, 'info');
     }
 
-For an in-depth look at using Stash take a look at :doc:`Basic Usage <Basics>` and :doc:`Handlers <Handlers>`.
+For an in-depth look at using Stash take a look at :doc:`Basic Usage <Basics>` and :doc:`Drivers <Drivers>`.
 
 Features
 ========
@@ -81,10 +81,10 @@ Features
     Stored items can be nested, like the folders of a filesystem. This allows for related items to be groups together and erased when changed. Storing a user's basic information can be nested 'users/userId/info', allow all of the user's information to be removed quite easily.
 
 **Interchangeable Back Ends**
-    Stash can use a number of different storage engines to persist cache items between requests. Current handlers include Filesystem, APC, Memcached, and Sqlite handlers.
+    Stash can use a number of different storage engines to persist cache items between requests. Current drivers include Filesystem, APC, Memcached, and Sqlite drivers.
 
-**Staggered Handlers**
-    It occasionally makes sense to use multiple backends- for example, you may have a small amount of memory to allot but a large piece of filesystem, in which case using APC and the FileSystem handler together is an ideal solution. Stash allows you to do this using the special backend, MultiHandler, which can take an unlimited number of handlers.
+**Staggered Drivers**
+    It occasionally makes sense to use multiple backends- for example, you may have a small amount of memory to allot but a large piece of filesystem, in which case using APC and the FileSystem driver together is an ideal solution. Stash allows you to do this using the special backend, MultiDriver, which can take an unlimited number of drivers.
 
 **Stampede Protection**
     When a particularly expensive to generate item misses it can cause a chain reaction- the system slows down as it generates the cache, but the longer it takes the more processes that miss and start regenerating it. Stash gives the developer the ability to limit cache regeneration to a single process, as well as an assortment of ways to handle misses.
@@ -99,7 +99,7 @@ Features
     Care is taken to use the fastest possible encoding and decoding functions when storing data, with the preference being to store things in their native data type. Serialization is reserved only for objects or deep multidimensional arrays where breaking down each component individually would be too long.
 
 **Comprehensively Unit Tested**
-    Every handler, class and wrapper is extensively tested. This includes using a variety of datatypes and ranges in order to ensure that the data you put in is the data you get out.
+    Every driver, class and wrapper is extensively tested. This includes using a variety of datatypes and ranges in order to ensure that the data you put in is the data you get out.
 
 License
 =======
