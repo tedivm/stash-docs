@@ -99,7 +99,7 @@ Features
     Care is taken to use the fastest possible encoding and decoding functions when storing data, with the preference being to store things in their native data type. Serialization is reserved only for objects or deep multidimensional arrays where breaking down each component individually would be too long.
 
 **Comprehensively Unit Tested**
-    Every handler, class and wrapper is extensively tested. This includes using a variety of datatypes and ranges in order to ensure that the data you put in is the data you get it.
+    Every handler, class and wrapper is extensively tested. This includes using a variety of datatypes and ranges in order to ensure that the data you put in is the data you get out.
 
 License
 =======
