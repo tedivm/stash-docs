@@ -20,7 +20,7 @@ The Filesystem driver stores each item in a php script, as native php. Unsurpris
 
     <?php
     // Uses a install specific default path if none is passed.
-    $driver = new StashFileSystem();
+    $driver = new Stash\Driver\FileSystem();
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('path' => '/tmp/myCache/');
