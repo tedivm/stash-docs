@@ -5,7 +5,7 @@ Drivers
 FileSystem
 ==========
 
-The StashFileSystem driver stores each item in a php script, as native php. Unsurprisingly this is the fastest backend for small to medium sites, as it is just as good as simply including a configuration file (and can even get stored in opcode caches). The downside is that clear and purge actions- those which have to recursively scan the cache's filesystem- take extraordinarily long compared to the other drivers.
+The Filesystem driver stores each item in a php script, as native php. Unsurprisingly this is the fastest backend for small to medium sites, as it is just as good as simply including a configuration file (and can even get stored in opcode caches). The downside is that clear and purge actions- those which have to recursively scan the cache's filesystem- take extraordinarily long compared to the other drivers.
 
 * *dirSplit*
     Defines how many subdirectories to divide each key into. Larger cache pools run the risk of hitting file system limits on how many files can exist in a directory, so they need to divide the data up. Larger numbers can have performance issues, so testing should be done.
@@ -30,7 +30,7 @@ The StashFileSystem driver stores each item in a php script, as native php. Unsu
 Sqlite
 ======
 
-An alternative file based caching backend is the StashSqlite driver. It can use either the PDO or native sqlite extensions, and can use either sqlite2 or sqlite3. 
+An alternative file based caching backend is the Sqlite driver. It can use either the PDO or native sqlite extensions, and can use either sqlite2 or sqlite3.
 
 * *extension*
     Either "pdo" or "sqlite". By default PDO is used and it falls back to sqlite, but if specified then only the passed extension will be used and no fallback action will be taken.
@@ -72,7 +72,7 @@ The APC extension is one of the most well known php caching extensions, allowing
 
     <?php
     // Uses a install specific default path if none is passed.
-    $driver = new StashApc();
+    $driver = new Stash\Driver\Apc();
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('ttl' => 3600, 'namespace' = md5(__file__));
@@ -91,7 +91,7 @@ Like the APC driver, the Xcache driver stores data directly in memory for use by
 Memcached
 =========
 
-Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The StashMemcached is a feature complete driver for Memcached, complete with  hierarchal caching.
+Memcached is a client/server application which allows machines to pool their memory together as one large memory cache. The Memcached driver is a feature complete driver for Memcached, complete with hierarchal caching.
 
 * *servers*
     An array of memcached servers, hosts and (optionally) weights for memcache. Each server is represented by an array- array(server, port, weight). If no servers are passed then the default of 127.0.0.1:11211 will be used.
