@@ -4,6 +4,61 @@ Basic Usage
 
 Stash is a simple to use library with powerful features.
 
+Autoloading
+===========
+
+The Stash library conforms to the PSR-0 autoloading standard. If your project doesn't already use a PSR-0 compliant autoloader, you can simply include the `autoload.php` file at the root of the project to load Stash classes.
+
+All of Stash's classes live in the Stash namespace. 
+
+
+Creating Stash Objects
+======================
+
+Creating a basic Stash object is simple:
+
+.. code-block:: php
+
+    <?php
+    $stash = new Stash\Pool();
+
+    // Set the "key", which is the path the Stash object points to.
+    $item = $stash->getCache('path/to/data');
+
+This will create a cache object with no cross request storage, meaning the data will only be cached for the lifetime of that one script or request. In order to store cache results across requests, we need a handler. Each handler interfaces with a specific form of persistent storage.
+
+
+.. code-block:: php
+
+    <?php
+    // Create Handler with default options
+    $stashFileSystem = new Stash\Handler\FileSystem();
+
+    // Create the actual cache object, injecting the backend
+    $stash = new Stash\Pool($stashFileSystem);
+
+    // Set the "key", which is the path the Stash object points to. This will be discussed in depth later,
+    // but for now just know it's an identifier.
+    $item = $stash->getItem('path/to/data');
+
+Each handler object can be used by many different cache objects, so that any initial setup and overhead (database connections, file handlers, etc.) can be done only once per request. In order to simplify this process, the Pool class automates the process of handler creation to ensure that all cache objects use the same handlers.
+
+.. code-block:: php
+
+    <?php
+    // Create Handler with default options
+    $stashFileSystem = new Stash\Handler\FileSystem();
+
+    // Create pool and inject handler
+    $pool = new Stash\Pool($stashFileSystem);
+
+    // Retrieve a single cache item
+    $item = $pool->getItem('path/to/data');
+
+    // Retrieve an iterator containing multiple cache items
+    $items = $pool->getItemIterator('path/to/data', 'path/to/more/data');
+
+
 Identifying Items Using Keys
 ==================================
 
@@ -17,10 +72,10 @@ Stash accepts keys in two forms: as a slash-delimited string, or as a series of 
 
     <?php
     // Pass the key as a string
-    $stash = $pool->getCache('models/users/' . $id . '/info');
+    $stashItem = $pool->getItem('models/users/' . $id . '/info');
 
     // Pass the key as a series of arguments
-    $stash = $pool->getCache('models', 'users', $id, 'info');
+    $stashItem = $pool->getItem('models', 'users', $id, 'info');
 
 Storing and Retrieving Data
 ===========================
@@ -38,19 +93,19 @@ Using these three functions, you can create simple cache blocks -- pieces of cod
     <?php
 
     // Get cache item.
-	$stash = $pool->getCache('path/to/item');
+	$stashItem = $pool->getItem('path/to/item');
 	
     // Attempt to "get"
-    $data = $stash->get();
+    $data = $stashItem->get();
 
     // Check to see if the data was a miss.
-    if($stash->isMiss())
+    if($stashItem->isMiss())
     {
         // Run intensive code
         $data = codeThatTakesALongTime();
 
         // Store data.
-        $stash->set($data);
+        $stashItem->set($data);
     }
 
     // Continue as normal.
@@ -63,27 +118,27 @@ The *store* function can take the expiration as an additional argument. This exp
     <?php
 
     // Get cache item.
-	$stash = $pool->getCache('path/to/item');
+	$stashItem = $pool->getItem('path/to/item');
 
     // Using an age.
     $data = $stash->get();
-    if($stash->isMiss())
+    if($stashItem->isMiss())
     {
         $data = expensiveFunction();
         // Cache expires in one hour.
-        $stash->set($data, 3600);
+        $stashItem->set($data, 3600);
     }
 
 
     // Using a DateTime.
-    $data = $stash->get();
-    if($stash->isMiss())
+    $data = $stashItem->get();
+    if($stashItem->isMiss())
     {
         $data = expensiveFunction();
 
         // Cache expires January 21, 2012.
         $expiration = new DateTime('2012-01-21');
-        $stash->set($data, $expiration);
+        $stashItem->set($data, $expiration);
     }
 
 The expiration sets the *maximum* time a cached object can remain fresh. In order to distribute cache misses, the Stash system tries to vary the expiration time for items by shortening a random amount; some handlers may also have size restrictions or other criteria for removing items early, and items can be cleared manually before they expire. Items will never be reported as fresh *after* the expiration time passes, however.
@@ -98,17 +153,14 @@ Clearing data is just as simple as getting it. As with the *get* and *store* fun
 
     <?php
     // Clearing a key.
-    $stash = $pool->getCache('path/to/data/specific/123')
-    $stash->clear();
+    $stashItem = $pool->getCache('path/to/data/specific/123')
+    $stashItem->clear();
 
     // Clearing a key with subkeys
-    $stash = $pool->getCache('path/to/data/general') // clears 'path/to/data/*'
-    $stash->clear();
+    $stashItem = $pool->getCache('path/to/data/general') // clears 'path/to/data/*'
+    $stashItem->clear();
 
-    // Clearing everything.
-    $pool->purge();
-
-The Pool class can also clear the entire cache:
+The Pool class can also empty the entire cache:
 
 .. code-block:: php
 
