@@ -100,9 +100,7 @@ html_theme = 'nature'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {}
-
-
+html_theme_options = {'sidebarwidth': 175}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
