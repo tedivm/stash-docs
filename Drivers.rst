@@ -1,6 +1,6 @@
-========
+=======
 Drivers
-========
+=======
 
 FileSystem
 ==========
@@ -17,12 +17,15 @@ compared to the other drivers.
     run the risk of hitting file system limits on how many files can exist in a
     directory, so they need to divide the data up. Larger numbers can have
     performance issues, so testing should be done.
+
 * *path*
     This optional parameter points the driver to the directory it should use for
     storage. If it isn't passed then an install specific directory is created
     inside the systems temporary directory.
+
 * *filePermissions*
     The unix permission for new files. Defaults to 0660.
+
 * *dirPermissions*
     The unix permission for new directories. Defaults to 0770.
 
@@ -48,9 +51,11 @@ sqlite3.
     Either "pdo" or "sqlite". By default PDO is used and it falls back to
     sqlite, but if specified then only the passed extension will be used and no
     fallback action will be taken.
+
 * *version*
     This takes either 2 or 3, with the default behavior being to use 3 and
     fallback to 2 if it isn't available.
+
 * *nesting*
     Defaults to 0, this option defines how many levels of keys get their own
     sqlite file. A value of 0 uses one file, while a value of 1 will use one
@@ -58,12 +63,15 @@ sqlite3.
     and second key for creating sqlite files. For larger sites this can improve
     performance by spreading locks to multiple files, but for most sites this
     should be left at it's default.
+
 * *path*
     This optional parameter points the driver to the directory it should use for
     storage. If it isn't passed then an install specific directory is created
     inside the systems temporary directory.
+
 * *filePermissions*
     The unix permission for new files. Defaults to 0660.
+
 * *dirPermissions*
     The unix permission for new directories. Defaults to 0770.
 
@@ -92,6 +100,7 @@ to use.
     This is the maximum time an item can live in memory. This is to keep memory
     pruned to small amounts, particularly when there is another driver backing
     this one.
+
 * *namespace*
     This stores the data under a namespace in case other scripts are using APC
     to store data as well. If this isn't passed the driver creates an install
@@ -130,9 +139,11 @@ complete driver for Memcached, complete with hierarchical caching.
     An array of memcached servers, hosts and (optionally) weights for memcache.
     Each server is represented by an array- array(server, port, weight). If no
     servers are passed then the default of 127.0.0.1:11211 will be used.
+
 * *extension*
     Which php extension to use, 'memcache' or 'memcached'. The default is to use
     the newer memcached and fallback to memcache if it is not available.
+
 * *Options*
     Extension options can be passed to the "memcached" driver by adding them to
     the options array. The memcached extension defined options using contants,
@@ -170,7 +181,7 @@ complete driver for Memcached, complete with hierarchical caching.
 
 
 Ephemeral
-======
+=========
 
 The Ephemeral driver is a special backend that only stores data for the lifetime
 of the script, whether it be a longer running process or a web request. Items
@@ -201,10 +212,8 @@ On subsequent requests, however, the data is not there-
     var_dump($item->isMiss()); // Outputs "true";
 
 
-
-
 Composite
-=============
+=========
 
 The Composite driver acts as a wrapper around one or more drivers, allowing
 different drivers to work together in a single cache.

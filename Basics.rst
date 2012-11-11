@@ -105,12 +105,14 @@ Storing data in Stash (and retrieving it in future requests) is easy. Three
 functions do the bulk of the work:
 
 * *get()* - Returns data that was previously stored, or null if nothing stored.
-(Since it is possible to store null values it is very important not to rely on a
-null return to check for a cache miss.)
+  (Since it is possible to store null values it is very important not to rely on a
+  null return to check for a cache miss.)
+
 * *isMiss()* - Returns true if no data is stored or the data is stale; returns
-false if fresh data is present.
+  false if fresh data is present.
+
 * *store($data, $expiration = null)* - Stores the specified data in the driver's
-persistent storage.
+  persistent storage.
 
 Using these three functions, you can create simple cache blocks -- pieces of
 code where you fetch data, check to see if it's fresh, and then regenerate and
