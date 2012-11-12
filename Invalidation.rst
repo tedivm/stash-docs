@@ -1,3 +1,5 @@
+.. _invalidation:
+
 ============
 Invalidation
 ============
