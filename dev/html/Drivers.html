@@ -1,0 +1,386 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Drivers &mdash; Stash 0.10.1-dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.10.1-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Stash 0.10.1-dev documentation" href="index.html" />
+    <link rel="prev" title="Core Classes" href="Classes.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Classes.html" title="Core Classes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.10.1-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="drivers">
+<span id="id1"></span><h1>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="filesystem">
+<h2>FileSystem<a class="headerlink" href="#filesystem" title="Permalink to this headline">¶</a></h2>
+<p>The Filesystem driver stores each item in a php script, as native php.
+Unsurprisingly this is the fastest backend for small to medium sites, as it is
+just as good as simply including a configuration file (and can even get stored
+in opcode caches). The downside is that clear and purge actions- those which
+have to recursively scan the cache&#8217;s filesystem- take extraordinarily long
+compared to the other drivers.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>dirSplit</em></dt>
+<dd><p class="first last">Defines how many subdirectories to divide each key into. Larger cache pools
+run the risk of hitting file system limits on how many files can exist in a
+directory, so they need to divide the data up. Larger numbers can have
+performance issues, so testing should be done.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>path</em></dt>
+<dd><p class="first last">This optional parameter points the driver to the directory it should use for
+storage. If it isn&#8217;t passed then an install specific directory is created
+inside the systems temporary directory.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>filePermissions</em></dt>
+<dd><p class="first last">The unix permission for new files. Defaults to 0660.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>dirPermissions</em></dt>
+<dd><p class="first last">The unix permission for new directories. Defaults to 0770.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Uses a install specific default path if none is passed.</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">();</span>
+
+<span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/tmp/myCache/&#39;</span><span class="p">);</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sqlite">
+<h2>Sqlite<a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h2>
+<p>An alternative file based caching backend is the Sqlite driver. It can use
+either the PDO or native sqlite extensions, and can use either sqlite2 or
+sqlite3.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>extension</em></dt>
+<dd><p class="first last">Either &#8220;pdo&#8221; or &#8220;sqlite&#8221;. By default PDO is used and it falls back to
+sqlite, but if specified then only the passed extension will be used and no
+fallback action will be taken.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>version</em></dt>
+<dd><p class="first last">This takes either 2 or 3, with the default behavior being to use 3 and
+fallback to 2 if it isn&#8217;t available.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>nesting</em></dt>
+<dd><p class="first last">Defaults to 0, this option defines how many levels of keys get their own
+sqlite file. A value of 0 uses one file, while a value of 1 will use one
+file for each unique first key and a value of two will use both the first
+and second key for creating sqlite files. For larger sites this can improve
+performance by spreading locks to multiple files, but for most sites this
+should be left at it&#8217;s default.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>path</em></dt>
+<dd><p class="first last">This optional parameter points the driver to the directory it should use for
+storage. If it isn&#8217;t passed then an install specific directory is created
+inside the systems temporary directory.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>filePermissions</em></dt>
+<dd><p class="first last">The unix permission for new files. Defaults to 0660.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>dirPermissions</em></dt>
+<dd><p class="first last">The unix permission for new directories. Defaults to 0770.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// StashSqlite</span>
+
+<span class="c1">// Uses a install specific default path if none is passed.</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Sqlite</span><span class="p">();</span>
+
+<span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/tmp/myCache/&#39;</span><span class="p">);</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Sqlite</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="apc">
+<h2>APC<a class="headerlink" href="#apc" title="Permalink to this headline">¶</a></h2>
+<p>The APC extension is one of the most well known php caching extensions, allowing
+for both php opcode caching and memory storage of php values. The StashApc
+driver uses its userspace libraries to store data directly in memory for scripts
+to use.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>ttl</em></dt>
+<dd><p class="first last">This is the maximum time an item can live in memory. This is to keep memory
+pruned to small amounts, particularly when there is another driver backing
+this one.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>namespace</em></dt>
+<dd><p class="first last">This stores the data under a namespace in case other scripts are using APC
+to store data as well. If this isn&#8217;t passed the driver creates an install
+specific namespace, so this is really only needed if two scripts need their
+own caches but are using the same Stash install.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Uses a install specific default path if none is passed.</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Apc</span><span class="p">();</span>
+
+<span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ttl&#39;</span> <span class="o">=&gt;</span> <span class="mi">3600</span><span class="p">,</span> <span class="s1">&#39;namespace&#39;</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="k">__file__</span><span class="p">));</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Apc</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xcache-experimental">
+<h2>Xcache (experimental)<a class="headerlink" href="#xcache-experimental" title="Permalink to this headline">¶</a></h2>
+<p>The Xcache driver is currently experimental.</p>
+<p>Like the APC driver, the Xcache driver stores data directly in memory for use by
+other scripts.</p>
+</div>
+<div class="section" id="memcached">
+<h2>Memcached<a class="headerlink" href="#memcached" title="Permalink to this headline">¶</a></h2>
+<p>Memcached is a client/server application which allows machines to pool their
+memory together as one large memory cache. The Memcached driver is a feature
+complete driver for Memcached, complete with hierarchical caching.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><em>servers</em></dt>
+<dd><p class="first last">An array of memcached servers, hosts and (optionally) weights for memcache.
+Each server is represented by an array- array(server, port, weight). If no
+servers are passed then the default of 127.0.0.1:11211 will be used.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>extension</em></dt>
+<dd><p class="first last">Which php extension to use, &#8216;memcache&#8217; or &#8216;memcached&#8217;. The default is to use
+the newer memcached and fallback to memcache if it is not available.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>Options</em></dt>
+<dd><p class="first last">Extension options can be passed to the &#8220;memcached&#8221; driver by adding them to
+the options array. The memcached extension defined options using contants,
+ie Memcached::OPT%. By passing in the % portion (&#8216;compression&#8217; for
+Memcached::OPT_COMPRESSION) and its respective option. Please see the <a class="reference external" href="http://us2.php.net/manual/en/memcached.constants.php">php
+manual for memcached</a>
+for the specific options.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// One Server</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">)));</span>
+
+
+<span class="c1">// Multiple Servers</span>
+<span class="nv">$servers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+<span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+<span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$servers</span><span class="p">));</span>
+
+<span class="c1">// Using memcached options</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mem1.example.net&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">);</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mem2.example.net&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">);</span>
+
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;prefix_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;application_name&#39;</span><span class="p">;</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;libketama_compatible&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache_lookups&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;serializer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span><span class="p">;</span>
+
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ephemeral">
+<h2>Ephemeral<a class="headerlink" href="#ephemeral" title="Permalink to this headline">¶</a></h2>
+<p>The Ephemeral driver is a special backend that only stores data for the lifetime
+of the script, whether it be a longer running process or a web request. Items
+pushed to this driver are stored in the script&#8217;s running memory. This driver has
+no options.</p>
+<p>When combined with the Composite driver the Ephemeral driver can reduce the load
+on the underlying caching services by storing returns in memory to reduce
+duplicate lookups (caching the cache, in a way).</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="k">new</span> <span class="nx">Stash\Driver\Ephemeral</span><span class="p">())</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Outputs &quot;data&quot;.</span>
+</pre></div>
+</div>
+<p>On subsequent requests, however, the data is not there-</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="k">new</span> <span class="nx">Stash\Driver\Ephemeral</span><span class="p">())</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">());</span> <span class="c1">// Outputs &quot;true&quot;;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="composite">
+<h2>Composite<a class="headerlink" href="#composite" title="Permalink to this headline">¶</a></h2>
+<p>The Composite driver acts as a wrapper around one or more drivers, allowing
+different drivers to work together in a single cache.</p>
+<p>Upon creation the driver takes in an array of drivers as an option, with each
+driver after the first having a lower and lower priority. When get requests are
+run the drivers are checked by highest priority (first, second, third, etc)
+until the item is found. When an item is found in the cache the drivers that
+previously missed it are repopulated so they will hit on it next time. The
+store, clear and purge operations are run in reverse order to prevent stale data
+from being placed back into a cleared subdriver.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$subDrivers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$subDrivers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Apc</span><span class="p">();</span>
+<span class="nv">$subDrivers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">();</span>
+<span class="nv">$subDrivers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcached</span><span class="p">();</span>
+
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;drivers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$subDrivers</span><span class="p">);</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Composite</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+
+<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="nv">$driver</span><span class="p">);</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+
+<span class="c1">// First it checks Apc. If that fails it checks FileSystem. If that succeeds</span>
+<span class="nx">it</span> <span class="nx">stores</span> <span class="nx">the</span> <span class="nx">returned</span> <span class="nx">value</span>
+<span class="c1">// from FileSystem into Apc and then returns the value.</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// First the data is stored in FileSystem, and then it is put into Apc.</span>
+<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+<span class="c1">// As with the store function, the data is first removed from FileSystem</span>
+<span class="nx">before</span> <span class="nx">being</span> <span class="nx">cleared</span> <span class="nx">from</span> <span class="nx">Apc</span><span class="o">.</span>
+<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="Contents.html">
+              <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+            </a></p>
+<h3><a href="Contents.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Drivers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#filesystem">FileSystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sqlite">Sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#apc">APC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xcache-experimental">Xcache (experimental)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memcached">Memcached</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ephemeral">Ephemeral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#composite">Composite</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Drivers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Classes.html" title="Core Classes"
+             >previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.10.1-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Robert Hafner.
+      Last updated on Nov 12, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
