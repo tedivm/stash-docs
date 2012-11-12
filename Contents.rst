@@ -7,5 +7,5 @@ Stash Documentation
    index
    Basics
    Invalidation
+   Classes
    Drivers
-
