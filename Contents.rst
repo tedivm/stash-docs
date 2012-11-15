@@ -2,9 +2,10 @@ Stash Documentation
 =================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    index
-   Usage
-   Handlers
-
+   Basics
+   Invalidation
+   Classes
+   Drivers
