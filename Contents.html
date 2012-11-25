@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Stash Documentation &mdash; Stash 0.9.5 documentation</title>
+    <title>Stash Documentation &mdash; Stash 0.10.1-dev documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.9.5',
+        VERSION:     '0.10.1-dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Stash 0.9.5 documentation" href="index.html" />
+    <link rel="top" title="Stash 0.10.1-dev documentation" href="index.html" />
     <link rel="next" title="Stash" href="index.html" /> 
   </head>
   <body>
@@ -39,7 +38,7 @@
         <li class="right" >
           <a href="index.html" title="Stash"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Stash 0.9.5 documentation</a> &raquo;</li> 
+        <li><a href="#">Stash 0.10.1-dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,6 +58,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Basics.html#autoloading">Autoloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Basics.html#creating-stash-objects">Creating Stash Objects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Basics.html#identifying-items-using-keys">Identifying Items Using Keys</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Basics.html#storing-and-retrieving-data">Storing and Retrieving Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Basics.html#clearing-data">Clearing Data</a></li>
@@ -68,22 +69,45 @@
 <li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Invalidation.html#stampede-protection">Stampede Protection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Invalidation.html#invalidation-methods">Invalidation Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#stash-sp-none">STASH_SP_NONE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#stash-sp-precompute">STASH_SP_PRECOMPUTE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#stash-sp-old">STASH_SP_OLD</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#stash-sp-value">STASH_SP_VALUE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#stash-sp-sleep">STASH_SP_SLEEP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#none">None</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#precompute">Precompute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#old">Old</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#value">Value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#sleep">Sleep</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Handlers.html">Handlers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Handlers.html#filesystem">FileSystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Handlers.html#sqlite">Sqlite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Handlers.html#apc">APC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Handlers.html#xcache-experimental">Xcache (experimental)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Handlers.html#memcached">Memcached</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Handlers.html#mulitihandler">MulitiHandler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Classes.html#drivers">Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Classes.html#pool">Pool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#constructor">Constructor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#getitem">getItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#getitemiterator">getItemIterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#flush">flush</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#purge">purge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Classes.html#item">Item</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#get">get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#ismiss">isMiss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#set">set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#clear">clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#lock">lock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#disable">disable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes.html#getkey">getKey</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#filesystem">FileSystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#sqlite">Sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#apc">APC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#xcache-experimental">Xcache (experimental)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#memcached">Memcached</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#ephemeral">Ephemeral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#composite">Composite</a></li>
 </ul>
 </li>
 </ul>
@@ -96,12 +120,16 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+            </a></p>
 <h3><a href="#">Table Of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Handlers.html">Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
 </ul>
 
   <h3>This Page</h3>
@@ -122,11 +150,12 @@
         <li class="right" >
           <a href="index.html" title="Stash"
              >next</a> |</li>
-        <li><a href="#">Stash 0.9.5 documentation</a> &raquo;</li> 
+        <li><a href="#">Stash 0.10.1-dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, Robert Hafner.
+      Last updated on Nov 24, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

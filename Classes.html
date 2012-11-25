@@ -1,0 +1,254 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Core Classes &mdash; Stash 0.10.1-dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.10.1-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Stash 0.10.1-dev documentation" href="index.html" />
+    <link rel="next" title="Drivers" href="Drivers.html" />
+    <link rel="prev" title="Invalidation" href="Invalidation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Drivers.html" title="Drivers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Invalidation.html" title="Invalidation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.10.1-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="core-classes">
+<span id="coreclasses"></span><h1>Core Classes<a class="headerlink" href="#core-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="drivers">
+<h2>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
+<p>Stash works by storing values into various backend systems, like APC and
+Memcached, and retrieving them later. With the exception of the constructors,
+drivers don&#8217;t have any &#8220;public&#8221; functions- they are used by the Pool and Item
+classes themselves to interact with the underlying cache system.</p>
+<p>The <a class="reference internal" href="Drivers.html#drivers"><em>Drivers</em></a> page contains a list of all drivers and their options.</p>
+</div>
+<div class="section" id="pool">
+<h2>Pool<a class="headerlink" href="#pool" title="Permalink to this headline">¶</a></h2>
+<p>The Pool class represents the entire caching system and all of the items in it.
+Objects of this class are used to retrieve Items from the cache, as well as to
+perform bulk operations on the system such as Purging or Clearing the cache.</p>
+<div class="section" id="constructor">
+<h3>Constructor<a class="headerlink" href="#constructor" title="Permalink to this headline">¶</a></h3>
+<p><em>construct($driver)</em></p>
+<p>The Pool constructor takes in a driver as an argument.</p>
+</div>
+<div class="section" id="getitem">
+<h3>getItem<a class="headerlink" href="#getitem" title="Permalink to this headline">¶</a></h3>
+<p><em>getItem($key)</em></p>
+<p>The getItem function takes in a key and returns an associated Item object. The
+structure of keys can be found on the <a class="reference internal" href="Basics.html#basics"><em>Basic Usage</em></a> page.</p>
+</div>
+<div class="section" id="getitemiterator">
+<h3>getItemIterator<a class="headerlink" href="#getitemiterator" title="Permalink to this headline">¶</a></h3>
+<p><em>getItemIterator(array $keys)</em></p>
+<p>The getItemIterator function takes in an array of keys and returns an Iterator
+object populated by Item objects for those keys. The structure of keys can be
+found on the <a class="reference internal" href="Basics.html#basics"><em>Basic Usage</em></a> page.</p>
+</div>
+<div class="section" id="flush">
+<h3>flush<a class="headerlink" href="#flush" title="Permalink to this headline">¶</a></h3>
+<p><em>flush()</em></p>
+<p>The flush function completely empties all items associated with the Pool. After
+calling this every Item will be considered a miss and will have to be
+regenerated.</p>
+</div>
+<div class="section" id="purge">
+<h3>purge<a class="headerlink" href="#purge" title="Permalink to this headline">¶</a></h3>
+<p><em>purge()</em></p>
+<p>The Purge function allows drivers to perform basic maintenance tasks, such as
+removing stale or expired items from storage. Not all drivers need this, as many
+interact with systems that handle that automatically.</p>
+<p>It&#8217;s important that this function is not called from inside a normal request, as
+the maintenance tasks this allows can occasionally take some time.</p>
+</div>
+</div>
+<div class="section" id="item">
+<h2>Item<a class="headerlink" href="#item" title="Permalink to this headline">¶</a></h2>
+<p>The Item class represents specific pieces of data in the caching system. Item
+objects are created by the Pool class.</p>
+<div class="section" id="get">
+<h3>get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h3>
+<p><em>get($invalidation, [$args])</em></p>
+<p>The get function the data mapped to this particular Item. If no value is stored
+at all then this function will return null. Since this can return false or null
+as a correctly cached value, the return value should not be used to determine
+successful retrieval of data- for that use the &#8220;isMiss()&#8221; function after calling
+this one.</p>
+<p>The get function can take a series of optional arguments defining how it handles
+cache misses. The first of these options is the invalidation method to be used,
+while the other options all provide invalidation specific options. The
+<a class="reference internal" href="Invalidation.html#invalidation"><em>Invalidation</em></a> page contains much more information about hos to use this
+functionality.</p>
+</div>
+<div class="section" id="ismiss">
+<h3>isMiss<a class="headerlink" href="#ismiss" title="Permalink to this headline">¶</a></h3>
+<p><em>isMiss()</em></p>
+<p>The isMiss function returns true when the current Item has either no data or
+stale data. Since Stash is capable of storing both null and false values and
+returning them via the get function, this is the only real way to test whether
+a cached value is usable or not.</p>
+<p>The exact behavior used to define a cache miss is defined by the invalidation
+method used for the object. The <a class="reference internal" href="Invalidation.html#invalidation"><em>Invalidation</em></a> page contains much more
+information about hos to use this functionality.</p>
+</div>
+<div class="section" id="set">
+<h3>set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<p><em>set($data, $ttl = null)</em></p>
+<p>The set function is used to populate the cache with data. The first argument
+can be any type of data that is able to be serialized- essentially everything
+except resources and classes which can&#8217;t be serialized. All data put into Stash
+will either come back exactly as inserted or not at all.</p>
+<p>The second argument defines how long the item will be stored in the cache. This
+is a maximum time, as items can be cleared or removed earlier depending on a
+number of factors. This argument can be an integer representing the time, in
+seconds, that the item will be considered valid. It can also be passed a
+DateTime object signifying the exact moment the data should expire. Finally, for
+items that are regenerated some other way, or which will never change, a null
+value can be passed.</p>
+</div>
+<div class="section" id="clear">
+<h3>clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h3>
+<p><em>clear()</em></p>
+<p>The clear function removes the current Item&#8217;s data from the backend storage.</p>
+<p>If hierarchical or &#8220;stackable&#8221; caching is being used this function will also
+remove children Items. The Key section of the <a class="reference internal" href="Basics.html#basics"><em>Basic Usage</em></a> document goes into
+more detail about how that works.</p>
+</div>
+<div class="section" id="lock">
+<h3>lock<a class="headerlink" href="#lock" title="Permalink to this headline">¶</a></h3>
+<p><em>lock($ttl = null)</em></p>
+<p>The lock function is used to tell other processes and requests that this
+particular item is being regenerated. This is typically called after the
+&#8220;isMiss&#8221; function returns true, before the Item is regenerated and stored using
+&#8220;set&#8221;. Depending on the Invalidation method set for this Item, this prevents
+multiple requests from attempting to regenerate the data in question,
+potentially preventing a cache stampede (also known as the dogpile effect) as
+multiple scripts attempt to run the same expensive code.</p>
+<p>The exact effect of this function depends on which invalidation method is being
+used. The <a class="reference internal" href="Invalidation.html#invalidation"><em>Invalidation</em></a> page contains much more information about hos to
+use this functionality.</p>
+</div>
+<div class="section" id="disable">
+<h3>disable<a class="headerlink" href="#disable" title="Permalink to this headline">¶</a></h3>
+<p><em>disable()</em></p>
+<p>The disable function disables all access to the &#8220;Driver&#8221; and forces the Item
+class to gracefully fail most of it&#8217;s calls.</p>
+</div>
+<div class="section" id="getkey">
+<h3>getKey<a class="headerlink" href="#getkey" title="Permalink to this headline">¶</a></h3>
+<p><em>getKey()</em></p>
+<p>The getKey function returns this Item&#8217;s key as a string. This is particularly
+useful when the Item is returned as a group of Items in an Iterator.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="Contents.html">
+              <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+            </a></p>
+<h3><a href="Contents.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Core Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#drivers">Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pool">Pool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constructor">Constructor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getitem">getItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getitemiterator">getItemIterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flush">flush</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purge">purge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#item">Item</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get">get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ismiss">isMiss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set">set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clear">clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lock">lock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disable">disable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getkey">getKey</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Classes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Drivers.html" title="Drivers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Invalidation.html" title="Invalidation"
+             >previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.10.1-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Robert Hafner.
+      Last updated on Nov 24, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -7,5 +7,5 @@ Stash Documentation
    index
    Basics
    Invalidation
-   Handlers
-
+   Classes
+   Drivers
