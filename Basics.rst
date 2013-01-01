@@ -27,7 +27,7 @@ Creating a basic Stash object is simple:
     $stash = new Stash\Pool();
 
     // Set the "key", which is the path the Stash object points to.
-    $item = $stash->getCache('path/to/data');
+    $item = $stash->getItem('path/to/data');
 
 This will create a cache object with no cross request storage, meaning the data
 will only be cached for the lifetime of that one script or request. In order to
@@ -196,11 +196,11 @@ keys beneath it in the hierarchy.*
 
     <?php
     // Clearing a key.
-    $stashItem = $pool->getCache('path/to/data/specific/123')
+    $stashItem = $pool->getItem('path/to/data/specific/123')
     $stashItem->clear();
 
     // Clearing a key with subkeys
-    $stashItem = $pool->getCache('path/to/data/general') // clears 'path/to/data/*'
+    $stashItem = $pool->getItem('path/to/data/general') // clears 'path/to/data/*'
     $stashItem->clear();
 
 The Pool class can also empty the entire cache:
