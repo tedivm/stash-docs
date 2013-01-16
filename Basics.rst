@@ -113,7 +113,7 @@ functions do the bulk of the work:
 * *isMiss()* - Returns true if no data is stored or the data is stale; returns
   false if fresh data is present.
 
-* *store($data, $expiration = null)* - Stores the specified data in the driver's
+* *set($data, $ttl = null)* - Stores the specified data in the driver's
   persistent storage.
 
 Using these three functions, you can create simple cache blocks -- pieces of
@@ -143,7 +143,7 @@ store the data if it was stale or absent.
     // Continue as normal.
     return $data;
 
-The *store* function can take the expiration as an additional argument. This
+The *set* function can take the expiration as an additional argument. This
 expiration can be a time, in seconds, that the cache should live or it can be a
 DateTime object that represents the time the cached item should expire. (This
 argument can be negative, which will result in an immediately stale cache.)
