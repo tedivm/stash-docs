@@ -27,7 +27,7 @@ Creating a basic Stash object is simple:
     $stash = new Stash\Pool();
 
     // Set the "key", which is the path the Stash object points to.
-    $item = $stash->getCache('path/to/data');
+    $item = $stash->getItem('path/to/data');
 
 This will create a cache object with no cross request storage, meaning the data
 will only be cached for the lifetime of that one script or request. In order to
@@ -113,7 +113,7 @@ functions do the bulk of the work:
 * *isMiss()* - Returns true if no data is stored or the data is stale; returns
   false if fresh data is present.
 
-* *store($data, $expiration = null)* - Stores the specified data in the driver's
+* *set($data, $ttl = null)* - Stores the specified data in the driver's
   persistent storage.
 
 Using these three functions, you can create simple cache blocks -- pieces of
@@ -143,7 +143,7 @@ store the data if it was stale or absent.
     // Continue as normal.
     return $data;
 
-The *store* function can take the expiration as an additional argument. This
+The *set* function can take the expiration as an additional argument. This
 expiration can be a time, in seconds, that the cache should live or it can be a
 DateTime object that represents the time the cached item should expire. (This
 argument can be negative, which will result in an immediately stale cache.)
@@ -196,11 +196,11 @@ keys beneath it in the hierarchy.*
 
     <?php
     // Clearing a key.
-    $stashItem = $pool->getCache('path/to/data/specific/123')
+    $stashItem = $pool->getItem('path/to/data/specific/123')
     $stashItem->clear();
 
     // Clearing a key with subkeys
-    $stashItem = $pool->getCache('path/to/data/general') // clears 'path/to/data/*'
+    $stashItem = $pool->getItem('path/to/data/general') // clears 'path/to/data/*'
     $stashItem->clear();
 
 The Pool class can also empty the entire cache:
