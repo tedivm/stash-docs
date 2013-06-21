@@ -58,7 +58,7 @@
 <p>Stash functions as a key-value store: you place things into the cache using a key and you retrieve them using the same key.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;fruit&#39;</span><span class="p">);</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
 
 <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
 <span class="c1">// string(6) &quot;apples&quot;</span>
@@ -68,7 +68,7 @@
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// First Request</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;fruit&#39;</span><span class="p">);</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
 
 <span class="c1">// Second Request</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;fruit&#39;</span><span class="p">);</span>
@@ -96,7 +96,7 @@
         <span class="nv">$userInfo</span> <span class="o">=</span> <span class="nx">loadUserInfoFromDatabase</span><span class="p">(</span><span class="nv">$userId</span><span class="p">);</span>
 
         <span class="c1">// Store the expensive code so the next time it doesn&#39;t miss.</span>
-        <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="nv">$userInfo</span><span class="p">);</span>
+        <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$userInfo</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="nv">$userInfo</span><span class="p">;</span>

@@ -277,7 +277,7 @@ from being placed back into a cleared subdriver.
     $data = $stash->get();
 
     // First the data is stored in FileSystem, and then it is put into Apc.
-    $stash->store($data);
+    $stash->set($data);
 
     // As with the store function, the data is first removed from FileSystem
     before being cleared from Apc.

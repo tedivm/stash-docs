@@ -349,7 +349,7 @@ from being placed back into a cleared subdriver.</p>
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
 <span class="c1">// First the data is stored in FileSystem, and then it is put into Apc.</span>
-<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
 <span class="c1">// As with the store function, the data is first removed from FileSystem</span>
 <span class="nx">before</span> <span class="nx">being</span> <span class="nx">cleared</span> <span class="nx">from</span> <span class="nx">Apc</span><span class="o">.</span>
