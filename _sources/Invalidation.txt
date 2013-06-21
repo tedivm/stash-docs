@@ -38,7 +38,7 @@ stampede prevention function that's fairly easy to use:
         // Store the expensive code so the next time it doesn't miss. The store
         // function marks the stampede as over for now, so other Stash items
         // will begin working as normal.
-        $item->store($userInfo);
+        $item->set($userInfo);
     }
 
 Invalidation Methods

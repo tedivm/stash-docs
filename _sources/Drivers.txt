@@ -182,6 +182,35 @@ complete driver for Memcached, complete with hierarchical caching.
     $driver = new Stash\Driver\Memcache($options);
 
 
+Redis
+=====
+
+Redis is a high performing advanced caching and key/value storage system. This
+driver uses the Redis PHP extension to enable Redis based caching, using one or
+more servers.
+
+* *servers*
+    An array of Redis servers and (optionally) ports to connect to. Each server
+    is represented by an array- array(server, port). If no servers are passed
+    then the default of 127.0.0.1:6379 will be used.
+
+.. code-block:: php
+
+    <?php
+    // One Server
+    $driver = new Stash\Driver\Redis(array('servers' => array('127.0.0.1', '6379')));
+
+
+    // Multiple Servers
+    $servers = array();
+    $servers[] = array('127.0.0.1');
+    $servers[] = array('10.10.10.20');
+    $servers[] = array('10.10.10.19', '6379');
+    $servers[] = array('10.10.10.19', '6380');
+
+    $driver = new Stash\Driver\Redis(array('servers' => $servers));
+
+
 Ephemeral
 =========
 
