@@ -10,3 +10,4 @@ Stash Documentation
    Invalidation
    Classes
    Drivers
+   Integration
