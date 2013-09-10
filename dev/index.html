@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Stash &mdash; Stash 0.10.2 documentation</title>
+    <title>Stash &mdash; Stash 0.11.0 alpha documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.10.2',
+        URL_ROOT:    './',
+        VERSION:     '0.11.0 alpha',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Stash 0.10.2 documentation" href="#" />
+    <link rel="top" title="Stash 0.11.0 alpha documentation" href="#" />
     <link rel="next" title="Getting Started" href="Setup.html" />
     <link rel="prev" title="Stash Documentation" href="Contents.html" /> 
   </head>
@@ -42,7 +41,7 @@
         <li class="right" >
           <a href="Contents.html" title="Stash Documentation"
              accesskey="P">previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.10.2 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.11.0 alpha documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,7 +58,7 @@
 <p>Stash functions as a key-value store: you place things into the cache using a key and you retrieve them using the same key.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;fruit&#39;</span><span class="p">);</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
 
 <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
 <span class="c1">// string(6) &quot;apples&quot;</span>
@@ -69,7 +68,7 @@
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// First Request</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;fruit&#39;</span><span class="p">);</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
 
 <span class="c1">// Second Request</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;fruit&#39;</span><span class="p">);</span>
@@ -97,7 +96,7 @@
         <span class="nv">$userInfo</span> <span class="o">=</span> <span class="nx">loadUserInfoFromDatabase</span><span class="p">(</span><span class="nv">$userId</span><span class="p">);</span>
 
         <span class="c1">// Store the expensive code so the next time it doesn&#39;t miss.</span>
-        <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="nv">$userInfo</span><span class="p">);</span>
+        <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$userInfo</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="nv">$userInfo</span><span class="p">;</span>
@@ -218,13 +217,13 @@ own fork.</p>
         <li class="right" >
           <a href="Contents.html" title="Stash Documentation"
              >previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.10.2 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.11.0 alpha documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Robert Hafner.
-      Last updated on Feb 26, 2013.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright 2013, Robert Hafner.
+      Last updated on Sep 09, 2013.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>
