@@ -29,7 +29,7 @@ to worry about backwards compatibility breaking changes occurring.
 .. code-block:: none
 
       "require": {
-        "tedivm/stash": "0.10.*"
+        "tedivm/stash": "0.11.*"
       }
 
 For project looking to take advantage of the latest features it's also possible
@@ -42,7 +42,7 @@ testing, but should be limited to non-production code.
         "tedivm/stash": "dev-master"
       }
 
-For more details on how to use composer with your projects, vist the composer
+For more details on how to use composer with your projects, visit the composer
 website at http://getcomposer.org/.
 
 
