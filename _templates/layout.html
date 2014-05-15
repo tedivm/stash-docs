@@ -1,0 +1,14 @@
+{# Import the theme's layout. #} {% extends "!layout.html" %}
+
+{# Customize the links in the main nav menu #}
+{%- block nav_links %}
+    <li><a href="{{ pathto(master_doc) }}">Home</a></li>
+
+{%- if theme_github_user and theme_github_repo %}
+    <li><a href="https://github.com/{{ theme_github_user }}/{{ theme_github_repo }}">Github</a></li>
+{%- endif %}
+
+    <li><a href="http://blog.tedivm.com">Blog</a></li>
+
+<!-- etc... --> {%- endblock %}
+

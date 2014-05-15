@@ -14,6 +14,8 @@
 
 import sys
 import os
+import guzzle_sphinx_theme
+
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -100,12 +102,12 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'nature'
+# html_theme = 'nature'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {'sidebarwidth': 175}
+# html_theme_options = {'sidebarwidth': 175}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -179,6 +181,65 @@ html_static_path = ['_static']
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Stashdoc'
+
+
+# -- Customized Settings for HTML output ----------------------------------
+
+
+# Uses a Guzzle style Pygments theme
+# pygments_style = 'guzzle_sphinx_theme.GuzzleStyle'
+
+# Adds an HTML table visitor to apply Bootstrap table classes
+html_translator_class = 'guzzle_sphinx_theme.HTMLTranslator'
+html_theme_path = guzzle_sphinx_theme.html_theme_path()
+html_theme = 'guzzle_sphinx_theme'
+
+# Register the theme as an extension to generate a sitemap.xml
+extensions.append("guzzle_sphinx_theme")
+
+# Guzzle theme options (see theme.conf for more information)
+html_theme_options = {
+
+    # Set the path to a special layout to include for the homepage
+    # "index_template": "special_index.html",
+
+    # Set the name of the project to appear in the nav menu
+    "project_nav_name": "Stash",
+
+    # Set your GitHub user and repo to enable GitHub stars links
+    "github_user": "tedivm",
+    "github_repo": "stash",
+
+    # Set your Disqus short name to enable comments
+    # "disqus_comments_shortname": "my_disqus_comments_short_name",
+
+    # Set you GA account ID to enable tracking
+    "google_analytics_account": "UA-29779027-1",
+
+    # Set a custom class to add to the navbar (e.g. navbar-inverse)
+    "navbar_class": "",
+
+    # Path to a touch icon
+    "touch_icon": "",
+
+    # Specify a base_url used to generate sitemap.xml links. If not
+    # specified, then no sitemap will be built.
+    "base_url": "http://stash.tedivm.com"
+}
+
+
+
+html_sidebars = {
+   '**': ['localtoc.html', 'searchbox.html'],
+   'using/windows': ['windowssidebar.html', 'searchbox.html'],
+}
+
+
+
+
+
+
+
 
 
 # -- Options for LaTeX output ---------------------------------------------
