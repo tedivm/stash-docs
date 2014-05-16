@@ -6,15 +6,20 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Stash &mdash; Stash 0.11.1 documentation</title>
+  
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Stash &mdash; Stash 0.12.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.11.1',
+        VERSION:     '0.12.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,11 +29,46 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Stash 0.11.1 documentation" href="#" />
+    <link rel="top" title="Stash 0.12.1 documentation" href="#" />
     <link rel="next" title="Getting Started" href="Setup.html" />
-    <link rel="prev" title="Stash Documentation" href="Contents.html" /> 
+    <link rel="prev" title="Stash Documentation" href="Contents.html" />
+  
+   
+
   </head>
   <body>
+<nav class="navbar navbar-default navbar-fixed-top " role="navigation">
+  <div class="container">
+    <div class="visible-md visible-lg navbar-text pull-right" id="github-stars">
+      <iframe src="http://ghbtns.com/github-btn.html?user=tedivm&repo=stash&type=watch&count=true&size=small"
+      allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
+    </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggle-main-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="
+    
+      #">Stash</a>
+    </div>
+    <div class="collapse navbar-collapse" id="toggle-main-nav">
+      <ul class="nav navbar-nav">
+          <li><a href="
+      #">Home</a></li>
+          <li><a href="https://github.com/tedivm/stash">Github</a></li>
+            
+              <li><a href="http://blog.tedivm.com">Blog</a></li>
+            
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -41,15 +81,75 @@
         <li class="right" >
           <a href="Contents.html" title="Stash Documentation"
              accesskey="P">previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
-    </div>  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+    </div>
+    <div class="container-wrapper">
+        <div class="container-fluid">
             
+    <div class="top-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Contents.html" title="previous chapter (use the left arrow)">&larr; Stash Documentation</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Setup.html" title="next chapter (use the right arrow)">Getting Started &rarr;</a></li>
+      </ul>
+    </div>
+  
+            <div class="row document clearer">
+  <div class="col-md-3 sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="
+      #">
+          <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+        </a></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><a href="
+    
+      #">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Stash</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-usage">Example Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Search</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-inline" action="search.html" method="get" role="form">
+      <div class="input-group">
+        <input name="q" type="text" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Go</button>
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+                <div class="col-md-9 body">
+                  
   <div class="section" id="stash">
 <span id="overview"></span><h1>Stash<a class="headerlink" href="#stash" title="Permalink to this headline">¶</a></h1>
 <p>Stash makes it easy to speed up your code by caching the results of expensive functions or code. Certain actions, like database queries or calls to external APIs, take a lot of time to run but tend to have the same results over short periods of time. This makes it much more efficient to store the results and call them back up later.</p>
@@ -124,8 +224,8 @@ strings, arrays and objects that can be serialized.</dd>
 <dt><strong>Hierarchal Cache</strong></dt>
 <dd>Stored items can be nested, like the folders of a filesystem. This allows
 for related items to be groups together and erased when changed. Storing a
-user&#8217;s basic information can be nested &#8216;users/userId/info&#8217;, allow all of the
-user&#8217;s information to be removed quite easily.</dd>
+user's basic information can be nested 'users/userId/info', allow all of the
+user's information to be removed quite easily.</dd>
 <dt><strong>Interchangeable Back Ends</strong></dt>
 <dd>Stash can use a number of different storage engines to persist cache items
 between requests. Current drivers include Filesystem, APC, Memcached, and
@@ -165,46 +265,31 @@ is the data you get out.</dd>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
 <p>Stash is licensed under the New BSD License. This means you are free to use it
-in any of your projects, proprietary or open source. While you aren&#8217;t obligated
-to contribute back, any bug fixes or enhancements are appreciated &#8211; besides,
+in any of your projects, proprietary or open source. While you aren't obligated
+to contribute back, any bug fixes or enhancements are appreciated -- besides,
 getting your code into the main branch is so much easier than maintaining your
 own fork.</p>
 </div>
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="Contents.html">
-              <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
-            </a></p>
-<h3><a href="Contents.html">Table Of Contents</a></h3>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">Stash</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#example-usage">Example Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
-</ul>
+                </div>
+              <div class="clearfix"></div>
+            </div>
+            
+    <div class="footer-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Contents.html" title="previous chapter (use the left arrow)">&larr; Stash Documentation</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Setup.html" title="next chapter (use the right arrow)">Getting Started &rarr;</a></li>
+      </ul>
+    </div>
+  
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
     <div class="related">
       <h3>Navigation</h3>
@@ -218,13 +303,23 @@ own fork.</p>
         <li class="right" >
           <a href="Contents.html" title="Stash Documentation"
              >previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013, Robert Hafner.
-      Last updated on Nov 17, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
-    </div>
+
+  <script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer container">
+    &copy; Copyright 2014, Robert Hafner. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-29779027-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </body>
 </html>

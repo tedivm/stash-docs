@@ -6,15 +6,20 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Drivers &mdash; Stash 0.11.1 documentation</title>
+  
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Drivers &mdash; Stash 0.12.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.11.1',
+        VERSION:     '0.12.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,11 +29,46 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Stash 0.11.1 documentation" href="index.html" />
+    <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
     <link rel="next" title="Integration" href="Integration.html" />
-    <link rel="prev" title="Core Classes" href="Classes.html" /> 
+    <link rel="prev" title="Core Classes" href="Classes.html" />
+  
+   
+
   </head>
   <body>
+<nav class="navbar navbar-default navbar-fixed-top " role="navigation">
+  <div class="container">
+    <div class="visible-md visible-lg navbar-text pull-right" id="github-stars">
+      <iframe src="http://ghbtns.com/github-btn.html?user=tedivm&repo=stash&type=watch&count=true&size=small"
+      allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
+    </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggle-main-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="
+    
+      index.html">Stash</a>
+    </div>
+    <div class="collapse navbar-collapse" id="toggle-main-nav">
+      <ul class="nav navbar-nav">
+          <li><a href="
+      index.html">Home</a></li>
+          <li><a href="https://github.com/tedivm/stash">Github</a></li>
+            
+              <li><a href="http://blog.tedivm.com">Blog</a></li>
+            
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -41,15 +81,80 @@
         <li class="right" >
           <a href="Classes.html" title="Core Classes"
              accesskey="P">previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
-    </div>  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+    </div>
+    <div class="container-wrapper">
+        <div class="container-fluid">
             
+    <div class="top-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Classes.html" title="previous chapter (use the left arrow)">&larr; Core Classes</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Integration.html" title="next chapter (use the right arrow)">Integration &rarr;</a></li>
+      </ul>
+    </div>
+  
+            <div class="row document clearer">
+  <div class="col-md-3 sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="
+      index.html">
+          <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+        </a></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><a href="
+    
+      index.html">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Drivers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#filesystem">FileSystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sqlite">Sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#apc">APC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xcache-experimental">Xcache (experimental)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memcached">Memcached</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#redis">Redis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ephemeral">Ephemeral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#composite">Composite</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Search</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-inline" action="search.html" method="get" role="form">
+      <div class="input-group">
+        <input name="q" type="text" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Go</button>
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+                <div class="col-md-9 body">
+                  
   <div class="section" id="drivers">
 <span id="id1"></span><h1>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="filesystem">
@@ -58,7 +163,7 @@
 Unsurprisingly this is the fastest backend for small to medium sites, as it is
 just as good as simply including a configuration file (and can even get stored
 in opcode caches). The downside is that clear and purge actions- those which
-have to recursively scan the cache&#8217;s filesystem- take extraordinarily long
+have to recursively scan the cache's filesystem- take extraordinarily long
 compared to the other drivers.</p>
 <ul>
 <li><dl class="first docutils">
@@ -73,7 +178,7 @@ performance issues, so testing should be done.</p>
 <li><dl class="first docutils">
 <dt><em>path</em></dt>
 <dd><p class="first last">This optional parameter points the driver to the directory it should use for
-storage. If it isn&#8217;t passed then an install specific directory is created
+storage. If it isn't passed then an install specific directory is created
 inside the systems temporary directory.</p>
 </dd>
 </dl>
@@ -109,7 +214,7 @@ sqlite3.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><em>extension</em></dt>
-<dd><p class="first last">Either &#8220;pdo&#8221; or &#8220;sqlite&#8221;. By default PDO is used and it falls back to
+<dd><p class="first last">Either &quot;pdo&quot; or &quot;sqlite&quot;. By default PDO is used and it falls back to
 sqlite, but if specified then only the passed extension will be used and no
 fallback action will be taken.</p>
 </dd>
@@ -118,7 +223,7 @@ fallback action will be taken.</p>
 <li><dl class="first docutils">
 <dt><em>version</em></dt>
 <dd><p class="first last">This takes either 2 or 3, with the default behavior being to use 3 and
-fallback to 2 if it isn&#8217;t available.</p>
+fallback to 2 if it isn't available.</p>
 </dd>
 </dl>
 </li>
@@ -129,14 +234,14 @@ sqlite file. A value of 0 uses one file, while a value of 1 will use one
 file for each unique first key and a value of two will use both the first
 and second key for creating sqlite files. For larger sites this can improve
 performance by spreading locks to multiple files, but for most sites this
-should be left at it&#8217;s default.</p>
+should be left at it's default.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><em>path</em></dt>
 <dd><p class="first last">This optional parameter points the driver to the directory it should use for
-storage. If it isn&#8217;t passed then an install specific directory is created
+storage. If it isn't passed then an install specific directory is created
 inside the systems temporary directory.</p>
 </dd>
 </dl>
@@ -184,7 +289,7 @@ this one.</p>
 <li><dl class="first docutils">
 <dt><em>namespace</em></dt>
 <dd><p class="first last">This stores the data under a namespace in case other scripts are using APC
-to store data as well. If this isn&#8217;t passed the driver creates an install
+to store data as well. If this isn't passed the driver creates an install
 specific namespace, so this is really only needed if two scripts need their
 own caches but are using the same Stash install.</p>
 </dd>
@@ -223,16 +328,16 @@ servers are passed then the default of 127.0.0.1:11211 will be used.</p>
 </li>
 <li><dl class="first docutils">
 <dt><em>extension</em></dt>
-<dd><p class="first last">Which php extension to use, &#8216;memcache&#8217; or &#8216;memcached&#8217;. The default is to use
+<dd><p class="first last">Which php extension to use, 'memcache' or 'memcached'. The default is to use
 the newer memcached and fallback to memcache if it is not available.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><em>Options</em></dt>
-<dd><p class="first last">Extension options can be passed to the &#8220;memcached&#8221; driver by adding them to
+<dd><p class="first last">Extension options can be passed to the &quot;memcached&quot; driver by adding them to
 the options array. The memcached extension defined options using contants,
-ie Memcached::OPT%. By passing in the % portion (&#8216;compression&#8217; for
+ie Memcached::OPT%. By passing in the % portion ('compression' for
 Memcached::OPT_COMPRESSION) and its respective option. Please see the <a class="reference external" href="http://us2.php.net/manual/en/memcached.constants.php">php
 manual for memcached</a>
 for the specific options.</p>
@@ -302,7 +407,7 @@ then the default of 127.0.0.1:6379 will be used.</p>
 <h2>Ephemeral<a class="headerlink" href="#ephemeral" title="Permalink to this headline">¶</a></h2>
 <p>The Ephemeral driver is a special backend that only stores data for the lifetime
 of the script, whether it be a longer running process or a web request. Items
-pushed to this driver are stored in the script&#8217;s running memory. This driver has
+pushed to this driver are stored in the script's running memory. This driver has
 no options.</p>
 <p>When combined with the Composite driver the Ephemeral driver can reduce the load
 on the underlying caching services by storing returns in memory to reduce
@@ -364,43 +469,23 @@ from being placed back into a cleared subdriver.</p>
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="Contents.html">
-              <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
-            </a></p>
-<h3><a href="Contents.html">Table Of Contents</a></h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Drivers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#filesystem">FileSystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sqlite">Sqlite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#apc">APC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#xcache-experimental">Xcache (experimental)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#memcached">Memcached</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#redis">Redis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ephemeral">Ephemeral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#composite">Composite</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
-</ul>
+                </div>
+              <div class="clearfix"></div>
+            </div>
+            
+    <div class="footer-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Classes.html" title="previous chapter (use the left arrow)">&larr; Core Classes</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Integration.html" title="next chapter (use the right arrow)">Integration &rarr;</a></li>
+      </ul>
+    </div>
+  
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Drivers.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
     <div class="related">
       <h3>Navigation</h3>
@@ -414,13 +499,23 @@ from being placed back into a cleared subdriver.</p>
         <li class="right" >
           <a href="Classes.html" title="Core Classes"
              >previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013, Robert Hafner.
-      Last updated on Nov 17, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
-    </div>
+
+  <script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer container">
+    &copy; Copyright 2014, Robert Hafner. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-29779027-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </body>
 </html>

@@ -6,15 +6,20 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Basic Usage &mdash; Stash 0.11.1 documentation</title>
+  
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Basic Usage &mdash; Stash 0.12.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.11.1',
+        VERSION:     '0.12.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,11 +29,46 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Stash 0.11.1 documentation" href="index.html" />
+    <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
     <link rel="next" title="Invalidation" href="Invalidation.html" />
-    <link rel="prev" title="Getting Started" href="Setup.html" /> 
+    <link rel="prev" title="Getting Started" href="Setup.html" />
+  
+   
+
   </head>
   <body>
+<nav class="navbar navbar-default navbar-fixed-top " role="navigation">
+  <div class="container">
+    <div class="visible-md visible-lg navbar-text pull-right" id="github-stars">
+      <iframe src="http://ghbtns.com/github-btn.html?user=tedivm&repo=stash&type=watch&count=true&size=small"
+      allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
+    </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggle-main-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="
+    
+      index.html">Stash</a>
+    </div>
+    <div class="collapse navbar-collapse" id="toggle-main-nav">
+      <ul class="nav navbar-nav">
+          <li><a href="
+      index.html">Home</a></li>
+          <li><a href="https://github.com/tedivm/stash">Github</a></li>
+            
+              <li><a href="http://blog.tedivm.com">Blog</a></li>
+            
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -41,24 +81,87 @@
         <li class="right" >
           <a href="Setup.html" title="Getting Started"
              accesskey="P">previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
-    </div>  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+    </div>
+    <div class="container-wrapper">
+        <div class="container-fluid">
             
+    <div class="top-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Setup.html" title="previous chapter (use the left arrow)">&larr; Getting Started</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Invalidation.html" title="next chapter (use the right arrow)">Invalidation &rarr;</a></li>
+      </ul>
+    </div>
+  
+            <div class="row document clearer">
+  <div class="col-md-3 sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="
+      index.html">
+          <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+        </a></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><a href="
+    
+      index.html">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#autoloading">Autoloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-stash-objects">Creating Stash Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#identifying-items-using-keys">Identifying Items Using Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-and-retrieving-data">Storing and Retrieving Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clearing-data">Clearing Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#purging-data">Purging Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Search</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-inline" action="search.html" method="get" role="form">
+      <div class="input-group">
+        <input name="q" type="text" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Go</button>
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+                <div class="col-md-9 body">
+                  
   <div class="section" id="basic-usage">
 <span id="basics"></span><h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
 <p>Stash is a simple to use library with powerful features.</p>
 <div class="section" id="autoloading">
 <h2>Autoloading<a class="headerlink" href="#autoloading" title="Permalink to this headline">¶</a></h2>
 <p>The Stash library conforms to the PSR-0 autoloading standard. If your project
-doesn&#8217;t already use a PSR-0 compliant autoloader, you can simply include the
+doesn't already use a PSR-0 compliant autoloader, you can simply include the
 <cite>autoload.php</cite> file at the root of the project to load Stash classes.</p>
-<p>All of Stash&#8217;s classes live in the Stash namespace.</p>
+<p>All of Stash's classes live in the Stash namespace.</p>
 </div>
 <div class="section" id="creating-stash-objects">
 <h2>Creating Stash Objects<a class="headerlink" href="#creating-stash-objects" title="Permalink to this headline">¶</a></h2>
@@ -118,9 +221,9 @@ folders on a computer. This makes clearing groups of items in the cache as
 simple as clearing their parent node, just like deleting a directory would erase
 all the files underneath.</p>
 <p>A project that had different models, each identified by an id and a type, might
-have it&#8217;s keys for those models start with models/type/id, with individual
-pieces of data stored in keys inside of those. If the user &#8220;bob&#8221; had the id
-&#8220;32&#8221;, the path to his data in the cache would be &#8220;models/users/32&#8221;.</p>
+have it's keys for those models start with models/type/id, with individual
+pieces of data stored in keys inside of those. If the user &quot;bob&quot; had the id
+&quot;32&quot;, the path to his data in the cache would be &quot;models/users/32&quot;.</p>
 <p>Stash accepts keys in two forms: as a slash-delimited string, or as a series of
 arguments representing each level of nesting. Both work in exactly the same way.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
@@ -142,11 +245,11 @@ functions do the bulk of the work:</p>
 null return to check for a cache miss.)</li>
 <li><em>isMiss()</em> - Returns true if no data is stored or the data is stale; returns
 false if fresh data is present.</li>
-<li><em>set($data, $ttl = null)</em> - Stores the specified data in the driver&#8217;s
+<li><em>set($data, $ttl = null)</em> - Stores the specified data in the driver's
 persistent storage.</li>
 </ul>
-<p>Using these three functions, you can create simple cache blocks &#8211; pieces of
-code where you fetch data, check to see if it&#8217;s fresh, and then regenerate and
+<p>Using these three functions, you can create simple cache blocks -- pieces of
+code where you fetch data, check to see if it's fresh, and then regenerate and
 store the data if it was stale or absent.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
@@ -211,7 +314,7 @@ cleared manually before they expire. Items will never be reported as fresh
 <div class="section" id="clearing-data">
 <h2>Clearing Data<a class="headerlink" href="#clearing-data" title="Permalink to this headline">¶</a></h2>
 <p>Clearing data is just as simple as getting it. As with the <em>get</em> and <em>store</em>
-functions, the <em>clear</em> function takes a set key - if one isn&#8217;t set then the
+functions, the <em>clear</em> function takes a set key - if one isn't set then the
 entire cache is cleared. Note that clearing a key will clear that key <em>and any
 keys beneath it in the hierarchy.</em></p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
@@ -244,41 +347,23 @@ maintenance task or as part of a cron job.</p>
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="Contents.html">
-              <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
-            </a></p>
-<h3><a href="Contents.html">Table Of Contents</a></h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Basic Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#autoloading">Autoloading</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-stash-objects">Creating Stash Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#identifying-items-using-keys">Identifying Items Using Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#storing-and-retrieving-data">Storing and Retrieving Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#clearing-data">Clearing Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#purging-data">Purging Data</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
-</ul>
+                </div>
+              <div class="clearfix"></div>
+            </div>
+            
+    <div class="footer-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Setup.html" title="previous chapter (use the left arrow)">&larr; Getting Started</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Invalidation.html" title="next chapter (use the right arrow)">Invalidation &rarr;</a></li>
+      </ul>
+    </div>
+  
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Basics.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
     <div class="related">
       <h3>Navigation</h3>
@@ -292,13 +377,23 @@ maintenance task or as part of a cron job.</p>
         <li class="right" >
           <a href="Setup.html" title="Getting Started"
              >previous</a> |</li>
-        <li><a href="Contents.html">Stash 0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013, Robert Hafner.
-      Last updated on Nov 17, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
-    </div>
+
+  <script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer container">
+    &copy; Copyright 2014, Robert Hafner. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-29779027-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </body>
 </html>
