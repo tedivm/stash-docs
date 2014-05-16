@@ -15,7 +15,7 @@
 import sys
 import os
 
-# Using custome version of guzzle_sphinx_theme found at
+# Using custom version of guzzle_sphinx_theme found at
 # https://github.com/tedivm/guzzle_sphinx_theme
 # sys.path.append("/Users/tedivm/Development/guzzle_sphinx_theme")
 import guzzle_sphinx_theme
