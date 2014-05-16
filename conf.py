@@ -14,6 +14,10 @@
 
 import sys
 import os
+
+# Using custome version of guzzle_sphinx_theme found at
+# https://github.com/tedivm/guzzle_sphinx_theme
+# sys.path.append("/Users/tedivm/Development/guzzle_sphinx_theme")
 import guzzle_sphinx_theme
 
 
@@ -45,6 +49,7 @@ source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'Contents'
+
 
 # General information about the project.
 project = u'Stash'
@@ -185,10 +190,6 @@ htmlhelp_basename = 'Stashdoc'
 
 # -- Customized Settings for HTML output ----------------------------------
 
-
-# Uses a Guzzle style Pygments theme
-# pygments_style = 'guzzle_sphinx_theme.GuzzleStyle'
-
 # Adds an HTML table visitor to apply Bootstrap table classes
 html_translator_class = 'guzzle_sphinx_theme.HTMLTranslator'
 html_theme_path = guzzle_sphinx_theme.html_theme_path()
@@ -224,17 +225,28 @@ html_theme_options = {
 
     # Specify a base_url used to generate sitemap.xml links. If not
     # specified, then no sitemap will be built.
-    "base_url": "http://stash.tedivm.com"
-}
+    "base_url": "http://stash.tedivm.com",
 
+    # Add blog to links at top
+    "navlinks": {
+      "Blog": "http://blog.tedivm.com"
+    },
+
+    # Override homepage template while still leaving TOS intact
+    "homepage": "index",
+
+    # Customize the branding a bit.
+    "highlight_color": "#FA5858",
+
+    "bodylink_color": "#428bca"
+
+}
 
 
 html_sidebars = {
-   '**': ['localtoc.html', 'searchbox.html'],
+   '**': ['globaltoc.html', 'searchbox.html'],
    'using/windows': ['windowssidebar.html', 'searchbox.html'],
 }
-
-
 
 
 
