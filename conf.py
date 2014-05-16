@@ -17,7 +17,7 @@ import os
 
 # Using custom version of guzzle_sphinx_theme found at
 # https://github.com/tedivm/guzzle_sphinx_theme
-# sys.path.append("/Users/tedivm/Development/guzzle_sphinx_theme")
+sys.path.append("/Users/tedivm/Development/guzzle_sphinx_theme")
 import guzzle_sphinx_theme
 
 
@@ -236,7 +236,7 @@ html_theme_options = {
     "homepage": "index",
 
     # Customize the branding a bit.
-    "highlight_color": "#FA5858",
+    "highlight_color": "#ED2024",
 
     "bodylink_color": "#428bca"
 
