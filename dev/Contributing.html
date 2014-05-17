@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-    <title>Integration &mdash; Stash 0.12.1 documentation</title>
+    <title>Contributing &mdash; Stash 0.12.1 documentation</title>
     
     <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -30,8 +30,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
-    <link rel="next" title="Extending" href="Extending.html" />
-    <link rel="prev" title="Drivers" href="Drivers.html" />
+    <link rel="prev" title="Extending" href="Extending.html" />
   
    
 
@@ -77,9 +76,6 @@
              accesskey="I">index</a></li>
         <li class="right" >
           <a href="Extending.html" title="Extending"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="Drivers.html" title="Drivers"
              accesskey="P">previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
@@ -90,11 +86,8 @@
     <div class="top-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Drivers.html" title="previous chapter (use the left arrow)">&larr; Drivers</a>
-          <span class="divider"></span>
-          
+          <a href="Extending.html" title="previous chapter (use the left arrow)">&larr; Extending</a>
         </li>
-          <li><a href="Extending.html" title="next chapter (use the right arrow)">Extending &rarr;</a></li>
       </ul>
     </div>
   
@@ -105,34 +98,6 @@
       index.html">
           <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
         </a></p>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3><a href="
-    
-      index.html">Table Of Contents</a></h3>
-  </div>
-  <div class="panel-body panel-toc panel-globaltoc">
-    <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Integration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#standards-compliance">Standards Compliance</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
-</ul>
-
-  </div>
-</div>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Search</h3>
@@ -154,38 +119,8 @@
   </div>
                 <div class="col-md-9 body">
                   
-  <div class="section" id="integration">
-<span id="id1"></span><h1>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Stash is available as a direct download through <a class="reference external" href="https://github.com/tedivm/Stash/releases">GitHub</a>, through Pear via the `
-pear.tedivm.com &lt;<a class="reference external" href="http://pear.tedivm.com">http://pear.tedivm.com</a>&gt;`_ channel, or the preferred method of
-using <a class="reference external" href="http://getcomposer.org/">Composer</a>.</p>
-<p>When using Composer it's important to remember that Stash follows semantic
-versioning, but has still not reached it's 1.0.0 release. This means care should
-be given when updating MINOR versions, but that PATCH versions will always be
-backwards compatible. The recommended Composer requirement should look like-</p>
-<blockquote>
-<div>&quot;tedivm/stash&quot;: &quot;0.11.*&quot;</div></blockquote>
-<p>Where 0.11 can be replaced with the version you've developed against.</p>
-</div>
-<div class="section" id="logging">
-<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
-<p>Stash supports logging through third party logging libraries, such as monolog.
-It does this by following  the <a class="reference external" href="http://www.php-fig.org/psr/3/">PSR-3
-LoggerAwareInterface</a>. Caching events of all
-varieties- from simple hit or miss numbers to driver errors and other exceptions-
-can be exposed to analysis by injecting a compliant logging object into any Pool
-instance.</p>
-</div>
-<div class="section" id="standards-compliance">
-<h2>Standards Compliance<a class="headerlink" href="#standards-compliance" title="Permalink to this headline">¶</a></h2>
-<p>Stash complies with <a class="reference external" href="http://www.php-fig.org/psr/0/">PSR-0</a>.,
-<a class="reference external" href="http://www.php-fig.org/psr/1/">PSR-1</a>., <a class="reference external" href="http://www.php-fig.org/psr/2/">PSR-2</a>. and <a class="reference external" href="http://www.php-fig.org/psr/3/">PSR-3</a>.
-This makes integration with other projects easier, as it shares a common defined
-code standard, follows naming scemes which allow for shared autoloaders, and
-opens itself up to integration with other libraries.</p>
-</div>
+  <div class="section" id="contributing">
+<span id="id1"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -196,11 +131,8 @@ opens itself up to integration with other libraries.</p>
     <div class="footer-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Drivers.html" title="previous chapter (use the left arrow)">&larr; Drivers</a>
-          <span class="divider"></span>
-          
+          <a href="Extending.html" title="previous chapter (use the left arrow)">&larr; Extending</a>
         </li>
-          <li><a href="Extending.html" title="next chapter (use the right arrow)">Extending &rarr;</a></li>
       </ul>
     </div>
   
@@ -215,9 +147,6 @@ opens itself up to integration with other libraries.</p>
              >index</a></li>
         <li class="right" >
           <a href="Extending.html" title="Extending"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="Drivers.html" title="Drivers"
              >previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>

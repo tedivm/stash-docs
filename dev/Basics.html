@@ -30,8 +30,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
-    <link rel="next" title="Invalidation" href="Invalidation.html" />
-    <link rel="prev" title="Getting Started" href="Setup.html" />
+    <link rel="next" title="Groupings" href="Grouping.html" />
+    <link rel="prev" title="Overview" href="Overview.html" />
   
    
 
@@ -76,10 +76,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Invalidation.html" title="Invalidation"
+          <a href="Grouping.html" title="Groupings"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Setup.html" title="Getting Started"
+          <a href="Overview.html" title="Overview"
              accesskey="P">previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
@@ -90,11 +90,11 @@
     <div class="top-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Setup.html" title="previous chapter (use the left arrow)">&larr; Getting Started</a>
+          <a href="Overview.html" title="previous chapter (use the left arrow)">&larr; Overview</a>
           <span class="divider"></span>
           
         </li>
-          <li><a href="Invalidation.html" title="next chapter (use the right arrow)">Invalidation &rarr;</a></li>
+          <li><a href="Grouping.html" title="next chapter (use the right arrow)">Groupings &rarr;</a></li>
       </ul>
     </div>
   
@@ -114,20 +114,34 @@
   <div class="panel-body panel-toc panel-globaltoc">
     <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Basic Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#autoloading">Autoloading</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-stash-objects">Creating Stash Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#identifying-items-using-keys">Identifying Items Using Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#storing-and-retrieving-data">Storing and Retrieving Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#clearing-data">Clearing Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#purging-data">Purging Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#concepts">Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pools-and-items">Pools and Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drivers">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys">Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#namespaces">Namespaces</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-items">Creating Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identifying-items">Identifying Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#caching-data">Caching Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clearing-data">Clearing Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#emptying-the-entire-cache">Emptying the Entire Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-maintenance">Running Maintenance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
 </ul>
 
   </div>
@@ -155,51 +169,75 @@
                   
   <div class="section" id="basic-usage">
 <span id="basics"></span><h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
-<p>Stash is a simple to use library with powerful features.</p>
-<div class="section" id="autoloading">
-<h2>Autoloading<a class="headerlink" href="#autoloading" title="Permalink to this headline">¶</a></h2>
-<p>The Stash library conforms to the PSR-0 autoloading standard. If your project
-doesn't already use a PSR-0 compliant autoloader, you can simply include the
-<cite>autoload.php</cite> file at the root of the project to load Stash classes.</p>
-<p>All of Stash's classes live in the Stash namespace.</p>
+<div class="section" id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pools-and-items">
+<h3>Pools and Items<a class="headerlink" href="#pools-and-items" title="Permalink to this headline">¶</a></h3>
+<p>The Pool class represents the caching system as a whole, while the Item class represents the pieces of data that are
+stored in it. Item classes get pulled out of the Pool when they are needed (in other words, Pools are Item Factories).</p>
 </div>
-<div class="section" id="creating-stash-objects">
-<h2>Creating Stash Objects<a class="headerlink" href="#creating-stash-objects" title="Permalink to this headline">¶</a></h2>
-<p>Creating a basic Stash object is simple:</p>
+<div class="section" id="drivers">
+<h3>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h3>
+<p>Drivers allow Stash to interact with different caching systems by abstracting away the system specific APIs.</p>
+<p>For the most part Drivers are invisible. Once they're created and injected into the Pool they can be forgotten about.
+If you're using Stash with a framework, such as the Symfony Stash Bundle, you can ignore drivers altogether.</p>
+</div>
+<div class="section" id="keys">
+<h3>Keys<a class="headerlink" href="#keys" title="Permalink to this headline">¶</a></h3>
+<p>Keys are unique strings that map to data in the caching system. Each Item is associated with a Key. At the simplest
+level Keys can be looked at as alphanumeric strings with a one to one mapping. This works like most traditional caching
+systems, with each key mapping to a single piece of data in the caching system.</p>
+<p>Stash also has a special kind of grouping system that allow cache items to be nested by adding a slash to Keys (the same
+syntax as identifying folders on a filesystem). These slashes tells Stash where the nesting points are. Nesting allows
+developers to organize items just like they would files and folders on a computer. This makes clearing groups of items
+in the cache as simple as clearing their parent node, just like deleting a directory would erase all the files underneath.</p>
+<p>A project that had different models, each identified by an id and a type, might have it's keys for those models start
+with models/type/id, with individual pieces of data stored in keys inside of those. If the user &quot;bob&quot; had the id &quot;32&quot;,
+the path to his data in the cache would be &quot;models/users/32&quot;.</p>
+</div>
+<div class="section" id="namespaces">
+<h3>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
+<p>Namespaces provide a simple way of grouping cache data together and isolating it from other data in the system.
+Namespaces are set on the Pool, with each subsequent Item retrieved from the Pool being a member of that Namespace. Two
+Items with the same key but different Namespaces will refer to different data, and actions performed on a Pool with a
+set Namespace only affects that Namespace.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-items">
+<h3>Creating Items<a class="headerlink" href="#creating-items" title="Permalink to this headline">¶</a></h3>
+<p>Creating an Item with Stash is simple-</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-<span class="nv">$stash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">();</span>
+<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">();</span>
 
 <span class="c1">// Set the &quot;key&quot;, which is the path the Stash object points to.</span>
-<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data&#39;</span><span class="p">);</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This will create a cache object with no cross request storage, meaning the data
-will only be cached for the lifetime of that one script or request. In order to
-store cache results across requests, we need a driver. Each driver interfaces
-with a specific form of persistent storage.</p>
+<p>This will create a Pool using the default &quot;Ephemeral&quot; driver. Data will be cached for the lifetime of the request, but
+will not be available to future requests. In order to cache data across requests a drivers is needed.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// Create Driver with default options</span>
-<span class="nv">$stashFileSystem</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">();</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">();</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="k">array</span><span class="p">());</span>
 
-<span class="c1">// Create the actual cache object, injecting the backend</span>
-<span class="nv">$stash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="nv">$stashFileSystem</span><span class="p">);</span>
+<span class="c1">// Inject the driver into a new Pool object.</span>
+<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="nv">$driver</span><span class="p">);</span>
 
-<span class="c1">// Set the &quot;key&quot;, which is the path the Stash object points to. This will be</span>
-<span class="c1">// discussed in depth later, but for now just know it&#39;s an identifier.</span>
-<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data&#39;</span><span class="p">);</span>
+<span class="c1">// New Items will get and store their data using the same Driver.</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Each driver object can be used by many different cache objects, so that any
-initial setup and overhead (database connections, file drivers, etc.) can be
-done only once per request. In order to simplify this process, the Pool class
-automates the process of driver creation to ensure that all cache objects use
-the same drivers.</p>
+<p>Each driver object can be used by many different Pool objects, and each of those Pools will then have access to the
+same data.</p>
+<p>Items can be retrieved from the Pool class individually or in groups.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// Create Driver with default options</span>
-<span class="nv">$stashFileSystem</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">();</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">();</span>
 
 <span class="c1">// Create pool and inject driver</span>
-<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="nv">$stashFileSystem</span><span class="p">);</span>
+<span class="nv">$pool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Pool</span><span class="p">(</span><span class="nv">$driver</span><span class="p">);</span>
 
 <span class="c1">// Retrieve a single cache item</span>
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data&#39;</span><span class="p">);</span>
@@ -209,139 +247,133 @@ the same drivers.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="identifying-items-using-keys">
-<h2>Identifying Items Using Keys<a class="headerlink" href="#identifying-items-using-keys" title="Permalink to this headline">¶</a></h2>
-<p>Stash identifies items in the cache pool using keys, which are just simple
-strings. Stash has a special kind of grouping system that allow cache items to
-be nested, similar to how folders are nested in filesystems, by adding a slash
-to Keys. The slash tells the Implementing Library where the nesting points are.
-If no nesting is used, Stacks behave exactly like the standard Cache interfaces.
-Nesting allows developers to organize items just like they would files and
-folders on a computer. This makes clearing groups of items in the cache as
-simple as clearing their parent node, just like deleting a directory would erase
-all the files underneath.</p>
-<p>A project that had different models, each identified by an id and a type, might
-have it's keys for those models start with models/type/id, with individual
-pieces of data stored in keys inside of those. If the user &quot;bob&quot; had the id
-&quot;32&quot;, the path to his data in the cache would be &quot;models/users/32&quot;.</p>
-<p>Stash accepts keys in two forms: as a slash-delimited string, or as a series of
-arguments representing each level of nesting. Both work in exactly the same way.</p>
+<div class="section" id="identifying-items">
+<h3>Identifying Items<a class="headerlink" href="#identifying-items" title="Permalink to this headline">¶</a></h3>
+<p>The examples so far show how to get Items using a Key represented as a string. It is also possible to represent a Key
+as an array or a series of function arguments. Each of these methods will retrieve the same Item, this is just some
+syntactic sugar developers can use.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// Pass the key as a string</span>
-<span class="nv">$stashItem</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;models/users/&#39;</span> <span class="o">.</span> <span class="nv">$id</span> <span class="o">.</span> <span class="s1">&#39;/info&#39;</span><span class="p">);</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;models/users/&#39;</span> <span class="o">.</span> <span class="nv">$id</span> <span class="o">.</span> <span class="s1">&#39;/info&#39;</span><span class="p">);</span>
+
+<span class="c1">// Pass the key as an array</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">));</span>
 
 <span class="c1">// Pass the key as a series of arguments</span>
-<span class="nv">$stashItem</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">);</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="storing-and-retrieving-data">
-<h2>Storing and Retrieving Data<a class="headerlink" href="#storing-and-retrieving-data" title="Permalink to this headline">¶</a></h2>
-<p>Storing data in Stash (and retrieving it in future requests) is easy. Three
-functions do the bulk of the work:</p>
+<div class="section" id="caching-data">
+<h3>Caching Data<a class="headerlink" href="#caching-data" title="Permalink to this headline">¶</a></h3>
+<p>Storing and Retrieving Data is done through the Item class. Four functions do the bulk of the work:</p>
 <ul class="simple">
-<li><em>get()</em> - Returns data that was previously stored, or null if nothing stored.
-(Since it is possible to store null values it is very important not to rely on a
-null return to check for a cache miss.)</li>
-<li><em>isMiss()</em> - Returns true if no data is stored or the data is stale; returns
-false if fresh data is present.</li>
-<li><em>set($data, $ttl = null)</em> - Stores the specified data in the driver's
-persistent storage.</li>
+<li><em>get()</em> - Returns data that was previously stored, or null if nothing stored. (Since it is possible to store null
+values it is very important not to rely on a null return to check for a cache miss.)</li>
+<li><em>isMiss()</em> - Returns true if no data is stored or the data is stale; returns false if fresh data is present.</li>
+<li><em>lock()</em> - This is used to let other processes know that this process is generating new data.</li>
+<li><em>set($data, $ttl = null)</em> - Stores the specified data for use by other requests.</li>
 </ul>
-<p>Using these three functions, you can create simple cache blocks -- pieces of
-code where you fetch data, check to see if it's fresh, and then regenerate and
-store the data if it was stale or absent.</p>
+<p>Using these four functions, you can create simple cache blocks -- pieces of code where you fetch data, check to see if
+it's fresh, and then regenerate and store the data if it was stale or absent.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-<span class="c1">// Get cache item.</span>
-    <span class="nv">$stashItem</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/item&#39;</span><span class="p">);</span>
+<span class="c1">// Get a cache item.</span>
+    <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/item&#39;</span><span class="p">);</span>
 
-<span class="c1">// Attempt to &quot;get&quot;</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<span class="c1">// Attempt to get the data</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
 <span class="c1">// Check to see if the data was a miss.</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">())</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">())</span>
 <span class="p">{</span>
+    <span class="c1">// Let other processes know that this one is rebuilding the data.</span>
+    <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">lock</span><span class="p">();</span>
+
     <span class="c1">// Run intensive code</span>
     <span class="nv">$data</span> <span class="o">=</span> <span class="nx">codeThatTakesALongTime</span><span class="p">();</span>
 
-    <span class="c1">// Store data.</span>
-    <span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="c1">// Store the expensive to generate data.</span>
+    <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// Continue as normal.</span>
-<span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+<span class="nx">useDataForStuff</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <em>set</em> function can take the expiration as an additional argument. This
-expiration can be a time, in seconds, that the cache should live or it can be a
-DateTime object that represents the time the cached item should expire. (This
-argument can be negative, which will result in an immediately stale cache.)</p>
+<p>The <em>set</em> function can take an optional &quot;expiration&quot; argument, which allows developers to set either a TTL in seconds
+or an explicit expiration using a DateTime object.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
 <span class="c1">// Get cache item.</span>
-    <span class="nv">$stashItem</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/item&#39;</span><span class="p">);</span>
+    <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/item&#39;</span><span class="p">);</span>
 
 <span class="c1">// Using an age.</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stash</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">())</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">())</span>
 <span class="p">{</span>
     <span class="nv">$data</span> <span class="o">=</span> <span class="nx">expensiveFunction</span><span class="p">();</span>
     <span class="c1">// Cache expires in one hour.</span>
-    <span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">3600</span><span class="p">);</span>
+    <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">3600</span><span class="p">);</span>
 <span class="p">}</span>
 
 
 <span class="c1">// Using a DateTime.</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">())</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">())</span>
 <span class="p">{</span>
     <span class="nv">$data</span> <span class="o">=</span> <span class="nx">expensiveFunction</span><span class="p">();</span>
 
-    <span class="c1">// Cache expires January 21, 2012.</span>
-    <span class="nv">$expiration</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;2012-01-21&#39;</span><span class="p">);</span>
-    <span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$expiration</span><span class="p">);</span>
+    <span class="c1">// Cache expires January 21, 2015.</span>
+    <span class="nv">$expiration</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;2015-01-21&#39;</span><span class="p">);</span>
+    <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$expiration</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The expiration sets the <em>maximum</em> time a cached object can remain fresh. In
-order to distribute cache misses, the Stash system tries to vary the expiration
-time for items by shortening a random amount; some drivers may also have size
-restrictions or other criteria for removing items early, and items can be
-cleared manually before they expire. Items will never be reported as fresh
-<em>after</em> the expiration time passes, however.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The expiration time only sets a maximum time the Item can be considered fresh, not a minimum. Items can be
+invalidated from the cache before their expiration time for a number of reasons. Stash will also attempt to
+distribute cache misses to normalize system load. At no point will an Item be considered fresh after the expiration
+or ttl is reached.</p>
+</div>
 </div>
 <div class="section" id="clearing-data">
-<h2>Clearing Data<a class="headerlink" href="#clearing-data" title="Permalink to this headline">¶</a></h2>
-<p>Clearing data is just as simple as getting it. As with the <em>get</em> and <em>store</em>
-functions, the <em>clear</em> function takes a set key - if one isn't set then the
-entire cache is cleared. Note that clearing a key will clear that key <em>and any
-keys beneath it in the hierarchy.</em></p>
+<h3>Clearing Data<a class="headerlink" href="#clearing-data" title="Permalink to this headline">¶</a></h3>
+<p>Clearing data is just as simple as getting it. Note that clearing a key will clear that key <em>and any keys beneath it in
+the hierarchy.</em></p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// Clearing a key.</span>
-<span class="nv">$stashItem</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data/specific/123&#39;</span><span class="p">)</span>
-<span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data/specific/123&#39;</span><span class="p">)</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
 
 <span class="c1">// Clearing a key with subkeys</span>
-<span class="nv">$stashItem</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data/general&#39;</span><span class="p">)</span> <span class="c1">// clears &#39;path/to/data/*&#39;</span>
-<span class="nv">$stashItem</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">&#39;path/to/data&#39;</span><span class="p">)</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span> <span class="c1">// clears &#39;path/to/data/*&#39; as well as &#39;path/to/data&#39;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="emptying-the-entire-cache">
+<h3>Emptying the Entire Cache<a class="headerlink" href="#emptying-the-entire-cache" title="Permalink to this headline">¶</a></h3>
 <p>The Pool class can also empty the entire cache:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="purging-data">
-<h2>Purging Data<a class="headerlink" href="#purging-data" title="Permalink to this headline">¶</a></h2>
-<p>The <em>purge</em> function removes stale data from the cache backends while leaving
-current data intact. Depending on the size of the cache and the specific drivers
-in use this can take some time, so it is best called as part of a separate
-maintenance task or as part of a cron job.</p>
+<div class="section" id="running-maintenance">
+<h3>Running Maintenance<a class="headerlink" href="#running-maintenance" title="Permalink to this headline">¶</a></h3>
+<p>Some caching systems require maintenance actions to occur. This can include things such as removing stale data or
+reindexing for improved performance.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="nv">$pool</span><span class="o">-&gt;</span><span class="na">purge</span><span class="p">();</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Depending on the size of the cache and the specific drivers in use this can take some time, so it is best called as
+part of a separate maintenance task or as part of a cron job.</p>
+</div>
 </div>
 </div>
 </div>
@@ -354,11 +386,11 @@ maintenance task or as part of a cron job.</p>
     <div class="footer-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Setup.html" title="previous chapter (use the left arrow)">&larr; Getting Started</a>
+          <a href="Overview.html" title="previous chapter (use the left arrow)">&larr; Overview</a>
           <span class="divider"></span>
           
         </li>
-          <li><a href="Invalidation.html" title="next chapter (use the right arrow)">Invalidation &rarr;</a></li>
+          <li><a href="Grouping.html" title="next chapter (use the right arrow)">Groupings &rarr;</a></li>
       </ul>
     </div>
   
@@ -372,10 +404,10 @@ maintenance task or as part of a cron job.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Invalidation.html" title="Invalidation"
+          <a href="Grouping.html" title="Groupings"
              >next</a> |</li>
         <li class="right" >
-          <a href="Setup.html" title="Getting Started"
+          <a href="Overview.html" title="Overview"
              >previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>

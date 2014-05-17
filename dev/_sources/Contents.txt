@@ -5,9 +5,13 @@ Stash Documentation
    :maxdepth: 3
 
    index
-   Setup
+   Overview
    Basics
+   Grouping
    Invalidation
+   Examples
    Classes
    Drivers
    Integration
+   Extending
+   Contributing

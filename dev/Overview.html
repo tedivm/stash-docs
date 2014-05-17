@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-    <title>Getting Started &mdash; Stash 0.12.1 documentation</title>
+    <title>Overview &mdash; Stash 0.12.1 documentation</title>
     
     <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -114,17 +114,26 @@
   <div class="panel-body panel-toc panel-globaltoc">
     <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#composer">Composer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#github">Github</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pear">Pear</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#composer">Composer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#direct-download">Direct Download</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#autoloading">Autoloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
 </ul>
 
   </div>
@@ -150,56 +159,62 @@
   </div>
                 <div class="col-md-9 body">
                   
-  <div class="section" id="getting-started">
-<span id="setup"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="overview">
+<span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Stash requires a minimum version of PHP5.3 or HHVM 3.0 in order to run. Individual
+drivers and caching systems will have their own requirements.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="composer">
-<h2>Composer<a class="headerlink" href="#composer" title="Permalink to this headline">¶</a></h2>
-<p>For most projects Composer is the ideal method of installation. Stash is present
+<h3>Composer<a class="headerlink" href="#composer" title="Permalink to this headline">¶</a></h3>
+<p>Composer is the preferred method of installation. Stash is present
 on <a class="reference external" href="https://packagist.org/packages/tedivm/stash">Packagist</a>, making
 installation as easy as adding a directive to your project's composer.json file.</p>
-<p>The simpliest way to use Composer is to include the latest version of Stash.</p>
-<div class="highlight-none"><div class="highlight"><pre>&quot;require&quot;: {
-  &quot;tedivm/stash&quot;: &quot;*&quot;
-}
-</pre></div>
-</div>
-<p>The downside to this is that API changes can occur which will break the project.
-Composer allows specific versions or lines of development to be used. This
-example, which is the preferred method, installs the latest version of the v0.10
-line of development, allowing for the latest enhancements but without the need
-to worry about backwards compatibility breaking changes occurring.</p>
-<div class="highlight-none"><div class="highlight"><pre>&quot;require&quot;: {
-  &quot;tedivm/stash&quot;: &quot;0.11.*&quot;
-}
+<p>Until Stash reaches a stable API with version 1.0 it is recommended that you
+review changes before even Minor updates, although bug fixes will always be
+backwards compatible.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="s">&quot;require&quot;</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span>
+  <span class="s">&quot;tedivm/stash&quot;</span><span class="p-Indicator">:</span> <span class="s">&quot;0.12.*&quot;</span>
+<span class="p-Indicator">}</span>
 </pre></div>
 </div>
 <p>For project looking to take advantage of the latest features it's also possible
 to install directly against the main development line. This is ideal for
 testing, but should be limited to non-production code.</p>
-<div class="highlight-none"><div class="highlight"><pre>&quot;require&quot;: {
-  &quot;tedivm/stash&quot;: &quot;dev-master&quot;
-}
+<div class="highlight-yaml"><div class="highlight"><pre><span class="s">&quot;require&quot;</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span>
+  <span class="s">&quot;tedivm/stash&quot;</span><span class="p-Indicator">:</span> <span class="s">&quot;dev-master&quot;</span>
+<span class="p-Indicator">}</span>
 </pre></div>
 </div>
 <p>For more details on how to use composer with your projects, visit the composer
 website at <a class="reference external" href="http://getcomposer.org/">http://getcomposer.org/</a>.</p>
 </div>
-<div class="section" id="github">
-<h2>Github<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>
-<p>Stash exists on <a class="reference external" href="https://github.com/tedivm/Stash">Github</a>, where anyone can
-contribute, fork, clone and download Stash. As Github is the primary location
-where development occurs, it's the best place to check the latest changes and
-enhancements.</p>
+<div class="section" id="direct-download">
+<h3>Direct Download<a class="headerlink" href="#direct-download" title="Permalink to this headline">¶</a></h3>
+<p>Versions of Stash are available as <a class="reference external" href="https://github.com/tedivm/Stash/releases">Releases</a>.
+on Github.</p>
 </div>
-<div class="section" id="pear">
-<h2>Pear<a class="headerlink" href="#pear" title="Permalink to this headline">¶</a></h2>
-<p>Stash can be installed from the <a class="reference external" href="http://pear.tedivm.com">tedivm pear channel</a>.</p>
-<div class="highlight-none"><div class="highlight"><pre>$ pear channel-discover pear.tedivm.com
-$ pear install tedivm/Stash
-</pre></div>
 </div>
-<p>Further instructions can be found at
-<a class="reference external" href="http://pear.tedivm.com">pear.tedivm.com</a>.</p>
+<div class="section" id="autoloading">
+<h2>Autoloading<a class="headerlink" href="#autoloading" title="Permalink to this headline">¶</a></h2>
+<p>If you installed using composer then you simply need to include it's autoloader.
+This is the preferred method of loading Stash.</p>
+<p>Stash confirms to PSR-0 and places it's code in the src folder, making it easy
+to include in a custom autoloader. This means &quot;StashPool&quot; can be found in
+&quot;srcStashPool.php&quot;..</p>
+<p>If all else fails there is an autoloader that is packaged with Stash itself.
+Just include &quot;autoload.php&quot;.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>Stash is licensed under the New BSD License. This means you are free to use it
+in any of your projects, proprietary or open source. While you aren't obligated
+to contribute back, any bug fixes or enhancements are appreciated -- besides,
+getting your code into the main branch is so much easier than maintaining your
+own fork.</p>
 </div>
 </div>
 
