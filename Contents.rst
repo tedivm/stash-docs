@@ -7,7 +7,10 @@ Stash Documentation
    index
    Overview
    Basics
+   Grouping
    Invalidation
    Classes
    Drivers
    Integration
+   Extending
+   Contributing
