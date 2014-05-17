@@ -1,8 +1,8 @@
-.. _basics:
+.. _examples:
 
-===========================
-Basic Usage
-===========================
+========
+Examples
+========
 
 
 Creating Stash Objects
