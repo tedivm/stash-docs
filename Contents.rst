@@ -5,7 +5,7 @@ Stash Documentation
    :maxdepth: 3
 
    index
-   Setup
+   Overview
    Basics
    Invalidation
    Classes

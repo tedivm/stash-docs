@@ -1,11 +1,21 @@
-.. _setup:
+.. _overview:
 
-===========================
-Getting Started
-===========================
+========
+Overview
+========
+
+Requirements
+============
+
+Stash requires a minimum version of PHP5.3 or HHVM 3.0 in order to run. Individual
+drivers and caching systems will have their own requirements.
+
+
+Installation
+============
 
 Composer
-========
+--------
 
 For most projects Composer is the ideal method of installation. Stash is present
 on `Packagist <https://packagist.org/packages/tedivm/stash>`_, making
@@ -29,7 +39,7 @@ to worry about backwards compatibility breaking changes occurring.
 .. code-block:: none
 
       "require": {
-        "tedivm/stash": "0.11.*"
+        "tedivm/stash": "0.12.*"
       }
 
 For project looking to take advantage of the latest features it's also possible
@@ -46,24 +56,18 @@ For more details on how to use composer with your projects, visit the composer
 website at http://getcomposer.org/.
 
 
-Github
-======
+Direct Download
+---------------
 
-Stash exists on `Github <https://github.com/tedivm/Stash>`_, where anyone can
-contribute, fork, clone and download Stash. As Github is the primary location
-where development occurs, it's the best place to check the latest changes and
-enhancements.
+Releases of Stash are available for direct download on `Github
+<https://github.com/tedivm/Stash/releases>`_.
 
 
-Pear
-====
+License
+=======
 
-Stash can be installed from the `tedivm pear channel <http://pear.tedivm.com>`_.
-
-.. code-block:: none
-
-    $ pear channel-discover pear.tedivm.com
-    $ pear install tedivm/Stash
-
-Further instructions can be found at
-`pear.tedivm.com <http://pear.tedivm.com>`_.
+Stash is licensed under the New BSD License. This means you are free to use it
+in any of your projects, proprietary or open source. While you aren't obligated
+to contribute back, any bug fixes or enhancements are appreciated -- besides,
+getting your code into the main branch is so much easier than maintaining your
+own fork.
