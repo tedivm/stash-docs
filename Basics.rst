@@ -4,17 +4,6 @@
 Basic Usage
 ===========================
 
-Stash is a simple to use library with powerful features.
-
-Autoloading
-===========
-
-The Stash library conforms to the PSR-0 autoloading standard. If your project
-doesn't already use a PSR-0 compliant autoloader, you can simply include the
-`autoload.php` file at the root of the project to load Stash classes.
-
-All of Stash's classes live in the Stash namespace.
-
 
 Creating Stash Objects
 ======================

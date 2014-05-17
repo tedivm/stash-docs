@@ -17,36 +17,26 @@ Installation
 Composer
 --------
 
-For most projects Composer is the ideal method of installation. Stash is present
+Composer is the preferred method of installation. Stash is present
 on `Packagist <https://packagist.org/packages/tedivm/stash>`_, making
 installation as easy as adding a directive to your project's composer.json file.
 
-The simpliest way to use Composer is to include the latest version of Stash.
+Until Stash reaches a stable API with version 1.0 it is recommended that you
+review changes before even Minor updates, although bug fixes will always be
+backwards compatible.
 
-.. code-block:: none
-
-      "require": {
-        "tedivm/stash": "*"
-      }
-
-
-The downside to this is that API changes can occur which will break the project.
-Composer allows specific versions or lines of development to be used. This
-example, which is the preferred method, installs the latest version of the v0.10
-line of development, allowing for the latest enhancements but without the need
-to worry about backwards compatibility breaking changes occurring.
-
-.. code-block:: none
+.. code-block:: yaml
 
       "require": {
         "tedivm/stash": "0.12.*"
       }
 
+
 For project looking to take advantage of the latest features it's also possible
 to install directly against the main development line. This is ideal for
 testing, but should be limited to non-production code.
 
-.. code-block:: none
+.. code-block:: yaml
 
       "require": {
         "tedivm/stash": "dev-master"
@@ -59,8 +49,22 @@ website at http://getcomposer.org/.
 Direct Download
 ---------------
 
-Releases of Stash are available for direct download on `Github
-<https://github.com/tedivm/Stash/releases>`_.
+Versions of Stash are available as `Releases <https://github.com/tedivm/Stash/releases>`_.
+on Github.
+
+
+Autoloading
+===========
+
+If you installed using composer then you simply need to include it's autoloader.
+This is the preferred method of loading Stash.
+
+Stash confirms to PSR-0 and places it's code in the src folder, making it easy
+to include in a custom autoloader. This means "Stash\Pool" can be found in
+"src\Stash\Pool.php"..
+
+If all else fails there is an autoloader that is packaged with Stash itself.
+Just include "autoload.php".
 
 
 License
