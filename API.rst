@@ -26,7 +26,7 @@ setLogger
 
 *setLogger($logger)*
 
-Sets a \PSR\Log\LoggerInterface style logging client to enable the tracking of errors.
+Sets a PSR LoggerInterface style logging client to enable the tracking of errors.
 
 
 setNamespace
