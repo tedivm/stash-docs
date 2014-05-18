@@ -4,24 +4,6 @@
 Core API
 ========
 
-Drivers
-=======
-
-Stash works by storing values into various backend systems, like APC and Memcached, and retrieving them later. With the
-exception their creation and setup, drivers don't have any "public" functions- they are used by the Pool and Item
-classes themselves to interact with the underlying cache system.
-
-The :ref:`Drivers` page contains a list of all drivers and their options.
-
-setOptions
-----------
-
-*setOptions(array $options)*
-
-Passes an array of options to the Driver. This can include things like server addresses or directories to use for cache
-storage.
-
-
 Pool
 ====
 
@@ -98,6 +80,7 @@ It's important that this function is not called from inside a normal request, as
 occasionally take some time.
 
 
+
 Item
 =====
 
@@ -106,21 +89,17 @@ objects are created by the Pool class.
 
 
 get
----
+----
 
-*get($invalidation, [$args])*
+*get($invalidation == Invalidation::PRECOMPUTE, [$args])*
 
-The get function the data mapped to this particular Item. If no value is stored
-at all then this function will return null. Since this can return false or null
-as a correctly cached value, the return value should not be used to determine
-successful retrieval of data- for that use the "isMiss()" function after calling
-this one.
+Retrieves the stored value of the Item or null if one is not set. Because null can be a valid stored object it is
+important to call *isMiss* in order to actually check it's validity.
 
-The get function can take a series of optional arguments defining how it handles
-cache misses. The first of these options is the invalidation method to be used,
-while the other options all provide invalidation specific options. The
-:ref:`invalidation` page contains much more information about hos to use this
-functionality.
+
+The get function can take a series of optional arguments defining how it handles cache misses. The first of these
+options is the invalidation method to be used, while the other options all provide invalidation specific options. The
+:ref:`invalidation` page contains much more information about hos to use this functionality.
 
 
 isMiss
@@ -128,33 +107,26 @@ isMiss
 
 *isMiss()*
 
-The isMiss function returns true when the current Item has either no data or
-stale data. Since Stash is capable of storing both null and false values and
-returning them via the get function, this is the only real way to test whether
-a cached value is usable or not.
+The isMiss function returns true when the current Item has either stale or no data. Since Stash is capable of storing
+both null and false values and returning them via the get function this is the only real way to test whether a cached
+value is usable or not.
 
-The exact behavior used to define a cache miss is defined by the invalidation
-method used for the object. The :ref:`invalidation` page contains much more
-information about hos to use this functionality.
+The exact behavior used to define a cache miss is defined by the invalidation method used for the object. The
+:ref:`invalidation` page contains much more information about hos to use this functionality.
 
 
 set
----
+----
 
 *set($data, $ttl = null)*
 
-The set function is used to populate the cache with data. The first argument
-can be any type of data that is able to be serialized- essentially everything
-except resources and classes which can't be serialized. All data put into Stash
-will either come back exactly as inserted or not at all.
+The set function is used to populate the cache with data. The first argument can be any type of data that is able to be
+serialized- essentially everything except resources and classes which can't be serialized.
 
-The second argument defines how long the item will be stored in the cache. This
-is a maximum time, as items can be cleared or removed earlier depending on a
-number of factors. This argument can be an integer representing the time, in
-seconds, that the item will be considered valid. It can also be passed a
-DateTime object signifying the exact moment the data should expire. Finally, for
-items that are regenerated some other way, or which will never change, a null
-value can be passed.
+The second argument defines how long the Item will be stored in the cache. This is a maximum time, as Items can be
+cleared or removed earlier but will never be considered a cache hit after it. This argument can either be a DateTime
+defining a specific expiration or an integer representing the time, in seconds, that the data should be considered
+fresh.
 
 
 clear
@@ -164,9 +136,8 @@ clear
 
 The clear function removes the current Item's data from the backend storage.
 
-If hierarchical or "stackable" caching is being used this function will also
-remove children Items. The Key section of the :ref:`basics` document goes into
-more detail about how that works.
+If hierarchical or "stackable" caching is being used this function will also remove children Items. The Key section of
+the :ref:`basics` document goes into more detail about how that works.
 
 
 lock
@@ -174,17 +145,12 @@ lock
 
 *lock($ttl = null)*
 
-The lock function is used to tell other processes and requests that this
-particular item is being regenerated. This is typically called after the
-"isMiss" function returns true, before the Item is regenerated and stored using
-"set". Depending on the Invalidation method set for this Item, this prevents
-multiple requests from attempting to regenerate the data in question,
-potentially preventing a cache stampede (also known as the dogpile effect) as
-multiple scripts attempt to run the same expensive code.
+This should be called right before the script attempts to regenerate data from a cache miss. It signifies to other
+processes or requests that the data is being generated and allows them to take special action to improve system
+performance. Put more simply, just call this function and your cache will be higher performing as a result.
 
-The exact effect of this function depends on which invalidation method is being
-used. The :ref:`invalidation` page contains much more information about hos to
-use this functionality.
+The exact effect of this function depends on which invalidation method is being used. The :ref:`invalidation` page
+contains much more information about how to use this functionality.
 
 
 disable
@@ -192,8 +158,7 @@ disable
 
 *disable()*
 
-The disable function disables all access to the "Driver" and forces the Item
-class to gracefully fail most of it's calls.
+The disable function prevents any read or write operations and forces all the other calls to fail gracefully.
 
 
 getKey
@@ -201,5 +166,48 @@ getKey
 
 *getKey()*
 
-The getKey function returns this Item's key as a string. This is particularly
-useful when the Item is returned as a group of Items in an Iterator.
+The getKey function returns this Item's key as a string. This is particularly useful when the Item is returned as a
+group of Items in an Iterator.
+
+
+extend
+------
+
+*extend($ttl = null)*
+
+This extends the Item's lifetime without changing it's data. Like the set function, the ttl can be a DateTime or
+integer.
+
+
+getCreation
+-----------
+
+*getCreation()*
+
+This returns a DateTime of the Item's creation time, if it is available.
+
+
+getExpiration
+-------------
+
+*getExpiration()*
+
+This returns a DateTime of the Item's expiration time, if it is available.
+
+
+Drivers
+=======
+
+Stash works by storing values into various backend systems, like APC and Memcached, and retrieving them later. With the
+exception their creation and setup, drivers don't have any "public" functions- they are used by the Pool and Item
+classes themselves to interact with the underlying cache system.
+
+The :ref:`Drivers` page contains a list of all drivers and their options.
+
+setOptions
+----------
+
+*setOptions(array $options)*
+
+Passes an array of options to the Driver. This can include things like server addresses or directories to use for cache
+storage.
