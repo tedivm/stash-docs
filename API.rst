@@ -115,6 +115,19 @@ The exact behavior used to define a cache miss is defined by the invalidation me
 :ref:`invalidation` page contains much more information about hos to use this functionality.
 
 
+lock
+----
+
+*lock($ttl = null)*
+
+This should be called right before the script attempts to regenerate data from a cache miss. It signifies to other
+processes or requests that the data is being generated and allows them to take special action to improve system
+performance. Put more simply, just call this function and your cache will be higher performing as a result.
+
+The exact effect of this function depends on which invalidation method is being used. The :ref:`invalidation` page
+contains much more information about how to use this functionality.
+
+
 set
 ----
 
@@ -140,25 +153,13 @@ If hierarchical or "stackable" caching is being used this function will also rem
 the :ref:`basics` document goes into more detail about how that works.
 
 
-lock
-----
+extend
+------
 
-*lock($ttl = null)*
+*extend($ttl = null)*
 
-This should be called right before the script attempts to regenerate data from a cache miss. It signifies to other
-processes or requests that the data is being generated and allows them to take special action to improve system
-performance. Put more simply, just call this function and your cache will be higher performing as a result.
-
-The exact effect of this function depends on which invalidation method is being used. The :ref:`invalidation` page
-contains much more information about how to use this functionality.
-
-
-disable
--------
-
-*disable()*
-
-The disable function prevents any read or write operations and forces all the other calls to fail gracefully.
+This extends the Item's lifetime without changing it's data. Like the set function, the ttl can be a DateTime or
+integer.
 
 
 getKey
@@ -168,15 +169,6 @@ getKey
 
 The getKey function returns this Item's key as a string. This is particularly useful when the Item is returned as a
 group of Items in an Iterator.
-
-
-extend
-------
-
-*extend($ttl = null)*
-
-This extends the Item's lifetime without changing it's data. Like the set function, the ttl can be a DateTime or
-integer.
 
 
 getCreation
@@ -193,6 +185,15 @@ getExpiration
 *getExpiration()*
 
 This returns a DateTime of the Item's expiration time, if it is available.
+
+
+disable
+-------
+
+*disable()*
+
+The disable function prevents any read or write operations and forces all the other calls to fail gracefully.
+
 
 
 Drivers
