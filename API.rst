@@ -1,34 +1,63 @@
-.. _coreclasses:
+.. _coreapi:
 
-============
-Core Classes
-============
+========
+Core API
+========
 
 Drivers
 =======
 
-Stash works by storing values into various backend systems, like APC and
-Memcached, and retrieving them later. With the exception of the constructors,
-drivers don't have any "public" functions- they are used by the Pool and Item
+Stash works by storing values into various backend systems, like APC and Memcached, and retrieving them later. With the
+exception their creation and setup, drivers don't have any "public" functions- they are used by the Pool and Item
 classes themselves to interact with the underlying cache system.
 
 The :ref:`Drivers` page contains a list of all drivers and their options.
+
+setOptions
+----------
+
+*setOptions(array $options)*
+
+Passes an array of options to the Driver. This can include things like server addresses or directories to use for cache
+storage.
 
 
 Pool
 ====
 
-The Pool class represents the entire caching system and all of the items in it.
-Objects of this class are used to retrieve Items from the cache, as well as to
-perform bulk operations on the system such as Purging or Clearing the cache.
+The Pool class represents the entire caching system and all of the items in it. Objects of this class are used to
+retrieve Items from the cache, as well as to perform bulk operations on the system such as Purging or Clearing the
+cache.
 
 
-Constructor
------------
+setDriver
+---------
 
-*construct($driver)*
+*setDriver($driver)*
 
-The Pool constructor takes in a driver as an argument.
+Sets the driver for use by the caching system. This driver handles the direct interface with the caching backends,
+keeping the system specific development abstracted out.
+
+
+setLogger
+---------
+
+*setLogger($logger)*
+
+Sets a \PSR\Log\LoggerInterface style logging client to enable the tracking of errors.
+
+
+setNamespace
+------------
+
+Places the Pool inside of a "namespace". All Items inside a specific namespace should be completely segmented from all
+other Items.
+
+
+getNamespace
+------------
+
+Retrieves the current namespace, or false if one isn't set.
 
 
 getItem
@@ -36,8 +65,8 @@ getItem
 
 *getItem($key)*
 
-The getItem function takes in a key and returns an associated Item object. The
-structure of keys can be found on the :ref:`basics` page.
+The getItem function takes in a key and returns an associated Item object. The structure of keys can be found on the
+:ref:`basics` page.
 
 
 getItemIterator
@@ -45,9 +74,8 @@ getItemIterator
 
 *getItemIterator(array $keys)*
 
-The getItemIterator function takes in an array of keys and returns an Iterator
-object populated by Item objects for those keys. The structure of keys can be
-found on the :ref:`basics` page.
+The getItemIterator function takes in an array of keys and returns an Iterator object populated by Item objects for
+those keys. The structure of keys can be found on the :ref:`basics` page.
 
 
 flush
@@ -55,9 +83,7 @@ flush
 
 *flush()*
 
-The flush function completely empties all items associated with the Pool. After
-calling this every Item will be considered a miss and will have to be
-regenerated.
+The flush function completely empties all items associated with the Pool. After calling this every Item will be considered a miss and will have to be regenerated.
 
 
 purge
@@ -65,12 +91,11 @@ purge
 
 *purge()*
 
-The Purge function allows drivers to perform basic maintenance tasks, such as
-removing stale or expired items from storage. Not all drivers need this, as many
-interact with systems that handle that automatically.
+The Purge function allows drivers to perform basic maintenance tasks, such as removing stale or expired items from
+storage. Not all drivers need this, as many interact with systems that handle that automatically.
 
-It's important that this function is not called from inside a normal request, as
-the maintenance tasks this allows can occasionally take some time.
+It's important that this function is not called from inside a normal request, as the maintenance tasks this allows can
+occasionally take some time.
 
 
 Item

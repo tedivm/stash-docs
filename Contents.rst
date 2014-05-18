@@ -9,7 +9,7 @@ Stash Documentation
    Basics
    Grouping
    Invalidation
-   Classes
+   API
    Drivers
    Integration
    Extending
