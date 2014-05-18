@@ -49,25 +49,6 @@ data. Old values can be reused, new values set, or the cache can even be
 refreshed before it gets stale. Different methods can be set by passing the
 appropriate constant to Stash's "get" function.
 
-None
-----
-
-By default Stash simply returns true for the "isMiss" function whenever the
-cache is invalid, meaning multiple cache misses can occur at once and stampede
-protection is not enabled. While not needed, this method can be explicitly set.
-
-.. code-block:: php
-
-    <?php
-    // preserves backward compatibility.
-    $item->get();
-
-    // recommended if this method is explicitly wanted as the default value may
-    // change in the future.
-    $item->get(Item::SP_NONE);
-
-    // returns false if the item is missing or expired, no exceptions.
-    $item->isMiss();
 
 Precompute
 ----------
@@ -84,6 +65,27 @@ time (in seconds) before the expiration when it should regenerate the cache.
     // five minutes before the cache expires one instance will return a miss,
     // causing the cache to regenerate.
     $item->get(Item::SP_PRECOMPUTE, 300);
+
+
+None
+----
+
+By default Stash simply returns true for the "isMiss" function whenever the
+cache is invalid, meaning multiple cache misses can occur at once and stampede
+protection is not enabled.
+
+.. code-block:: php
+
+    <?php
+    // preserves backward compatibility.
+    $item->get();
+
+    // recommended if this method is explicitly wanted as the default value may
+    // change in the future.
+    $item->get(Item::SP_NONE);
+
+    // returns false if the item is missing or expired, no exceptions.
+    $item->isMiss();
 
 Old
 ---

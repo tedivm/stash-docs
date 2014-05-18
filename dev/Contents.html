@@ -161,8 +161,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Invalidation.html#stampede-protection">Stampede Protection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Invalidation.html#invalidation-methods">Invalidation Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#none">None</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Invalidation.html#precompute">Precompute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Invalidation.html#none">None</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Invalidation.html#old">Old</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Invalidation.html#value">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Invalidation.html#sleep">Sleep</a></li>
@@ -170,49 +170,64 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Examples.html#creating-stash-objects">Creating Stash Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Examples.html#identifying-items-using-keys">Identifying Items Using Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Examples.html#storing-and-retrieving-data">Storing and Retrieving Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Examples.html#clearing-data">Clearing Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Examples.html#purging-data">Purging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="API.html#pool">Pool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#setdriver">setDriver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#setlogger">setLogger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#setnamespace">setNamespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getnamespace">getNamespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getitem">getItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getitemiterator">getItemIterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#flush">flush</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#purge">purge</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Classes.html#drivers">Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Classes.html#pool">Pool</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#constructor">Constructor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#getitem">getItem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#getitemiterator">getItemIterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#flush">flush</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#purge">purge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#item">Item</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#get">get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#ismiss">isMiss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#lock">lock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#set">set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#clear">clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#extend">extend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getkey">getKey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getcreation">getCreation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getexpiration">getExpiration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#disable">disable</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="Classes.html#item">Item</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#get">get</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#ismiss">isMiss</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#set">set</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#clear">clear</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#lock">lock</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#disable">disable</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Classes.html#getkey">getKey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#drivers">Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#setoptions">setOptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#driverlist">DriverList</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getavailabledrivers">getAvailableDrivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getalldrivers">getAllDrivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#getdriverclass">getDriverClass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#registerdriver">registerDriver</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#filesystem">FileSystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#sqlite">Sqlite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#apc">APC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#xcache-experimental">Xcache (experimental)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#memcached">Memcached</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#redis">Redis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#ephemeral">Ephemeral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Drivers.html#composite">Composite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#system">System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#filesystem">FileSystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#sqlite">Sqlite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#apc">APC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#server">Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#memcached">Memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#redis">Redis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drivers.html#specialized">Specialized</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#ephemeral">Ephemeral</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Drivers.html#composite">Composite</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Integration.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Integration.html#logging">Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Integration.html#standards-compliance">Standards Compliance</a></li>
 </ul>

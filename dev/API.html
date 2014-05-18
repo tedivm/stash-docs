@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+  
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Core API &mdash; Stash 0.12.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.12.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
+    <link rel="next" title="Drivers" href="Drivers.html" />
+    <link rel="prev" title="Invalidation" href="Invalidation.html" />
+  
+   
+
+  </head>
+  <body>
+<nav class="navbar navbar-default navbar-fixed-top " role="navigation">
+  <div class="container">
+    <div class="visible-md visible-lg navbar-text pull-right" id="github-stars">
+      <iframe src="http://ghbtns.com/github-btn.html?user=tedivm&repo=stash&type=watch&count=true&size=small"
+      allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
+    </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggle-main-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="
+    
+      index.html">Stash</a>
+    </div>
+    <div class="collapse navbar-collapse" id="toggle-main-nav">
+      <ul class="nav navbar-nav">
+          <li><a href="
+      index.html">Home</a></li>
+          <li><a href="https://github.com/tedivm/stash">Github</a></li>
+            
+              <li><a href="http://blog.tedivm.com">Blog</a></li>
+            
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Drivers.html" title="Drivers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Invalidation.html" title="Invalidation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+        <div class="container-fluid">
+            
+    <div class="top-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Invalidation.html" title="previous chapter (use the left arrow)">&larr; Invalidation</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Drivers.html" title="next chapter (use the right arrow)">Drivers &rarr;</a></li>
+      </ul>
+    </div>
+  
+            <div class="row document clearer">
+  <div class="col-md-3 sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="
+      index.html">
+          <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
+        </a></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><a href="
+    
+      index.html">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Core API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pool">Pool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setdriver">setDriver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setlogger">setLogger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setnamespace">setNamespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getnamespace">getNamespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getitem">getItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getitemiterator">getItemIterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flush">flush</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purge">purge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#item">Item</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get">get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ismiss">isMiss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lock">lock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set">set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clear">clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extend">extend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getkey">getKey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getcreation">getCreation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getexpiration">getExpiration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disable">disable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#drivers">Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setoptions">setOptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#driverlist">DriverList</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getavailabledrivers">getAvailableDrivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getalldrivers">getAllDrivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getdriverclass">getDriverClass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#registerdriver">registerDriver</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Search</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-inline" action="search.html" method="get" role="form">
+      <div class="input-group">
+        <input name="q" type="text" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Go</button>
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+                <div class="col-md-9 body">
+                  
+  <div class="section" id="core-api">
+<span id="coreapi"></span><h1>Core API<a class="headerlink" href="#core-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pool">
+<h2>Pool<a class="headerlink" href="#pool" title="Permalink to this headline">¶</a></h2>
+<p>The Pool class represents the entire caching system and all of the items in it. Objects of this class are used to
+retrieve Items from the cache, as well as to perform bulk operations on the system such as Purging or Clearing the
+cache.</p>
+<div class="section" id="setdriver">
+<h3>setDriver<a class="headerlink" href="#setdriver" title="Permalink to this headline">¶</a></h3>
+<p><em>setDriver($driver)</em></p>
+<p>Sets the driver for use by the caching system. This driver handles the direct interface with the caching backends,
+keeping the system specific development abstracted out.</p>
+</div>
+<div class="section" id="setlogger">
+<h3>setLogger<a class="headerlink" href="#setlogger" title="Permalink to this headline">¶</a></h3>
+<p><em>setLogger($logger)</em></p>
+<p>Sets a PSRLogLoggerInterface style logging client to enable the tracking of errors.</p>
+</div>
+<div class="section" id="setnamespace">
+<h3>setNamespace<a class="headerlink" href="#setnamespace" title="Permalink to this headline">¶</a></h3>
+<p>Places the Pool inside of a &quot;namespace&quot;. All Items inside a specific namespace should be completely segmented from all
+other Items.</p>
+</div>
+<div class="section" id="getnamespace">
+<h3>getNamespace<a class="headerlink" href="#getnamespace" title="Permalink to this headline">¶</a></h3>
+<p>Retrieves the current namespace, or false if one isn't set.</p>
+</div>
+<div class="section" id="getitem">
+<h3>getItem<a class="headerlink" href="#getitem" title="Permalink to this headline">¶</a></h3>
+<p><em>getItem($key)</em></p>
+<p>The getItem function takes in a key and returns an associated Item object. The structure of keys can be found on the
+<a class="reference internal" href="Basics.html#basics"><em>Basic Usage</em></a> page.</p>
+</div>
+<div class="section" id="getitemiterator">
+<h3>getItemIterator<a class="headerlink" href="#getitemiterator" title="Permalink to this headline">¶</a></h3>
+<p><em>getItemIterator(array $keys)</em></p>
+<p>The getItemIterator function takes in an array of keys and returns an Iterator object populated by Item objects for
+those keys. The structure of keys can be found on the <a class="reference internal" href="Basics.html#basics"><em>Basic Usage</em></a> page.</p>
+</div>
+<div class="section" id="flush">
+<h3>flush<a class="headerlink" href="#flush" title="Permalink to this headline">¶</a></h3>
+<p><em>flush()</em></p>
+<p>The flush function completely empties all items associated with the Pool. After calling this every Item will be considered a miss and will have to be regenerated.</p>
+</div>
+<div class="section" id="purge">
+<h3>purge<a class="headerlink" href="#purge" title="Permalink to this headline">¶</a></h3>
+<p><em>purge()</em></p>
+<p>The Purge function allows drivers to perform basic maintenance tasks, such as removing stale or expired items from
+storage. Not all drivers need this, as many interact with systems that handle that automatically.</p>
+<p>It's important that this function is not called from inside a normal request, as the maintenance tasks this allows can
+occasionally take some time.</p>
+</div>
+</div>
+<div class="section" id="item">
+<h2>Item<a class="headerlink" href="#item" title="Permalink to this headline">¶</a></h2>
+<p>The Item class represents specific pieces of data in the caching system. Item
+objects are created by the Pool class.</p>
+<div class="section" id="get">
+<h3>get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h3>
+<p><em>get($invalidation == Invalidation::PRECOMPUTE, [$args])</em></p>
+<p>Retrieves the stored value of the Item or null if one is not set. Because null can be a valid stored object it is
+important to call <em>isMiss</em> in order to actually check it's validity.</p>
+<p>The get function can take a series of optional arguments defining how it handles cache misses. The first of these
+options is the invalidation method to be used, while the other options all provide invalidation specific options. The
+<a class="reference internal" href="Invalidation.html#invalidation"><em>Invalidation</em></a> page contains much more information about hos to use this functionality.</p>
+</div>
+<div class="section" id="ismiss">
+<h3>isMiss<a class="headerlink" href="#ismiss" title="Permalink to this headline">¶</a></h3>
+<p><em>isMiss()</em></p>
+<p>The isMiss function returns true when the current Item has either stale or no data. Since Stash is capable of storing
+both null and false values and returning them via the get function this is the only real way to test whether a cached
+value is usable or not.</p>
+<p>The exact behavior used to define a cache miss is defined by the invalidation method used for the object. The
+<a class="reference internal" href="Invalidation.html#invalidation"><em>Invalidation</em></a> page contains much more information about hos to use this functionality.</p>
+</div>
+<div class="section" id="lock">
+<h3>lock<a class="headerlink" href="#lock" title="Permalink to this headline">¶</a></h3>
+<p><em>lock($ttl = null)</em></p>
+<p>This should be called right before the script attempts to regenerate data from a cache miss. It signifies to other
+processes or requests that the data is being generated and allows them to take special action to improve system
+performance. Put more simply, just call this function and your cache will be higher performing as a result.</p>
+<p>The exact effect of this function depends on which invalidation method is being used. The <a class="reference internal" href="Invalidation.html#invalidation"><em>Invalidation</em></a> page
+contains much more information about how to use this functionality.</p>
+</div>
+<div class="section" id="set">
+<h3>set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<p><em>set($data, $ttl = null)</em></p>
+<p>The set function is used to populate the cache with data. The first argument can be any type of data that is able to be
+serialized- essentially everything except resources and classes which can't be serialized.</p>
+<p>The second argument defines how long the Item will be stored in the cache. This is a maximum time, as Items can be
+cleared or removed earlier but will never be considered a cache hit after it. This argument can either be a DateTime
+defining a specific expiration or an integer representing the time, in seconds, that the data should be considered
+fresh.</p>
+</div>
+<div class="section" id="clear">
+<h3>clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h3>
+<p><em>clear()</em></p>
+<p>The clear function removes the current Item's data from the backend storage.</p>
+<p>If hierarchical or &quot;stackable&quot; caching is being used this function will also remove children Items. The Key section of
+the <a class="reference internal" href="Basics.html#basics"><em>Basic Usage</em></a> document goes into more detail about how that works.</p>
+</div>
+<div class="section" id="extend">
+<h3>extend<a class="headerlink" href="#extend" title="Permalink to this headline">¶</a></h3>
+<p><em>extend($ttl = null)</em></p>
+<p>This extends the Item's lifetime without changing it's data. Like the set function, the ttl can be a DateTime or
+integer.</p>
+</div>
+<div class="section" id="getkey">
+<h3>getKey<a class="headerlink" href="#getkey" title="Permalink to this headline">¶</a></h3>
+<p><em>getKey()</em></p>
+<p>The getKey function returns this Item's key as a string. This is particularly useful when the Item is returned as a
+group of Items in an Iterator.</p>
+</div>
+<div class="section" id="getcreation">
+<h3>getCreation<a class="headerlink" href="#getcreation" title="Permalink to this headline">¶</a></h3>
+<p><em>getCreation()</em></p>
+<p>This returns a DateTime of the Item's creation time, if it is available.</p>
+</div>
+<div class="section" id="getexpiration">
+<h3>getExpiration<a class="headerlink" href="#getexpiration" title="Permalink to this headline">¶</a></h3>
+<p><em>getExpiration()</em></p>
+<p>This returns a DateTime of the Item's expiration time, if it is available.</p>
+</div>
+<div class="section" id="disable">
+<h3>disable<a class="headerlink" href="#disable" title="Permalink to this headline">¶</a></h3>
+<p><em>disable()</em></p>
+<p>The disable function prevents any read or write operations and forces all the other calls to fail gracefully.</p>
+</div>
+</div>
+<div class="section" id="drivers">
+<h2>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
+<p>Stash works by storing values into various backend systems, like APC and Memcached, and retrieving them later. With the
+exception their creation and setup, drivers don't have any &quot;public&quot; functions- they are used by the Pool and Item
+classes themselves to interact with the underlying cache system.</p>
+<p>The <a class="reference internal" href="Drivers.html#drivers"><em>Drivers</em></a> page contains a list of all drivers and their options.</p>
+<div class="section" id="setoptions">
+<h3>setOptions<a class="headerlink" href="#setoptions" title="Permalink to this headline">¶</a></h3>
+<p><em>setOptions(array $options)</em></p>
+<p>Passes an array of options to the Driver. This can include things like server addresses or directories to use for cache
+storage.</p>
+</div>
+</div>
+<div class="section" id="driverlist">
+<h2>DriverList<a class="headerlink" href="#driverlist" title="Permalink to this headline">¶</a></h2>
+<p>The DriverList class contains functions that are useful for people integrating or extending Stash. It primarily provides
+information on what Drivers are available.</p>
+<div class="section" id="getavailabledrivers">
+<h3>getAvailableDrivers<a class="headerlink" href="#getavailabledrivers" title="Permalink to this headline">¶</a></h3>
+<p><em>DriverList::getAvailableDrivers()</em></p>
+<p>Returns an associative array, $name =&gt; $class, of Drivers that can be enabled on this system.</p>
+</div>
+<div class="section" id="getalldrivers">
+<h3>getAllDrivers<a class="headerlink" href="#getalldrivers" title="Permalink to this headline">¶</a></h3>
+<p><em>DriverList::getAllDrivers()</em></p>
+<p>Returns an associative array, $name =&gt; $class, of all Drivers regardless of whether they can run on this system.</p>
+</div>
+<div class="section" id="getdriverclass">
+<h3>getDriverClass<a class="headerlink" href="#getdriverclass" title="Permalink to this headline">¶</a></h3>
+<p><em>DriverList::getDriverClass($name)</em></p>
+<p>Returns the class name of the requested driver.</p>
+</div>
+<div class="section" id="registerdriver">
+<h3>registerDriver<a class="headerlink" href="#registerdriver" title="Permalink to this headline">¶</a></h3>
+<p><em>DriverList::registerDriver($name, $class)</em></p>
+<p>Adds a new Driver to the list of system drivers. This is used for extending Stash with custom drivers.</p>
+</div>
+</div>
+</div>
+
+
+                </div>
+              <div class="clearfix"></div>
+            </div>
+            
+    <div class="footer-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Invalidation.html" title="previous chapter (use the left arrow)">&larr; Invalidation</a>
+          <span class="divider"></span>
+          
+        </li>
+          <li><a href="Drivers.html" title="next chapter (use the right arrow)">Drivers &rarr;</a></li>
+      </ul>
+    </div>
+  
+
+        </div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Drivers.html" title="Drivers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Invalidation.html" title="Invalidation"
+             >previous</a> |</li>
+        <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer container">
+    &copy; Copyright 2014, Robert Hafner. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-29779027-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

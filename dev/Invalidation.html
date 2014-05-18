@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
-    <link rel="next" title="Examples" href="Examples.html" />
+    <link rel="next" title="Core API" href="API.html" />
     <link rel="prev" title="Groupings" href="Grouping.html" />
   
    
@@ -76,7 +76,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Examples.html" title="Examples"
+          <a href="API.html" title="Core API"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="Grouping.html" title="Groupings"
@@ -94,7 +94,7 @@
           <span class="divider"></span>
           
         </li>
-          <li><a href="Examples.html" title="next chapter (use the right arrow)">Examples &rarr;</a></li>
+          <li><a href="API.html" title="next chapter (use the right arrow)">Core API &rarr;</a></li>
       </ul>
     </div>
   
@@ -120,8 +120,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Invalidation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#stampede-protection">Stampede Protection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#invalidation-methods">Invalidation Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#none">None</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#precompute">Precompute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#none">None</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#old">Old</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sleep">Sleep</a></li>
@@ -129,8 +129,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
@@ -202,24 +201,6 @@ stampede prevention function that's fairly easy to use:</p>
 data. Old values can be reused, new values set, or the cache can even be
 refreshed before it gets stale. Different methods can be set by passing the
 appropriate constant to Stash's &quot;get&quot; function.</p>
-<div class="section" id="none">
-<h3>None<a class="headerlink" href="#none" title="Permalink to this headline">¶</a></h3>
-<p>By default Stash simply returns true for the &quot;isMiss&quot; function whenever the
-cache is invalid, meaning multiple cache misses can occur at once and stampede
-protection is not enabled. While not needed, this method can be explicitly set.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-<span class="c1">// preserves backward compatibility.</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-
-<span class="c1">// recommended if this method is explicitly wanted as the default value may</span>
-<span class="c1">// change in the future.</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">Item</span><span class="o">::</span><span class="na">SP_NONE</span><span class="p">);</span>
-
-<span class="c1">// returns false if the item is missing or expired, no exceptions.</span>
-<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="precompute">
 <h3>Precompute<a class="headerlink" href="#precompute" title="Permalink to this headline">¶</a></h3>
 <p>The personal favorite method of the Stash developers, this method causes Stash
@@ -230,6 +211,24 @@ time (in seconds) before the expiration when it should regenerate the cache.</p>
 <span class="c1">// five minutes before the cache expires one instance will return a miss,</span>
 <span class="c1">// causing the cache to regenerate.</span>
 <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">Item</span><span class="o">::</span><span class="na">SP_PRECOMPUTE</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="none">
+<h3>None<a class="headerlink" href="#none" title="Permalink to this headline">¶</a></h3>
+<p>By default Stash simply returns true for the &quot;isMiss&quot; function whenever the
+cache is invalid, meaning multiple cache misses can occur at once and stampede
+protection is not enabled.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// preserves backward compatibility.</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// recommended if this method is explicitly wanted as the default value may</span>
+<span class="c1">// change in the future.</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">Item</span><span class="o">::</span><span class="na">SP_NONE</span><span class="p">);</span>
+
+<span class="c1">// returns false if the item is missing or expired, no exceptions.</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">isMiss</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -293,7 +292,7 @@ sleeping is the product of these two numbers.</p>
           <span class="divider"></span>
           
         </li>
-          <li><a href="Examples.html" title="next chapter (use the right arrow)">Examples &rarr;</a></li>
+          <li><a href="API.html" title="next chapter (use the right arrow)">Core API &rarr;</a></li>
       </ul>
     </div>
   
@@ -307,7 +306,7 @@ sleeping is the product of these two numbers.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Examples.html" title="Examples"
+          <a href="API.html" title="Core API"
              >next</a> |</li>
         <li class="right" >
           <a href="Grouping.html" title="Groupings"

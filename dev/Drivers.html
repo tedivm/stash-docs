@@ -31,7 +31,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
     <link rel="next" title="Integration" href="Integration.html" />
-    <link rel="prev" title="Core Classes" href="Classes.html" />
+    <link rel="prev" title="Core API" href="API.html" />
   
    
 
@@ -79,7 +79,7 @@
           <a href="Integration.html" title="Integration"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Classes.html" title="Core Classes"
+          <a href="API.html" title="Core API"
              accesskey="P">previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
@@ -90,7 +90,7 @@
     <div class="top-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Classes.html" title="previous chapter (use the left arrow)">&larr; Core Classes</a>
+          <a href="API.html" title="previous chapter (use the left arrow)">&larr; Core API</a>
           <span class="divider"></span>
           
         </li>
@@ -118,17 +118,24 @@
 <li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Classes.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Drivers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#filesystem">FileSystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sqlite">Sqlite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#apc">APC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#xcache-experimental">Xcache (experimental)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#memcached">Memcached</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#redis">Redis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ephemeral">Ephemeral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#composite">Composite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system">System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filesystem">FileSystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sqlite">Sqlite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apc">APC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#server">Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memcached">Memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redis">Redis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#specialized">Specialized</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ephemeral">Ephemeral</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#composite">Composite</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
@@ -161,8 +168,10 @@
                   
   <div class="section" id="drivers">
 <span id="id1"></span><h1>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="system">
+<h2>System<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="filesystem">
-<h2>FileSystem<a class="headerlink" href="#filesystem" title="Permalink to this headline">¶</a></h2>
+<h3>FileSystem<a class="headerlink" href="#filesystem" title="Permalink to this headline">¶</a></h3>
 <p>The Filesystem driver stores each item in a php script, as native php.
 Unsurprisingly this is the fastest backend for small to medium sites, as it is
 just as good as simply including a configuration file (and can even get stored
@@ -206,12 +215,12 @@ inside the systems temporary directory.</p>
 
 <span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
 <span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/tmp/myCache/&#39;</span><span class="p">);</span>
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\FileSystem</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="sqlite">
-<h2>Sqlite<a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h2>
+<h3>Sqlite<a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h3>
 <p>An alternative file based caching backend is the Sqlite driver. It can use
 either the PDO or native sqlite extensions, and can use either sqlite2 or
 sqlite3.</p>
@@ -271,12 +280,12 @@ inside the systems temporary directory.</p>
 
 <span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
 <span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/tmp/myCache/&#39;</span><span class="p">);</span>
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Sqlite</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="apc">
-<h2>APC<a class="headerlink" href="#apc" title="Permalink to this headline">¶</a></h2>
+<h3>APC<a class="headerlink" href="#apc" title="Permalink to this headline">¶</a></h3>
 <p>The APC extension is one of the most well known php caching extensions, allowing
 for both php opcode caching and memory storage of php values. The StashApc
 driver uses its userspace libraries to store data directly in memory for scripts
@@ -306,18 +315,15 @@ own caches but are using the same Stash install.</p>
 
 <span class="c1">// Setting a custom path is done by passing an options array to the constructor.</span>
 <span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ttl&#39;</span> <span class="o">=&gt;</span> <span class="mi">3600</span><span class="p">,</span> <span class="s1">&#39;namespace&#39;</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="k">__file__</span><span class="p">));</span>
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Apc</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="xcache-experimental">
-<h2>Xcache (experimental)<a class="headerlink" href="#xcache-experimental" title="Permalink to this headline">¶</a></h2>
-<p>The Xcache driver is currently experimental.</p>
-<p>Like the APC driver, the Xcache driver stores data directly in memory for use by
-other scripts.</p>
 </div>
+<div class="section" id="server">
+<h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="memcached">
-<h2>Memcached<a class="headerlink" href="#memcached" title="Permalink to this headline">¶</a></h2>
+<h3>Memcached<a class="headerlink" href="#memcached" title="Permalink to this headline">¶</a></h3>
 <p>Memcached is a client/server application which allows machines to pool their
 memory together as one large memory cache. The Memcached driver is a feature
 complete driver for Memcached, complete with hierarchical caching.</p>
@@ -351,18 +357,24 @@ for the specific options.</p>
 </ul>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// One Server</span>
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">)));</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">();</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">)));</span>
 
 
 <span class="c1">// Multiple Servers</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">();</span>
+
 <span class="nv">$servers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$servers</span><span class="p">));</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$servers</span><span class="p">));</span>
+
 
 <span class="c1">// Using memcached options</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">();</span>
+
 <span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
 <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mem1.example.net&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">);</span>
 <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mem2.example.net&#39;</span><span class="p">,</span> <span class="s1">&#39;11211&#39;</span><span class="p">);</span>
@@ -372,12 +384,12 @@ for the specific options.</p>
 <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache_lookups&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;serializer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span><span class="p">;</span>
 
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Memcache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="redis">
-<h2>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h2>
+<h3>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
 <p>Redis is a high performing advanced caching and key/value storage system. This
 driver uses the Redis PHP extension to enable Redis based caching, using one or
 more servers.</p>
@@ -393,22 +405,28 @@ then the default of 127.0.0.1:6379 will be used.</p>
 </ul>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// One Server</span>
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Redis</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;6379&#39;</span><span class="p">)));</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Redis</span><span class="p">();</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;6379&#39;</span><span class="p">)));</span>
 
 
 <span class="c1">// Multiple Servers</span>
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Redis</span><span class="p">();</span>
+
 <span class="nv">$servers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.20&#39;</span><span class="p">);</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;6379&#39;</span><span class="p">);</span>
 <span class="nv">$servers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;10.10.10.19&#39;</span><span class="p">,</span> <span class="s1">&#39;6380&#39;</span><span class="p">);</span>
 
-<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stash\Driver\Redis</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$servers</span><span class="p">));</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$servers</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="specialized">
+<h2>Specialized<a class="headerlink" href="#specialized" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="ephemeral">
-<h2>Ephemeral<a class="headerlink" href="#ephemeral" title="Permalink to this headline">¶</a></h2>
+<h3>Ephemeral<a class="headerlink" href="#ephemeral" title="Permalink to this headline">¶</a></h3>
 <p>The Ephemeral driver is a special backend that only stores data for the lifetime
 of the script, whether it be a longer running process or a web request. Items
 pushed to this driver are stored in the script's running memory. This driver has
@@ -434,7 +452,7 @@ duplicate lookups (caching the cache, in a way).</p>
 </div>
 </div>
 <div class="section" id="composite">
-<h2>Composite<a class="headerlink" href="#composite" title="Permalink to this headline">¶</a></h2>
+<h3>Composite<a class="headerlink" href="#composite" title="Permalink to this headline">¶</a></h3>
 <p>The Composite driver acts as a wrapper around one or more drivers, allowing
 different drivers to work together in a single cache.</p>
 <p>Upon creation the driver takes in an array of drivers as an option, with each
@@ -471,6 +489,7 @@ from being placed back into a cleared subdriver.</p>
 </div>
 </div>
 </div>
+</div>
 
 
                 </div>
@@ -480,7 +499,7 @@ from being placed back into a cleared subdriver.</p>
     <div class="footer-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Classes.html" title="previous chapter (use the left arrow)">&larr; Core Classes</a>
+          <a href="API.html" title="previous chapter (use the left arrow)">&larr; Core API</a>
           <span class="divider"></span>
           
         </li>
@@ -501,7 +520,7 @@ from being placed back into a cleared subdriver.</p>
           <a href="Integration.html" title="Integration"
              >next</a> |</li>
         <li class="right" >
-          <a href="Classes.html" title="Core Classes"
+          <a href="API.html" title="Core API"
              >previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
