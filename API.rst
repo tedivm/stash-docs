@@ -212,3 +212,41 @@ setOptions
 
 Passes an array of options to the Driver. This can include things like server addresses or directories to use for cache
 storage.
+
+
+DriverList
+==========
+
+The DriverList class contains functions that are useful for people integrating or extending Stash. It primarily provides
+information on what Drivers are available.
+
+getAvailableDrivers
+-------------------
+
+*DriverList::getAvailableDrivers()*
+
+Returns an associative array, $name => $class, of Drivers that can be enabled on this system.
+
+
+getAllDrivers
+-------------
+
+*DriverList::getAllDrivers()*
+
+Returns an associative array, $name => $class, of all Drivers regardless of whether they can run on this system.
+
+
+getDriverClass
+--------------
+
+*DriverList::getDriverClass($name)*
+
+Returns the class name of the requested driver.
+
+
+registerDriver
+--------------
+
+*DriverList::registerDriver($name, $class)*
+
+Adds a new Driver to the list of system drivers. This is used for extending Stash with custom drivers.
