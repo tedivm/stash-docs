@@ -9,7 +9,6 @@ Stash Documentation
    Basics
    Grouping
    Invalidation
-   Examples
    Classes
    Drivers
    Integration
