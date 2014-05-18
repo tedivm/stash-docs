@@ -4,25 +4,6 @@
 Integration
 ===========
 
-
-Installation
-------------
-
-Stash is available as a direct download through `GitHub
-<https://github.com/tedivm/Stash/releases>`_, through Pear via the `
-pear.tedivm.com <http://pear.tedivm.com>`_ channel, or the preferred method of
-using `Composer <http://getcomposer.org/>`_.
-
-When using Composer it's important to remember that Stash follows semantic
-versioning, but has still not reached it's 1.0.0 release. This means care should
-be given when updating MINOR versions, but that PATCH versions will always be
-backwards compatible. The recommended Composer requirement should look like-
-
-    "tedivm/stash": "0.11.*"
-
-Where 0.11 can be replaced with the version you've developed against.
-
-
 Logging
 -------
 
