@@ -107,6 +107,32 @@
         </a></p>
 <div class="panel panel-default">
   <div class="panel-heading">
+    <h3><a href="
+    
+      index.html">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Groupings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#stacks">Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#namespaces">Namespaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
     <h3 class="panel-title">Search</h3>
   </div>
   <div class="panel-body">
@@ -128,6 +154,31 @@
                   
   <div class="section" id="groupings">
 <span id="id1"></span><h1>Groupings<a class="headerlink" href="#groupings" title="Permalink to this headline">¶</a></h1>
+<p>Grouping is an extremely important feature of caching. By making it easier for developers to clear out related items
+and for framework and application developers to isolate data among components, caching will become more common place and
+application performance will improve as a result.</p>
+<p>Stash offers two methods of grouping, Stacks and Namespaces. Although similar they are meant to serve distinct purposes-
+Stacks are meant to give developers the ability to organize and invalidate their data in logical groups, while
+Namespaces exist to let frameworks isolate different systems from each other. Combined they allow library and
+application developers the ability to create Stacks and use Keys without having to worry key collision or what other
+libraries may be storing in the cache.</p>
+<div class="section" id="stacks">
+<h2>Stacks<a class="headerlink" href="#stacks" title="Permalink to this headline">¶</a></h2>
+<p>Stacks are a special kind of grouping system that allow cache items to be nested, similar to how folders are nested in
+filesystems. Stacks work by adding a special character to Keys, the slash, which tells the Implementing Library where
+the nesting points are. If the first character of the key is not a slash, Stacks behaves exactly like the standard Cache
+interfaces.</p>
+<p>An example key may look like &quot;/Users/Bob/Friends&quot;, &quot;/Users/Bob/Friends/Active&quot; or just &quot;/Users/Bob&quot;. The special thing
+about Stacks is that clearing out &quot;/Users/Bob&quot; also clears out &quot;/Users/Bob/Friends&quot; and &quot;/Users/Bob/Friends/Active&quot;.</p>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<p>Namespaces can be used to separate the storage of different systems in the cache. This allows different sections to be
+cleared on an individual level, while also preventing overlapping keys.</p>
+<p>Namespaces are controlled by the Pool::setNamespace($name) function. Once a namespace is set all operations the Pool and
+it's subsequent children Items do will in that isolated namespace (Items pulled out of the Pool before a namespace
+change maintain their original namespace).</p>
+</div>
 </div>
 
 

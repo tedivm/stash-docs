@@ -107,6 +107,35 @@
         </a></p>
 <div class="panel panel-default">
   <div class="panel-heading">
+    <h3><a href="
+    
+      index.html">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Extending</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interfaces">Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#abstracttests">AbstractTests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#replacing-the-item-class">Replacing The Item Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-drivers">Building Drivers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
     <h3 class="panel-title">Search</h3>
   </div>
   <div class="panel-body">
@@ -128,6 +157,59 @@
                   
   <div class="section" id="extending">
 <span id="id1"></span><h1>Extending<a class="headerlink" href="#extending" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>The process of extending Stash is pretty straight forward-</p>
+<ul class="simple">
+<li>Create the new class, either extending the existing one or implementing the Interface.</li>
+<li>Extend the AbstractTest and configure it to use the newly created class.</li>
+<li>Run the test suite and fix any bugs that appear.</li>
+<li>Add additional tests for any custom behavior that was added.</li>
+</ul>
+</div>
+<div class="section" id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h2>
+<p>In the Integration section it's recommended that developers typehint against the built in interfaces, and this allows
+any code written that impliments get used by all of those developers. It also makes it clear to developers extending
+Stash which changes are breaking expectations of users of the library. The interfaces are extensively commented, and
+reading them directly is by far the best way to understand what is expected of the things that implement them.</p>
+<p>When extending the Pool and Item classes it's highly recommended that the built in classes be utilized
+and built off of, but any class that passes the test suite and impliments the relevant interfaces should be able to be
+swapped in for the equivalent Stash class without problem. When building Drivers it is often easier to start with a
+fresh slate and simply build out the DriverInterface.</p>
+<p>Relevant Interfaces:</p>
+<ul class="simple">
+<li><em>Stash\Interfaces\PoolInterface</em></li>
+<li><em>Stash\Interfaces\ItemInterface</em></li>
+<li><em>Stash\Interfaces\DriverInterface</em></li>
+</ul>
+</div>
+<div class="section" id="abstracttests">
+<h2>AbstractTests<a class="headerlink" href="#abstracttests" title="Permalink to this headline">¶</a></h2>
+<p>While Interfaces define an API contract, Tests make sure they're enforced. To make development easier there is an
+AbstractTest for every Interface with a full suite of tests to ensure proper behavior. Using each suite is done by
+creating the new test class and extending it off of the AbstractTest (rather than the typical
+PHPUnit_Framework_TestCase), and then setting the appropriate class attribute to let the new test know which class they
+should be testing.</p>
+<ul class="simple">
+<li><em>Stash\Tests\AbstractPoolTest</em>- Set 'poolClass'.</li>
+<li><em>Stash\Tests\AbstractItemTest</em>- Set 'itemClass'.</li>
+<li><em>Stash\Tests\Driver\AbstractDriverTest</em>- Set 'driverClass'.</li>
+</ul>
+</div>
+<div class="section" id="replacing-the-item-class">
+<h2>Replacing The Item Class<a class="headerlink" href="#replacing-the-item-class" title="Permalink to this headline">¶</a></h2>
+<p>When extending the Pool it's easy to also change the Item class by overriding the &quot;itemClass&quot; protected variable with
+the new Item class name.</p>
+<p>To change the Item class without having to make a new Pool class as well the Pool-&gt;setItemClass() method can be used. It
+has to be called for each new Pool instance, and the new Item class must impliment the ItemInterface or an exception
+will be thrown.</p>
+</div>
+<div class="section" id="building-drivers">
+<h2>Building Drivers<a class="headerlink" href="#building-drivers" title="Permalink to this headline">¶</a></h2>
+<p>Although Stash comes with a variety of built in Drivers there are plenty more that can be built. New Drivers are always
+appreciated, so please feel free to issue a pull request to get it submitted.</p>
+</div>
 </div>
 
 
