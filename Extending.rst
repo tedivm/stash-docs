@@ -56,12 +56,5 @@ When extending the Pool it's easy to also change the Item class by overriding th
 the new Item class name.
 
 To change the Item class without having to make a new Pool class as well the Pool->setItemClass() method can be used. It
-has to be called for each new Pool instance, and the new Item class must impliment the ItemInterface or an exception
+has to be called for each new Pool instance, and the new Item class must implement the ItemInterface or an exception
 will be thrown.
-
-
-Building Drivers
-================
-
-Although Stash comes with a variety of built in Drivers there are plenty more that can be built. New Drivers are always
-appreciated, so please feel free to issue a pull request to get it submitted.

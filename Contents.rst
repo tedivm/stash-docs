@@ -13,4 +13,5 @@ Stash Documentation
    Drivers
    Integration
    Extending
+   AddingDrivers
    Contributing
