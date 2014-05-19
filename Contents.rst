@@ -15,3 +15,4 @@ Stash Documentation
    Extending
    AddingDrivers
    Contributing
+   FAQ
