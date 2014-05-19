@@ -68,6 +68,18 @@ system. Stash suppresses many types of errors to allow processes to continue as 
 of integration.
 
 
+Maintenance Actions
+===================
+
+Some drivers require that maintenance action be performed regular. The FileSystem and SQLite drivers, as an example,
+need to remove old data as they can't do it automatically. These operations are all abstracted away behind Pool->purge()
+but will need to be called regularly by the integrating applications.
+
+The Pool->purge() function should be called as a stand alone operation. Depending on the Driver being used this can take
+longer than your typical action and should not be tied to a user request. It is also recommended that this be run from a
+command line where possible, such as in an automated cron job, in order to improve performance.
+
+
 Standards Compliance
 ====================
 

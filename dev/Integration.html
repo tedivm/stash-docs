@@ -126,10 +126,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#driver-wrapping">Driver Wrapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maintenance-actions">Maintenance Actions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#standards-compliance">Standards Compliance</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AddingDrivers.html">Adding Drivers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
 </ul>
 
@@ -208,6 +210,15 @@ can be injected into the Pool class through the setLogger method.</p>
 <p>Logging is a powerful feature to give system admins, as it gives them access to errors that occur in with the logging
 system. Stash suppresses many types of errors to allow processes to continue as normal, making logging an important part
 of integration.</p>
+</div>
+<div class="section" id="maintenance-actions">
+<h2>Maintenance Actions<a class="headerlink" href="#maintenance-actions" title="Permalink to this headline">¶</a></h2>
+<p>Some drivers require that maintenance action be performed regular. The FileSystem and SQLite drivers, as an example,
+need to remove old data as they can't do it automatically. These operations are all abstracted away behind Pool-&gt;purge()
+but will need to be called regularly by the integrating applications.</p>
+<p>The Pool-&gt;purge() function should be called as a stand alone operation. Depending on the Driver being used this can take
+longer than your typical action and should not be tied to a user request. It is also recommended that this be run from a
+command line where possible, such as in an automated cron job, in order to improve performance.</p>
 </div>
 <div class="section" id="standards-compliance">
 <h2>Standards Compliance<a class="headerlink" href="#standards-compliance" title="Permalink to this headline">¶</a></h2>

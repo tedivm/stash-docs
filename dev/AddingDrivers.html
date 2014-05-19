@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-    <title>Extending &mdash; Stash 0.12.1 documentation</title>
+    <title>Adding Drivers &mdash; Stash 0.12.1 documentation</title>
     
     <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -30,8 +30,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
-    <link rel="next" title="Adding Drivers" href="AddingDrivers.html" />
-    <link rel="prev" title="Integration" href="Integration.html" />
+    <link rel="next" title="Contributing" href="Contributing.html" />
+    <link rel="prev" title="Extending" href="Extending.html" />
   
    
 
@@ -76,10 +76,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="AddingDrivers.html" title="Adding Drivers"
+          <a href="Contributing.html" title="Contributing"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Integration.html" title="Integration"
+          <a href="Extending.html" title="Extending"
              accesskey="P">previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
@@ -90,11 +90,11 @@
     <div class="top-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Integration.html" title="previous chapter (use the left arrow)">&larr; Integration</a>
+          <a href="Extending.html" title="previous chapter (use the left arrow)">&larr; Extending</a>
           <span class="divider"></span>
           
         </li>
-          <li><a href="AddingDrivers.html" title="next chapter (use the right arrow)">Adding Drivers &rarr;</a></li>
+          <li><a href="Contributing.html" title="next chapter (use the right arrow)">Contributing &rarr;</a></li>
       </ul>
     </div>
   
@@ -121,14 +121,20 @@
 <li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Extending</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#interfaces">Interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#abstracttests">AbstractTests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#replacing-the-item-class">Replacing The Item Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Adding Drivers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#keys">Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#driverinterface">DriverInterface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setoptions">setOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getdata">getData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#storedata">storeData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clear">clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purge">purge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#isavailable">isAvailable</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="AddingDrivers.html">Adding Drivers</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
 </ul>
 
@@ -155,55 +161,71 @@
   </div>
                 <div class="col-md-9 body">
                   
-  <div class="section" id="extending">
-<span id="id1"></span><h1>Extending<a class="headerlink" href="#extending" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>The process of extending Stash is pretty straight forward-</p>
+  <div class="section" id="adding-drivers">
+<span id="addingdrivers"></span><h1>Adding Drivers<a class="headerlink" href="#adding-drivers" title="Permalink to this headline">¶</a></h1>
+<p>Although Stash comes with a variety of built in Drivers there are plenty more that can be built. New Drivers are always
+appreciated, so please feel free to issue a pull request to get it included in the core library.</p>
+<div class="section" id="keys">
+<h2>Keys<a class="headerlink" href="#keys" title="Permalink to this headline">¶</a></h2>
+<p>Stash provides a variety of methods for developers to define keys, but it normalizes those keys into an array before
+passing it to the driver. For the purposes of driver development a key is always an indexed array.</p>
+<p>For example, where a user can represent a key as &quot;path/to/data&quot;, it will always come to the Driver as
+array('path', 'to', 'data).</p>
+</div>
+<div class="section" id="driverinterface">
+<h2>DriverInterface<a class="headerlink" href="#driverinterface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setoptions">
+<h3>setOptions<a class="headerlink" href="#setoptions" title="Permalink to this headline">¶</a></h3>
+<p><em>setOptions(array $options = array())</em></p>
+<p>Sets the driver for use by the caching system. This driver handles the direct interface with the caching backends,
+keeping the system specific development abstracted out.</p>
+<p>It takes an array which is used to pass option values to the driver. As this is the only required function that is used
+specifically by the developer is is where any engine specific options should go. An engine that requires authentication
+information, as an example, should get them here.</p>
+<p>When defining this function it's important to use Key =&gt; Value pairs rather than indexed arrays, as it makes
+standardizing configuration builders easier for people integrating this library.</p>
+</div>
+<div class="section" id="getdata">
+<h3>getData<a class="headerlink" href="#getdata" title="Permalink to this headline">¶</a></h3>
+<p><em>getData($key)</em></p>
+<p>Returns the previously stored data as well as it's expiration date in an associative array. This array contains two
+keys- a 'data' key and an 'expiration' key. The 'data' key should be exactly the same as the value passed to storeData.</p>
+<p>In the event that data is not present simply return false.</p>
+</div>
+<div class="section" id="storedata">
+<h3>storeData<a class="headerlink" href="#storedata" title="Permalink to this headline">¶</a></h3>
+<p><em>storeData(array $key, mixed $data, $expiration)</em></p>
+<p>Takes in data from the exposed Stash libraries and stored it for later retrieval.</p>
 <ul class="simple">
-<li>Create the new class, either extending the existing one or implementing the Interface.</li>
-<li>Extend the AbstractTest and configure it to use the newly created class.</li>
-<li>Run the test suite and fix any bugs that appear.</li>
-<li>Add additional tests for any custom behavior that was added.</li>
+<li><em>Key</em> an array which should map to a specific, unique location for that array, This location should also be able to
+handle recursive deletes, where the removal of an item represented by an identical, but truncated, key causes all of
+the 'children' keys to be removed.</li>
+<li><em>Data</em> is the value meant to be stored. This is an array which contains the raw storage as well as meta data about the
+data. The meta data can be ignored or used by the driver but entire data parameter must be retrievable exactly as it
+was placed in.</li>
+<li><em>Expiration</em> is a timestamp containing representing the date and time the item will expire. This should also be
+stored, as it is needed by the getData function.</li>
 </ul>
 </div>
-<div class="section" id="interfaces">
-<h2>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h2>
-<p>In the Integration section it's recommended that developers typehint against the built in interfaces, and this allows
-any code written that impliments get used by all of those developers. It also makes it clear to developers extending
-Stash which changes are breaking expectations of users of the library. The interfaces are extensively commented, and
-reading them directly is by far the best way to understand what is expected of the things that implement them.</p>
-<p>When extending the Pool and Item classes it's highly recommended that the built in classes be utilized
-and built off of, but any class that passes the test suite and impliments the relevant interfaces should be able to be
-swapped in for the equivalent Stash class without problem. When building Drivers it is often easier to start with a
-fresh slate and simply build out the DriverInterface.</p>
-<p>Relevant Interfaces:</p>
-<ul class="simple">
-<li><em>Stash\Interfaces\PoolInterface</em></li>
-<li><em>Stash\Interfaces\ItemInterface</em></li>
-<li><em>Stash\Interfaces\DriverInterface</em></li>
-</ul>
+<div class="section" id="clear">
+<h3>clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h3>
+<p>clear(array $key = null)</p>
+<p>Clears the cache tree using the key array provided as the key. If called with no arguments the entire cache gets cleared.</p>
 </div>
-<div class="section" id="abstracttests">
-<h2>AbstractTests<a class="headerlink" href="#abstracttests" title="Permalink to this headline">¶</a></h2>
-<p>While Interfaces define an API contract, Tests make sure they're enforced. To make development easier there is an
-AbstractTest for every Interface with a full suite of tests to ensure proper behavior. Using each suite is done by
-creating the new test class and extending it off of the AbstractTest (rather than the typical
-PHPUnit_Framework_TestCase), and then setting the appropriate class attribute to let the new test know which class they
-should be testing.</p>
-<ul class="simple">
-<li><em>Stash\Tests\AbstractPoolTest</em>- Set 'poolClass'.</li>
-<li><em>Stash\Tests\AbstractItemTest</em>- Set 'itemClass'.</li>
-<li><em>Stash\Tests\Driver\AbstractDriverTest</em>- Set 'driverClass'.</li>
-</ul>
+<div class="section" id="purge">
+<h3>purge<a class="headerlink" href="#purge" title="Permalink to this headline">¶</a></h3>
+<p><em>purge()</em></p>
+<p>This function provides a space for maintenance actions in the cache. It was originally meant for removing stale items in
+storage engines that needed manual actions to do so (sqlite, filesystem) but can be used for any maintenance that should
+not occur during regular user operations.</p>
 </div>
-<div class="section" id="replacing-the-item-class">
-<h2>Replacing The Item Class<a class="headerlink" href="#replacing-the-item-class" title="Permalink to this headline">¶</a></h2>
-<p>When extending the Pool it's easy to also change the Item class by overriding the &quot;itemClass&quot; protected variable with
-the new Item class name.</p>
-<p>To change the Item class without having to make a new Pool class as well the Pool-&gt;setItemClass() method can be used. It
-has to be called for each new Pool instance, and the new Item class must implement the ItemInterface or an exception
-will be thrown.</p>
+<div class="section" id="isavailable">
+<h3>isAvailable<a class="headerlink" href="#isavailable" title="Permalink to this headline">¶</a></h3>
+<p><em>isAvailable()</em></p>
+<p>Returns whether the driver is able to run in the current environment or not. Any system checks - such as making sure any
+required extensions are missing - should be done here. This is a general check; if any instance of this driver can be
+used in the current environment it should return true.</p>
+</div>
 </div>
 </div>
 
@@ -215,11 +237,11 @@ will be thrown.</p>
     <div class="footer-links">
       <ul class="breadcrumb pull-right">
         <li>
-          <a href="Integration.html" title="previous chapter (use the left arrow)">&larr; Integration</a>
+          <a href="Extending.html" title="previous chapter (use the left arrow)">&larr; Extending</a>
           <span class="divider"></span>
           
         </li>
-          <li><a href="AddingDrivers.html" title="next chapter (use the right arrow)">Adding Drivers &rarr;</a></li>
+          <li><a href="Contributing.html" title="next chapter (use the right arrow)">Contributing &rarr;</a></li>
       </ul>
     </div>
   
@@ -233,10 +255,10 @@ will be thrown.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="AddingDrivers.html" title="Adding Drivers"
+          <a href="Contributing.html" title="Contributing"
              >next</a> |</li>
         <li class="right" >
-          <a href="Integration.html" title="Integration"
+          <a href="Extending.html" title="Extending"
              >previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
