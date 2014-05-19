@@ -30,6 +30,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Stash 0.12.1 documentation" href="index.html" />
+    <link rel="prev" title="Contributing" href="Contributing.html" />
   
    
 
@@ -73,15 +74,22 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Contributing.html" title="Contributing"
+             accesskey="P">previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="container-wrapper">
         <div class="container-fluid">
             
-    
-      <div class="clearer"></div>
-    
+    <div class="top-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Contributing.html" title="previous chapter (use the left arrow)">&larr; Contributing</a>
+        </li>
+      </ul>
+    </div>
   
             <div class="row document clearer">
   <div class="col-md-3 sphinxsidebar">
@@ -90,6 +98,35 @@
       index.html">
           <img class="logo" src="_static/tedivmGlider.png" alt="Logo"/>
         </a></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><a href="
+    
+      index.html">Table Of Contents</a></h3>
+  </div>
+  <div class="panel-body panel-toc panel-globaltoc">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Stash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Basics.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grouping.html">Groupings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Invalidation.html">Invalidation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Drivers.html">Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AddingDrivers.html">Adding Drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#packaging">Packaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compatibility">Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#drivers">Drivers</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Search</h3>
@@ -113,6 +150,52 @@
                   
   <div class="section" id="faq">
 <span id="id1"></span><h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="packaging">
+<h2>Packaging<a class="headerlink" href="#packaging" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>When is version 1.0 coming out?</strong></li>
+</ul>
+<p>Right now the biggest thing holding back v1.0 is the completion of the PSR-Caching proposal. This proposal is meant to
+define a common caching interface that libraries such as Stash can expose to any library that desires caching. Once this
+is complete and we can be sure that Stash does not have anything in it that would prevent it from adopting this standard
+a v1.0 release will be made and the Stash API will be stabilized.</p>
+<ul class="simple">
+<li><strong>What happened to the PEAR repositories?</strong></li>
+</ul>
+<p>Frankly, the PEAR repositories were not getting nearly enough traffic to justify the work it took in maintaining them.
+With modern packaging systems like Composer it's time to move on from PEAR.</p>
+</div>
+<div class="section" id="compatibility">
+<h2>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>What's all this PSR stuff I keep heading about?</strong></li>
+</ul>
+<p>PSR's are documents published by the PHP Framework Interoperability Group, of which Stash is a member. This group
+attempts to make code more easily shared between libraries, frameworks and applications by creating standards that can
+be used to ensure interoperability. Following these standards makes Stash more portable, and Stash can take advantage
+of other libraries, such as monolog, that expose functionality through their own PSRs.</p>
+<ul class="simple">
+<li><strong>Does Stash work on Windows and OSX?</strong></li>
+</ul>
+<p>Yup! Some drivers may have special options that need to be set, but these are all documented.</p>
+</div>
+<div class="section" id="drivers">
+<h2>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Why don't you support xcache?</strong></li>
+</ul>
+<p>Unfortunately xcache does not allow itself to be loaded when being run from the command line. Although this makes sense
+in theory, as cli scripts are not going to share memory between runs, it makes testing extremely difficult and without
+testing it's hard to make high quality drivers.</p>
+<ul class="simple">
+<li><strong>Why don't you support wincache?</strong></li>
+</ul>
+<p>Because we don't have a windows box to test it on, although that may change.</p>
+<ul class="simple">
+<li><strong>Can you support X caching system?</strong></li>
+</ul>
+<p>We're happy to take requests, but even happier when they're pull requests.</p>
+</div>
 </div>
 
 
@@ -120,7 +203,13 @@
               <div class="clearfix"></div>
             </div>
             
-    
+    <div class="footer-links">
+      <ul class="breadcrumb pull-right">
+        <li>
+          <a href="Contributing.html" title="previous chapter (use the left arrow)">&larr; Contributing</a>
+        </li>
+      </ul>
+    </div>
   
 
         </div>
@@ -131,6 +220,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="Contributing.html" title="Contributing"
+             >previous</a> |</li>
         <li><a href="Contents.html">Stash 0.12.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
