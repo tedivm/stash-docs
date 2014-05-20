@@ -9,9 +9,10 @@ Stash Documentation
    Basics
    Grouping
    Invalidation
-   Examples
-   Classes
+   API
    Drivers
    Integration
    Extending
+   AddingDrivers
    Contributing
+   FAQ

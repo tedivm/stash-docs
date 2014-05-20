@@ -4,8 +4,11 @@
 Drivers
 =======
 
+System
+======
+
 FileSystem
-==========
+----------
 
 The Filesystem driver stores each item in a php script, as native php.
 Unsurprisingly this is the fastest backend for small to medium sites, as it is
@@ -39,11 +42,11 @@ compared to the other drivers.
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('path' => '/tmp/myCache/');
-    $driver = new Stash\Driver\FileSystem($options);
+    $driver->setOptions($options);
 
 
 Sqlite
-======
+------
 
 An alternative file based caching backend is the Sqlite driver. It can use
 either the PDO or native sqlite extensions, and can use either sqlite2 or
@@ -87,11 +90,11 @@ sqlite3.
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('path' => '/tmp/myCache/');
-    $driver = new Stash\Driver\Sqlite($options);
+    $driver->setOptions($options);
 
 
 APC
-===
+---
 
 The APC extension is one of the most well known php caching extensions, allowing
 for both php opcode caching and memory storage of php values. The StashApc
@@ -117,21 +120,14 @@ to use.
 
     // Setting a custom path is done by passing an options array to the constructor.
     $options = array('ttl' => 3600, 'namespace' = md5(__file__));
-    $driver = new Stash\Driver\Apc($options);
+    $driver->setOptions($options);
 
 
-
-Xcache (experimental)
-=====================
-
-The Xcache driver is currently experimental.
-
-Like the APC driver, the Xcache driver stores data directly in memory for use by
-other scripts.
-
+Server
+======
 
 Memcached
-=========
+---------
 
 Memcached is a client/server application which allows machines to pool their
 memory together as one large memory cache. The Memcached driver is a feature
@@ -158,18 +154,24 @@ complete driver for Memcached, complete with hierarchical caching.
 
     <?php
     // One Server
-    $driver = new Stash\Driver\Memcache(array('servers' => array('127.0.0.1', '11211')));
+    $driver = new Stash\Driver\Memcache();
+    $driver->setOptions(array('servers' => array('127.0.0.1', '11211')));
 
 
     // Multiple Servers
+    $driver = new Stash\Driver\Memcache();
+
     $servers = array();
     $servers[] = array('127.0.0.1', '11211', 60);
     $servers[] = array('10.10.10.19', '11211', 20);
     $servers[] = array('10.10.10.19', '11211', 20);
 
-    $driver = new Stash\Driver\Memcache(array('servers' => $servers));
+    $driver->setOptions(array('servers' => $servers));
+
 
     // Using memcached options
+    $driver = new Stash\Driver\Memcache();
+
     $options = array();
     $options['servers'][] = array('mem1.example.net', '11211');
     $options['servers'][] = array('mem2.example.net', '11211');
@@ -179,11 +181,11 @@ complete driver for Memcached, complete with hierarchical caching.
     $options['cache_lookups'] = true;
     $options['serializer'] = 'json';
 
-    $driver = new Stash\Driver\Memcache($options);
+    $driver->setOptions($options);
 
 
 Redis
-=====
+-----
 
 Redis is a high performing advanced caching and key/value storage system. This
 driver uses the Redis PHP extension to enable Redis based caching, using one or
@@ -198,21 +200,27 @@ more servers.
 
     <?php
     // One Server
-    $driver = new Stash\Driver\Redis(array('servers' => array('127.0.0.1', '6379')));
+    $driver = new Stash\Driver\Redis();
+    $driver->setOptions(array('servers' => array('127.0.0.1', '6379')));
 
 
     // Multiple Servers
+    $driver = new Stash\Driver\Redis();
+
     $servers = array();
     $servers[] = array('127.0.0.1');
     $servers[] = array('10.10.10.20');
     $servers[] = array('10.10.10.19', '6379');
     $servers[] = array('10.10.10.19', '6380');
 
-    $driver = new Stash\Driver\Redis(array('servers' => $servers));
+    $driver->setOptions(array('servers' => $servers));
 
+
+Specialized
+===========
 
 Ephemeral
-=========
+---------
 
 The Ephemeral driver is a special backend that only stores data for the lifetime
 of the script, whether it be a longer running process or a web request. Items
@@ -244,7 +252,7 @@ On subsequent requests, however, the data is not there-
 
 
 Composite
-=========
+---------
 
 The Composite driver acts as a wrapper around one or more drivers, allowing
 different drivers to work together in a single cache.
